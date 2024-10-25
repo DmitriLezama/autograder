@@ -1,11 +1,11 @@
 package com.gophers;
 
-/**
- * Hello world!
- *
- */
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        SubmissionManager submissionManager = new SubmissionManager(new ZipFileExtractor());
+        List<String> studentSubmissionDirectories = submissionManager.extractSubmissions("submissions.zip");
+        System.out.println("Student Submission Directories: " + studentSubmissionDirectories);
     }
 }

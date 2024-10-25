@@ -1,0 +1,17 @@
+# project specific files
+StudentSubmissions
+src/main/resources
+
+# Maven target directory
+/target/
+
+# IDE specific files
+.idea/
+*.iml
+.vscode
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.tmp
