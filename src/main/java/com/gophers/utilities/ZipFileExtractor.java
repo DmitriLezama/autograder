@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.utilities;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

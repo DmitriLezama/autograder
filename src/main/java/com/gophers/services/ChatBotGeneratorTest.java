@@ -1,8 +1,9 @@
-package com.gophers;
+package com.gophers.services;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import com.gophers.SampleAssignment.ChatBotGenerator;
+
+import com.gophers.data.ChatBotGenerator;
 
 public class ChatBotGeneratorTest {
 

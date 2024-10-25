@@ -1,4 +1,4 @@
-package com.gophers.SampleAssignment;
+package com.gophers.data;
 
 public class ChatBot {
     private final static int messageLimit = 10;
@@ -6,7 +6,6 @@ public class ChatBot {
     private String chatBotName;
     private int numResponsesGenerated;
 
-    // constructors
     public ChatBot() {
         this.chatBotName = ChatBotGenerator.generateChatBotLLM(0);
         this.numResponsesGenerated = 0;
@@ -17,7 +16,6 @@ public class ChatBot {
         this.numResponsesGenerated = 0;
     }
 
-    // accessors
     public String getChatBotName() {
         return this.chatBotName;
     }
@@ -26,7 +24,6 @@ public class ChatBot {
         return this.numResponsesGenerated;
     }
 
-    // class methods
     public static int getMessageLimit() {
         return messageLimit;
     }
@@ -45,7 +42,6 @@ public class ChatBot {
         return (messagesSent >= messageLimit);
     }
 
-    // methods
     private String generateResponse() {
         messageNumber++;
         numResponsesGenerated++;

@@ -1,4 +1,4 @@
-package com.gophers.SampleAssignment;
+package com.gophers.data;
 
 public class ChatBotGenerator {
     public static String generateChatBotLLM(int LLMCodeNumber) {

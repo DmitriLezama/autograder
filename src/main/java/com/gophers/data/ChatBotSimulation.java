@@ -1,4 +1,4 @@
-package com.gophers.SampleAssignment;
+package com.gophers.data;
 
 import java.util.Random;
 
