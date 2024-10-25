@@ -6,6 +6,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
 import com.gophers.services.ChatBotGeneratorTest;
+import com.gophers.services.ChatBotTest;
 
 public class AssignmentTestRunner {
     private final List<Class<?>> testClasses;
@@ -13,6 +14,7 @@ public class AssignmentTestRunner {
     public AssignmentTestRunner() {
         testClasses = new ArrayList<>();
         testClasses.add(ChatBotGeneratorTest.class);
+        testClasses.add(ChatBotTest.class);
     }
 
     public Result runTest(Class<?> testname) {

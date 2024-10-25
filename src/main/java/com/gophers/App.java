@@ -12,6 +12,6 @@ public class App {
         List<String> studentSubmissions = submissionManager.extractSubmissions("submissions.zip");
         GradeManager gradeManager = new GradeManager();
         var result = gradeManager.getAssignmentGrade(studentSubmissions.get(0));
-        System.out.println("Results: " + result.toString());
+        System.out.println("Results:\n" + result.toString());
     }
 }
