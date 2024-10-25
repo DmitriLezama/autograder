@@ -25,7 +25,7 @@ public class ChatBotTest {
         assertNotNull(defaultBot.prompt("Hello Bard"));
         assertNotNull(bardBot.prompt("Hello Chat GPT"));
     }
-    
+
     @Test
     public void testChatBotNameField() throws NoSuchFieldException {
         Field field = ChatBot.class.getDeclaredField("chatBotName");
@@ -46,7 +46,7 @@ public class ChatBotTest {
         assertTrue(Modifier.isPrivate(field.getModifiers()));
         assertEquals(int.class, field.getType());
         assertTrue(Modifier.isStatic(field.getModifiers()));
-        assertEquals(10, defaultBot.getMessageLimit());
+        assertEquals(10, ChatBot.getMessageLimit());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ChatBotTest {
         assertEquals(String.class, method.getReturnType());
         assertTrue(Modifier.isPrivate(method.getModifiers()));
     }
-    
+
     @Test
     public void testResponseWhenPrompted() throws NoSuchMethodException {
         assertNotNull(defaultBot.prompt("How are you"));
@@ -104,7 +104,7 @@ public class ChatBotTest {
     public static void testLimitReach() throws NoSuchMethodException {
         Method method = ChatBot.class.getMethod("limitReached");
         assertTrue(Modifier.isStatic(method.getModifiers()));
-        assertFalse(defaultBot.limitReached());
+        assertFalse(ChatBot.limitReached());
     }
 
     @AfterAll
@@ -112,7 +112,7 @@ public class ChatBotTest {
     public static void testTotalResponseCounterAfterPrompt() throws NoSuchMethodException {
         Method method = ChatBot.class.getMethod("getTotalNumResponsesGenerated");
         assertTrue(Modifier.isStatic(method.getModifiers()));
-        assertEquals(3, defaultBot.getTotalNumResponsesGenerated());
+        assertEquals(3, ChatBot.getTotalNumResponsesGenerated());
     }
 
     @AfterAll
@@ -120,6 +120,6 @@ public class ChatBotTest {
     public static void testRemainingMessagesAfterPrompt() throws NoSuchMethodException {
         Method method = ChatBot.class.getMethod("getTotalNumMessagesRemaining");
         assertTrue(Modifier.isStatic(method.getModifiers()));
-        assertEquals(7, defaultBot.getTotalNumMessagesRemaining());
+        assertEquals(7, ChatBot.getTotalNumMessagesRemaining());
     }
 }
