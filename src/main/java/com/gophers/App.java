@@ -13,5 +13,6 @@ public class App {
         GradeManager gradeManager = new GradeManager();
         var result = gradeManager.getAssignmentGrade(studentSubmissions.get(0));
         System.out.println("Results:\n" + result.toString());
+        gradeManager.generatePDFGrade(result);
     }
 }

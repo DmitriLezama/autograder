@@ -5,10 +5,12 @@ import java.util.List;
 import org.junit.runner.Result;
 
 import com.gophers.interfaces.Grade;
+import com.gophers.interfaces.PDF;
 import com.gophers.structures.AssignmentGrade;
 import com.gophers.structures.ChatBotGeneratorGrade;
 import com.gophers.structures.ChatBotGrade;
 import com.gophers.utilities.AssignmentTestRunner;
+import com.gophers.utilities.PDFGenerator;
 
 public class GradeManager {
 
@@ -22,5 +24,10 @@ public class GradeManager {
         grades.add(chatBotGrade);
         AssignmentGrade assignmentGrade = new AssignmentGrade(grades);
         return assignmentGrade;
+    }
+
+    public void generatePDFGrade(AssignmentGrade assignmentGrade) {
+        PDF pdf = new PDFGenerator();
+        pdf.generate(assignmentGrade);
     }
 }

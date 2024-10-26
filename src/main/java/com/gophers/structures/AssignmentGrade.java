@@ -16,6 +16,10 @@ public class AssignmentGrade {
             gradesMap.put(critieria[i], grades.get(i).getMarks());
     }
 
+    public Map<String, Integer> getGradesMap() {
+        return this.gradesMap;
+    }
+
     public String toString() {
         String result = "";
         for (var entry : gradesMap.entrySet())
