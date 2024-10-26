@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.managers;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +9,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import com.gophers.App;
+import com.gophers.utilities.ZipFileExtractor;
 
-class SubmissionManager {
+public class SubmissionManager {
     private static final String OUTPUT_DIRECTORY = "StudentSubmissions";
     private final ZipFileExtractor extractor;
 
