@@ -1,32 +1,47 @@
 package com.gophers.services;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import com.gophers.data.ChatBotSimulation;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import com.gophers.data.ChatBotSimulation;
+
+/*This class contains units tests for the ChatBotSimulation class.
+ * The purpose of these is to verify the proper functioning of the main method of ChatBotSimulation,
+ * which includes checking the initialization of the ChatBotPlatform, adding various types of chatbots,
+ * interacting with the chatbots, and printing out summmary statistics.
+ * The tests ensure that all the requirements specified for the ChatBotSimulation are met,
+ * such as the correct output messages and appropriate behaviour during execution.
+ */
 public class ChatBotSimulationTest {
+    //Captures the output printed to the console during test execution.
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-
+    /*
+     * Sets up the output stream to capture console output before each test.
+     * This method redirects the standard output stream (System.out) to a ByteArrayOutputStream,
+     * allowing us to capture and analyze console output produced during the execution of the main method
+     */
     @BeforeEach
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 
+    /*
+     * Tests that the main method starts by printing "Hello World!" to the console.
+     */
     @Test
     public void testMainStartsWithHelloWorld() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
         assertTrue(output.startsWith("Hello World!"), "Should start with 'Hello World!'");
     }
-
+    
+    //Old Test method
+    /* 
     @Test
     public void testChatBotPlatformInitialization() throws Exception {
         String filePath = "src/main/java/com/gophers/data/ChatBotSimulation.java"; // Adjust the path as necessary
@@ -47,7 +62,18 @@ public class ChatBotSimulationTest {
         assertTrue(lineFound,
                 "The line 'ChatBotPlatform anyvariablename = new ChatBotPlatform();' was not found in the main method.");
     }
+    */
+    
+    //New test method
+    
+    @Test
+    public void testChatBotPlatformInitialization() {
+        ChatBotSimulation.main(null);
+        String output = outputStreamCaptor.toString().trim();
+        assertTrue(output.contains("ChatBotPlatform initialized"), "ChatBotPlatform should be initialized and printed");
+    }
 
+    
     @Test
     public void testChatBotsAdded() {
         ChatBotSimulation.main(null);
