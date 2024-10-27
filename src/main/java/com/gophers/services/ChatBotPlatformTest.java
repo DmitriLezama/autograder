@@ -24,7 +24,7 @@ public class ChatBotPlatformTest {
         messageNumberField.set(null, 0);
     }
 
-    // 1. Test bots collection initialization (2 marks)
+    // 1. Test bots collection initialization 
     @Test
     public void testBotsCollectionInitialized() {
         List<ChatBot> bots = platform.getChatBots();
@@ -37,7 +37,7 @@ public class ChatBotPlatformTest {
         assertTrue("Bots collection should be empty initially", bots.isEmpty());
     }
 
-    // 2. Test constructor initialization (2 marks)
+    // 2. Test constructor initialization 
     @Test
     public void testChatBotPlatformConstructor() {
         assertNotNull("ChatBotPlatform should be initialized", platform);
@@ -48,7 +48,7 @@ public class ChatBotPlatformTest {
         assertNotNull("Bots collection should be initialized", platform.getChatBots());
     }
 
-    // 3. Test adding ChatBots individually (5 marks)
+    // 3. Test adding ChatBots individually 
     @Test
     public void testAddFirstChatBot() {
         assertTrue("Should add first ChatBot", platform.addChatBot(1));
@@ -78,7 +78,7 @@ public class ChatBotPlatformTest {
         assertEquals("Total ChatBots should be 3", 3, platform.getChatBots().size());
     }
 
-    // 4. Test adding ChatBot when message limit is reached (3 marks)
+    // 4. Test adding ChatBot when message limit is reached 
     @Test
     public void testLimitReachedAfterAddingChatBots() {
         for (int i = 0; i < ChatBot.getMessageLimit(); i++) {
@@ -97,7 +97,7 @@ public class ChatBotPlatformTest {
         assertFalse("Should not add more ChatBots when limit is reached", platform.addChatBot(4));
     }
 
-    // 5. Test getChatBotList formatting (6 marks)
+    // 5. Test getChatBotList formatting 
     @Test
     public void testGetChatBotListContainsBotNumbers() {
         platform.addChatBot(1);
@@ -140,7 +140,7 @@ public class ChatBotPlatformTest {
         assertTrue("Should contain Total Messages Remaining: 7", result.contains("Total Messages Remaining: 7"));
     }
 
-    // 6. Test interaction with a valid bot number (3 marks)
+    // 6. Test interaction with a valid bot number 
     @Test
     public void testInteractWithValidBot() {
         platform.addChatBot(1);
@@ -149,7 +149,7 @@ public class ChatBotPlatformTest {
         assertTrue("Response should contain generated text", response.contains("generatedTextHere"));
     }
 
-    // 7. Test interaction with invalid bot numbers (5 marks)
+    // 7. Test interaction with invalid bot numbers 
     @Test
     public void testInteractWithBotInvalidNegativeIndex() {
         platform.addChatBot(1);
@@ -168,7 +168,7 @@ public class ChatBotPlatformTest {
         assertEquals("Incorrect Bot Number (1) Selected. Try again", platform.interactWithBot(1, "Hello").trim());
     }
 
-    // 8. Test interaction when limit is reached (3 marks)
+    // 8. Test interaction when limit is reached 
     @Test
     public void testInteractWithBotAfterLimitReached() {
         platform.addChatBot(1);

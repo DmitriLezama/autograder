@@ -10,17 +10,31 @@ public class ChatBotPlatformGrade extends GradeTemplate {
     }
 
     protected void allocateWeightings() {
-        super.testMarks.put("testBotsCollection", 2);
-        super.testMarks.put("testConstructor", 2);
+        super.testMarks.put("testBotsCollection", 1);
+        super.testMarks.put("testBotsCollectionEmptyInitially", 1);
 
-        super.testMarks.put("testAddChatBot", 3);
-        super.testMarks.put("testAddChatBotLimitReached", 2);
+        super.testMarks.put("testChatBotPlatformConstructor", 1);
+        super.testMarks.put("testChatBotPlatformBotsCollectionInitialized", 1);
 
-        super.testMarks.put("testGetChatBotList", 3);
-        super.testMarks.put("testGetChatBotListEmpty", 3);
+        super.testMarks.put("testAddFirstChatBot", 1);
+        super.testMarks.put("testAddSecondChatBot", 1);
+        super.testMarks.put("testAddThirdChatBot", 1);
+        super.testMarks.put("testChatBotsCountAfterAdding", 1);
 
-        super.testMarks.put("testInteractWithBotValidNumber", 1);
-        super.testMarks.put("testInteractWithBotInvalidNumber", 2);
-        super.testMarks.put("testInteractWithBotLimitReached", 2);
+        super.testMarks.put("testLimitReachedAfterAddingChatBots", 1);
+        super.testMarks.put("testAddChatBotAfterLimitReached", 1);
+
+        super.testMarks.put("testGetChatBotListContainsBotNumbers", 1);
+        super.testMarks.put("testGetChatBotListContainsBotNames", 1);
+        super.testMarks.put("testGetChatBotListContainsMessageCountPerBot", 1);
+        super.testMarks.put("testGetChatBotListContainsTotalMessagesUsedAndRemaining", 2);
+
+        super.testMarks.put("testInteractWithValidBot", 1);
+
+        super.testMarks.put("testInteractWithBotInvalidNegativeIndex", 1);
+        super.testMarks.put("testInteractWithBotInvalidOutOfRangeIndex(", 1);
+        super.testMarks.put("testInteractWithBotInvalidIndexEqualToSize", 1);
+
+        super.testMarks.put("testInteractWithBotAfterLimitReached", 1);
     }
 }
