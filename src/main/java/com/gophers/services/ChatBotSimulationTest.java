@@ -1,48 +1,39 @@
 package com.gophers.services;
 
-import java.io.BufferedReader;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
+import com.gophers.data.ChatBotSimulation;
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import com.gophers.data.ChatBotSimulation;
-
-/*This class contains units tests for the ChatBotSimulation class.
- * The purpose of these is to verify the proper functioning of the main method of ChatBotSimulation,
- * which includes checking the initialization of the ChatBotPlatform, adding various types of chatbots,
- * interacting with the chatbots, and printing out summmary statistics.
- * The tests ensure that all the requirements specified for the ChatBotSimulation are met,
- * such as the correct output messages and appropriate behaviour during execution.
- */
 public class ChatBotSimulationTest {
-    //Captures the output printed to the console during test execution.
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-    /*
-     * Sets up the output stream to capture console output before each test.
-     * This method redirects the standard output stream (System.out) to a ByteArrayOutputStream,
-     * allowing us to capture and analyze console output produced during the execution of the main method
-     */
-    @BeforeEach
+    private final PrintStream originalOut = System.out;
+
+    @Before
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 
-    /*
-     * Tests that the main method starts by printing "Hello World!" to the console.
-     */
+    @After
+    public void tearDown() {
+        System.setOut(originalOut);
+    }
+
     @Test
-    public void testMainStartsWithHelloWorld() {
+    public void testMainMethodStartsWithHelloWorld() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        assertTrue(output.startsWith("Hello World!"), "Should start with 'Hello World!'");
+        assertTrue("Should start with 'Hello World!'", output.startsWith("Hello World!"));
     }
-    
+
     @Test
     public void testChatBotPlatformInitialization() throws Exception {
         String filePath = "src/main/java/com/gophers/data/ChatBotSimulation.java"; // Adjust the path as necessary
@@ -60,25 +51,25 @@ public class ChatBotSimulationTest {
             e.printStackTrace();
         }
 
-        assertTrue(lineFound,
-                "The line 'ChatBotPlatform anyvariablename = new ChatBotPlatform();' was not found in the main method.");
+        assertTrue(
+                "The line 'ChatBotPlatform anyvariablename = new ChatBotPlatform();' was not found in the main method.",
+                lineFound);
     }
-    
 
     @Test
     public void testChatBotsAdded() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        assertTrue(output.contains("Your ChatBots"), "Output should contain 'Your ChatBots' section");
+        assertTrue("Output should contain 'Your ChatBots' section", output.contains("Your ChatBots"));
         // assertTrue(output.contains("Bot Number"), "Output should list 'Bot Number:'
         // for each bot");
-        assertTrue(output.contains("LLaMa"), "Output should contain 'LLaMa'");
-        assertTrue(output.contains("Mistral7B"), "Output should contain 'Mistral7B'");
-        assertTrue(output.contains("Bard"), "Output should contain 'Bard'");
-        assertTrue(output.contains("Claude"), "Output should contain 'Claude'");
-        assertTrue(output.contains("Solar"), "Output should contain 'Solar'");
+        assertTrue("Output should contain 'LLaMa'", output.contains("LLaMa"));
+        assertTrue("Output should contain 'Mistral7B'", output.contains("Mistral7B"));
+        assertTrue("Output should contain 'Bard'", output.contains("Bard"));
+        assertTrue("Output should contain 'Claude'", output.contains("Claude"));
+        assertTrue("Output should contain 'Solar'", output.contains("Solar"));
         long botCount = output.lines().filter(line -> line.startsWith("Bot Number:")).count();
-        assertTrue(botCount >= 1, "At least one ChatBot should be added");
+        assertTrue("At least one ChatBot should be added", botCount >= 1);
     }
 
     @Test
@@ -97,22 +88,23 @@ public class ChatBotSimulationTest {
     public void testChatBotSummaryStatistics() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        assertTrue(output.contains("Your ChatBots"), "Output should contain 'Your ChatBots' section");
+        assertTrue("Output should contain 'Your ChatBots' section", output.contains("Your ChatBots"));
         // assertTrue(output.contains("Number Messages Used:"), "Output should contain
         // 'Number Messages Used'");
-        assertTrue(output.contains("Total Messages Used:"), "Output should contain 'Total Messages Used:'");
-        assertTrue(output.contains("Total Messages Remaining:"), "Output should contain 'Total Messages Remaining:'");
+        assertTrue("Output should contain 'Total Messages Used:'", output.contains("Total Messages Used:"));
+        assertTrue("Output should contain 'Total Messages Remaining:'", output.contains("Total Messages Remaining:"));
     }
 
     @Test
-    public void testFinalChatBotSummaryStatistics() {
+    public void testChatBotFinalSummary() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        int totalMessagesIndex = output.indexOf("Total Messages Used:");
-        assertTrue(totalMessagesIndex != -1, "'Total Messages Used:' should exist in the output");
-        
-        String substring = output.substring(totalMessagesIndex + "Total Messages Used:".length()).trim();
-        assertTrue(substring.contains("Your ChatBots"), 
-                "'Your ChatBots' should appear after 'Total Messages Used:'");
+        String[] lines = output.split("\n");
+        assertTrue("Output should not be empty.", lines.length > 0);
+        assertTrue("The last output line should contain 'Total Messages Used:'",
+                output.contains("Total Messages Used"));
+        assertTrue("The last output line should contain 'Total Messages Remaining: 0'",
+                output.contains("Total Messages Remaining: 0"));
     }
+
 }

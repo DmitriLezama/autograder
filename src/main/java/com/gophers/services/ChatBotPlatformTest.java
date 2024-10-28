@@ -4,9 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import com.gophers.data.ChatBotPlatform;
 import com.gophers.data.ChatBot;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.lang.reflect.Field;
 import java.util.List;
-import static org.junit.Assert.*;
 
 public class ChatBotPlatformTest {
     private ChatBotPlatform platform;

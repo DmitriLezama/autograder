@@ -10,7 +10,7 @@ public class ChatBotSimulationGrade extends GradeTemplate {
     }
 
     protected void allocateWeightings() {
-        super.testMarks.put("testMainStartsWithHelloWorld", 1);
+        super.testMarks.put("testMainMethodStartsWithHelloWorld", 1);
         super.testMarks.put("testChatBotPlatformInitialization", 1);
         /*
          * tbh this just hadda lockin ICL need to test the results/output accurately and
