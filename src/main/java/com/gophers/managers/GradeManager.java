@@ -1,39 +1,28 @@
 package com.gophers.managers;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.runner.Result;
-
-import com.gophers.interfaces.Grade;
 import com.gophers.interfaces.PDF;
 import com.gophers.structures.AssignmentDetails;
 import com.gophers.structures.AssignmentGrade;
-import com.gophers.structures.ChatBotGeneratorGrade;
-import com.gophers.structures.ChatBotGrade;
-import com.gophers.structures.ChatBotPlatformGrade;
-import com.gophers.structures.ChatBotSimulationGrade;
 import com.gophers.structures.StudentDetails;
+import com.gophers.structures.factory.AbstractGradeFactory;
+import com.gophers.structures.factory.GradeFactory;
 import com.gophers.utilities.AssignmentTestRunner;
+import com.gophers.utilities.FileCopier;
 import com.gophers.utilities.PDFGenerator;
 
 public class GradeManager {
+    private final AbstractGradeFactory gradeFactory = new GradeFactory();
 
     public AssignmentDetails getAssignmentDetails(String submissionDirectory) {
-        AssignmentTestRunner assignmentTestRunner = new AssignmentTestRunner();
-        List<Result> results = assignmentTestRunner.runAllTest();
-        List<Grade> grades = new ArrayList<>();
-        Grade chatBotGeneratorGrade = new ChatBotGeneratorGrade(results.get(0));
-        Grade chatBotGrade = new ChatBotGrade(results.get(1));
-        Grade chatBotPlatformGrade = new ChatBotPlatformGrade(results.get(2));
-        Grade chatBotSimulationGrade = new ChatBotSimulationGrade(results.get(3));
-        grades.add(chatBotGeneratorGrade);
-        grades.add(chatBotGrade);
-        grades.add(chatBotPlatformGrade);
-        grades.add(chatBotSimulationGrade);
-        AssignmentGrade assignmentGrade = new AssignmentGrade(grades);
-        StudentDetails student = new StudentDetails("816035591", "Dmitri", "Lezama");
-        AssignmentDetails assignmentDetails = new AssignmentDetails(student, assignmentGrade);
-        return assignmentDetails;
+        FileCopier.copyJavaFiles(submissionDirectory);
+        List<Result> results = new AssignmentTestRunner().runAllTest();
+        AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createGrades(results));
+        StudentDetails student = new StudentDetails(submissionDirectory);
+        // Logging
+        System.out.println("Results:\n" + assignmentGrade.toString());
+        return new AssignmentDetails(student, assignmentGrade);
     }
 
     public void generatePDFGrade(AssignmentDetails assignmentDetails) {

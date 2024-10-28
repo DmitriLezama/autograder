@@ -9,12 +9,13 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
 public class PDFGenerator implements PDF {
-    public final String TEMPLATE_PATH = "Template.pdf";
+    public final String TEMPLATE_PATH = "src/main/resources/Template.pdf";
+    public final String OUTPUT_PATH = "src/main/resources/Template.pdf";
 
     public void generate(AssignmentDetails assignmentDetails) {
         try {
             PdfReader reader = new PdfReader(TEMPLATE_PATH);
-            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream("temp.pdf"));
+            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(OUTPUT_PATH));
             AcroFields form = stamper.getAcroFields();
             populateFields(assignmentDetails.toPDFData(), form);
             stamper.setFormFlattening(true);
@@ -25,15 +26,8 @@ public class PDFGenerator implements PDF {
         }
     }
 
-    private void populateFields(Map<String, String> data, AcroFields form) {
+    private void populateFields(Map<String, String> data, AcroFields form) throws Exception {
         for (String key : data.keySet())
-            try {
-                form.setField(key, data.get(key));
-                form.setField("Bonus", "5, 10, 10, 5");
-                form.setField("Total", "100");
-                form.setField("FeedBack", "Good Work");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            form.setField(key, data.get(key));
     }
 }

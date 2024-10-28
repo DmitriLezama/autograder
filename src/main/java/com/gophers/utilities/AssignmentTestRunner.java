@@ -13,7 +13,7 @@ public class AssignmentTestRunner {
     private final List<Class<?>> testClasses;
 
     public AssignmentTestRunner() {
-        testClasses = new ArrayList<>();
+        testClasses = new ArrayList<Class<?>>();
         testClasses.add(ChatBotGeneratorTest.class);
         testClasses.add(ChatBotTest.class);
         testClasses.add(ChatBotPlatformTest.class);

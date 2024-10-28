@@ -14,11 +14,10 @@ public class AssignmentDetails {
 
     public Map<String, String> toPDFData() {
         Map<String, String> data = new HashMap<String, String>();
-        data.put("StudentName", studentDetails.getStudentName());
-        data.put("StudentID", studentDetails.getStudentID());
-        data.put("StudentPercentage", "100%"); // hardcoded for now
-        data.putAll(assignmentGrade.getGradesMap());
+        data.putAll(studentDetails.toPDFData());
+        data.putAll(assignmentGrade.toPDFData());
+        data.put("Bonus", "5, 10, 10, 5");
+        data.put("FeedBack", "Good Work");
         return data;
     }
-
 }
