@@ -3,6 +3,10 @@ package com.gophers.structures;
 import org.junit.runner.Result;
 
 public class ChatBotGrade extends GradeTemplate {
+    /*
+     * Has 1 too many test for the constructor
+     * Add a limit reached test to ensure its static
+     */
     private static final int totalMarks = 36;
 
     public ChatBotGrade(Result result) {
@@ -24,9 +28,10 @@ public class ChatBotGrade extends GradeTemplate {
         super.testMarks.put("testDefaultConstructor_ObjectNotNull", 1);
         super.testMarks.put("testDefaultConstructor_CorrectChatBotName", 1);
         super.testMarks.put("testDefaultConstructor_InitialResponseCount", 1);
+        // test not needed
+        // super.testMarks.put("testOverloadedConstructor_InitialResponseCount", 1);
         super.testMarks.put("testOverloadedConstructor_ObjectisNotNull", 1);
         super.testMarks.put("testOverloadedConstructor_ProducesCorrectBot", 1);
-        super.testMarks.put("testOverloadedConstructor_InitialResponseCount", 1);
         super.testMarks.put("testOverloadedConstructor_InvalidLLMCode", 1);
         super.testMarks.put("testGetChatBotName", 1);
 
@@ -39,6 +44,7 @@ public class ChatBotGrade extends GradeTemplate {
         super.testMarks.put("testGetTotalNumMessagesRemaining_ReachesZero", 1);
         super.testMarks.put("testLimitReached_InitiallyFalse", 1);
         super.testMarks.put("testLimitReached_TrueWhenLimitReached", 1);
+        // missingtest for limit reached class method test
 
         // GenerateResponse Tests
         super.testMarks.put("testGenerateResponse_FieldisPrivate", 1);

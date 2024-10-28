@@ -1,6 +1,9 @@
 package com.gophers.services;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,8 +43,6 @@ public class ChatBotSimulationTest {
         assertTrue(output.startsWith("Hello World!"), "Should start with 'Hello World!'");
     }
     
-    //Old Test method
-    /* 
     @Test
     public void testChatBotPlatformInitialization() throws Exception {
         String filePath = "src/main/java/com/gophers/data/ChatBotSimulation.java"; // Adjust the path as necessary
@@ -62,18 +63,8 @@ public class ChatBotSimulationTest {
         assertTrue(lineFound,
                 "The line 'ChatBotPlatform anyvariablename = new ChatBotPlatform();' was not found in the main method.");
     }
-    */
     
-    //New test method
-    
-    @Test
-    public void testChatBotPlatformInitialization() {
-        ChatBotSimulation.main(null);
-        String output = outputStreamCaptor.toString().trim();
-        assertTrue(output.contains("ChatBotPlatform initialized"), "ChatBotPlatform should be initialized and printed");
-    }
 
-    
     @Test
     public void testChatBotsAdded() {
         ChatBotSimulation.main(null);

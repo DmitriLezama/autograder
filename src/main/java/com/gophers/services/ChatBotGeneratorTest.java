@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import org.junit.Test;
 
 import com.gophers.data.ChatBotGenerator;
 
 @SuppressWarnings("static-access")
 public class ChatBotGeneratorTest {
-
     private ChatBotGenerator generator;
 
     @org.junit.Before
@@ -23,7 +23,7 @@ public class ChatBotGeneratorTest {
     public void testMethodIsStatic_generateChatBotLLM() {
         try {
             Method method = ChatBotGenerator.class.getMethod("generateChatBotLLM", int.class);
-            assertTrue("Method should be static", java.lang.reflect.Modifier.isStatic(method.getModifiers()));
+            assertTrue("Method should be static", Modifier.isStatic(method.getModifiers()));
             String result = ChatBotGenerator.generateChatBotLLM(1);
             assertTrue("Static method should return non-null result", result != null);
         } catch (NoSuchMethodException e) {
