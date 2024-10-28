@@ -27,13 +27,15 @@ public class ChatBotSimulationTest {
         System.setOut(originalOut);
     }
 
+    // Test for requirement 1
     @Test
     public void testMainMethodStartsWithHelloWorld() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        assertTrue("Should start with 'Hello World!'", output.startsWith("Hello World!"));
+        assertTrue("Should start with 'Hello World!'", output.startsWith("Hello World!")); // 1 mark
     }
 
+    // Test for requirement 2
     @Test
     public void testChatBotPlatformInitialization() throws Exception {
         String filePath = "src/main/java/com/gophers/data/ChatBotSimulation.java"; // Adjust the path as necessary
@@ -51,60 +53,123 @@ public class ChatBotSimulationTest {
             e.printStackTrace();
         }
 
-        assertTrue(
-                "The line 'ChatBotPlatform anyvariablename = new ChatBotPlatform();' was not found in the main method.",
-                lineFound);
+        assertTrue("The line 'ChatBotPlatform anyvariablename = new ChatBotPlatform();' was not found in the main method.", lineFound); // 1 mark
+    }
+
+    // Test for requirement 3: Adding ChatBots
+
+    @Test
+    public void testIndividualChatBotsAdded() {
+        ChatBotSimulation.main(null);
+        String output = outputStreamCaptor.toString().trim();
+
+        // Check for individual ChatBots
+        assertTrue("Output should contain 'LLaMa'", output.contains("LLaMa")); 
+        assertTrue("Output should contain 'Mistral7B'", output.contains("Mistral7B")); 
+        assertTrue("Output should contain 'Bard'", output.contains("Bard")); 
+        assertTrue("Output should contain 'Claude'", output.contains("Claude")); 
+        assertTrue("Output should contain 'Solar'", output.contains("Solar")); // 1 mark
     }
 
     @Test
-    public void testChatBotsAdded() {
+    public void testAtLeastOneChatBotAdded() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        assertTrue("Output should contain 'Your ChatBots' section", output.contains("Your ChatBots"));
-        // assertTrue(output.contains("Bot Number"), "Output should list 'Bot Number:'
-        // for each bot");
-        assertTrue("Output should contain 'LLaMa'", output.contains("LLaMa"));
-        assertTrue("Output should contain 'Mistral7B'", output.contains("Mistral7B"));
-        assertTrue("Output should contain 'Bard'", output.contains("Bard"));
-        assertTrue("Output should contain 'Claude'", output.contains("Claude"));
-        assertTrue("Output should contain 'Solar'", output.contains("Solar"));
+
         long botCount = output.lines().filter(line -> line.startsWith("Bot Number:")).count();
-        assertTrue("At least one ChatBot should be added", botCount >= 1);
+        assertTrue("At least one ChatBot should be added", botCount >= 1); // 1 mark
     }
 
+    // Test for requirement 4: Printing ChatBot statistics
     @Test
-    public void testChatBotInteraction() {
+    public void testChatBotsSectionPresent() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        long botInteractions = output.lines()
+    
+        assertTrue("Output should contain 'Your ChatBots' section", output.contains("Your ChatBots")); // 1 mark
+    }
+    
+    @Test
+    public void testChatBotSummaryStatisticsPresent() {
+        ChatBotSimulation.main(null);
+        String output = outputStreamCaptor.toString().trim();
+    
+        assertTrue("Output should contain 'Total Messages Used:'", output.contains("Total Messages Used:")); // 1 mark
+        assertTrue("Output should contain 'Total Messages Remaining:'", output.contains("Total Messages Remaining:")); 
+    }
+    
+
+    // Test for requirement 5: Interactions with ChatBots
+    //  Check if any interactions occurred
+    @Test
+    public void testChatBotHasInteractions() {
+        ChatBotSimulation.main(null);
+        String output = outputStreamCaptor.toString().trim();
+
+        long interactionCount = output.lines()
                 .filter(line -> line.startsWith("(Message#") ||
                         line.startsWith("Incorrect Bot Number") ||
                         line.startsWith("Daily Limit Reached"))
                 .count();
-        assertEquals(15, botInteractions);
+
+        assertTrue("There should be interactions with ChatBots.", interactionCount > 0); // 1 mark
     }
 
+    // Check for presence of "(Message#" format indicating message interaction
     @Test
-    public void testChatBotSummaryStatistics() {
+    public void testMessageFormatInInteractions() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        assertTrue("Output should contain 'Your ChatBots' section", output.contains("Your ChatBots"));
-        // assertTrue(output.contains("Number Messages Used:"), "Output should contain
-        // 'Number Messages Used'");
-        assertTrue("Output should contain 'Total Messages Used:'", output.contains("Total Messages Used:"));
-        assertTrue("Output should contain 'Total Messages Remaining:'", output.contains("Total Messages Remaining:"));
+
+        boolean messageFormatFound = output.lines().anyMatch(line -> line.startsWith("(Message#"));
+        assertTrue("Interaction messages should start with '(Message#'", messageFormatFound); // 1 mark
     }
 
+    // Check for handling of incorrect bot number messages
     @Test
-    public void testChatBotFinalSummary() {
+    public void testIncorrectBotNumberHandling() {
+        ChatBotSimulation.main(null);
+        String output = outputStreamCaptor.toString().trim();
+
+        boolean incorrectBotMessageFound = output.lines().anyMatch(line -> line.startsWith("Incorrect Bot Number"));
+        assertTrue("Output should include 'Incorrect Bot Number' message if applicable.", incorrectBotMessageFound); // 1 mark
+    }
+
+    // Check for exactly 15 interactions
+    @Test
+    public void testExactNumberOfInteractions() {
+        ChatBotSimulation.main(null);
+        String output = outputStreamCaptor.toString().trim();
+
+        long interactionCount = output.lines()
+                .filter(line -> line.startsWith("(Message#") ||
+                        line.startsWith("Incorrect Bot Number") ||
+                        line.startsWith("Daily Limit Reached"))
+                .count();
+
+        assertEquals("Should interact exactly 15 times with ChatBots.", 15, interactionCount); // 1 mark
+    }
+
+
+    // Test for requirement 6: Final summary statistics
+    // Check that final summary output is not empty
+    @Test
+    public void testFinalSummaryNotEmpty() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
         String[] lines = output.split("\n");
-        assertTrue("Output should not be empty.", lines.length > 0);
-        assertTrue("The last output line should contain 'Total Messages Used:'",
-                output.contains("Total Messages Used"));
-        assertTrue("The last output line should contain 'Total Messages Remaining: 0'",
-                output.contains("Total Messages Remaining: 0"));
+
+        assertTrue("Final summary output should not be empty.", lines.length > 0); // 1 mark
+    }
+
+    // Check that final summary contains the required summary statistics
+    @Test
+    public void testFinalSummaryStatistics() {
+        ChatBotSimulation.main(null);
+        String output = outputStreamCaptor.toString().trim();
+
+        assertTrue("Final summary should contain 'Total Messages Used:'", output.contains("Total Messages Used:")); 
+        assertTrue("Final summary should contain 'Total Messages Remaining: 0'", output.contains("Total Messages Remaining: 0")); // 1 mark
     }
 
 }
