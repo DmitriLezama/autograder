@@ -1,16 +1,22 @@
 package com.gophers.services;
 
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.PrintStream;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
-import java.io.File;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import com.gophers.data.ChatBot;
-import com.gophers.data.ChatBotPlatform;
 import com.gophers.data.ChatBotGenerator;
+import com.gophers.data.ChatBotPlatform;
 import com.gophers.data.ChatBotSimulation;
 
 public class ProgramTest {
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     @Test
     public void test_ChatBotCompiles() {
@@ -39,6 +45,16 @@ public class ProgramTest {
                         doesClassCompile(ChatBotPlatform.class) &&
                         doesClassCompile(ChatBotGenerator.class) &&
                         doesClassCompile(ChatBotSimulation.class));
+    }
+
+    @Before
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
+
+    @After
+    public void tearDown() {
+        System.setOut(originalOut);
     }
 
     @Test
