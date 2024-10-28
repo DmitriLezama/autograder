@@ -10,8 +10,13 @@ public class ChatBotGeneratorGrade extends GradeTemplate {
     }
 
     protected void allocateWeightings() {
-        super.testMarks.put("testGenerateChatBotLLMValidCodes", 3);
-        super.testMarks.put("testGenerateChatBotLLMInvalidCodes", 4);
+        super.testMarks.put("testMethodIsStatic_generateChatBotLLM", 1);
+        super.testMarks.put("testGenerateChatBotLLM_ReturnsLLaMaForCode1", 1);
+        super.testMarks.put("testGenerateChatBotLLM_ReturnsMistral7BForCode2", 1);
+        super.testMarks.put("testGenerateChatBotLLM_ReturnsBardForCode3", 1);
+        super.testMarks.put("testGenerateChatBotLLM_ReturnsClaudeForCode4", 1);
+        super.testMarks.put("testGenerateChatBotLLM_ReturnsSolarForCode5", 1);
+        super.testMarks.put("testGenerateChatBotLLM_ReturnsChatGPT35ForInvalidCodes", 1);
     }
 
 }

@@ -9,6 +9,8 @@ import com.gophers.interfaces.PDF;
 import com.gophers.structures.AssignmentGrade;
 import com.gophers.structures.ChatBotGeneratorGrade;
 import com.gophers.structures.ChatBotGrade;
+import com.gophers.structures.ChatBotPlatformGrade;
+import com.gophers.structures.ChatBotSimulationGrade;
 import com.gophers.utilities.AssignmentTestRunner;
 import com.gophers.utilities.PDFGenerator;
 
@@ -20,8 +22,12 @@ public class GradeManager {
         List<Grade> grades = new ArrayList<>();
         Grade chatBotGeneratorGrade = new ChatBotGeneratorGrade(results.get(0));
         Grade chatBotGrade = new ChatBotGrade(results.get(1));
+        Grade chatBotPlatformGrade = new ChatBotPlatformGrade(results.get(2));
+        Grade chatBotSimulationGrade = new ChatBotSimulationGrade(results.get(3));
         grades.add(chatBotGeneratorGrade);
         grades.add(chatBotGrade);
+        grades.add(chatBotPlatformGrade);
+        grades.add(chatBotSimulationGrade);
         AssignmentGrade assignmentGrade = new AssignmentGrade(grades);
         return assignmentGrade;
     }

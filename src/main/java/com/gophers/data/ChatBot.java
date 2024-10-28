@@ -45,7 +45,7 @@ public class ChatBot {
     private String generateResponse() {
         messageNumber++;
         numResponsesGenerated++;
-        return "(Message #" + getTotalNumResponsesGenerated()
+        return "(Message# " + getTotalNumResponsesGenerated()
                 + ") Response from " + getChatBotName()
                 + "\t >> generatedTextHere";
     }
@@ -58,7 +58,7 @@ public class ChatBot {
 
     public String toString() {
         return "ChatBot Name: " + getChatBotName() +
-                "\tNumber Messages used: "
+                "\tNumber Messages Used: "
                 + getNumResponsesGenerated();
     }
 }
