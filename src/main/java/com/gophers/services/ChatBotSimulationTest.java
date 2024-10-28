@@ -3,9 +3,11 @@ package com.gophers.services;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
+import com.gophers.data.ChatBot;
 import com.gophers.data.ChatBotSimulation;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,13 +20,17 @@ public class ChatBotSimulationTest {
     private final PrintStream originalOut = System.out;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchFieldException, IllegalAccessException {
+        Field messageNumberField = ChatBot.class.getDeclaredField("messageNumber");
+        messageNumberField.setAccessible(true);
+        messageNumberField.set(null, 0);
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 
     @After
     public void tearDown() {
         System.setOut(originalOut);
+        System.out.println(outputStreamCaptor.toString());
     }
 
     // Test for requirement 1
