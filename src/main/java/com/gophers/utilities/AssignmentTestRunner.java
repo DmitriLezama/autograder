@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
-
 import com.gophers.services.ChatBotTest;
 import com.gophers.services.ChatBotGeneratorTest;
 import com.gophers.services.ChatBotPlatformTest;
