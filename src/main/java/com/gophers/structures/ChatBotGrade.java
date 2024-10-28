@@ -28,23 +28,24 @@ public class ChatBotGrade extends GradeTemplate {
         super.testMarks.put("testDefaultConstructor_ObjectNotNull", 1);
         super.testMarks.put("testDefaultConstructor_CorrectChatBotName", 1);
         super.testMarks.put("testDefaultConstructor_InitialResponseCount", 1);
-        // test not needed
-        // super.testMarks.put("testOverloadedConstructor_InitialResponseCount", 1);
+
+        // Overloaded Constructor Tests
         super.testMarks.put("testOverloadedConstructor_ObjectisNotNull", 1);
         super.testMarks.put("testOverloadedConstructor_ProducesCorrectBot", 1);
         super.testMarks.put("testOverloadedConstructor_InvalidLLMCode", 1);
-        super.testMarks.put("testGetChatBotName", 1);
 
         // Method Tests
+        super.testMarks.put("testGetChatBotName", 1);
         super.testMarks.put("testNumResponsesGenerated", 1);
         super.testMarks.put("testGetTotalNumResponsesGenerated_IsStatic", 1);
         super.testMarks.put("testGetTotalNumResponsesGenerated_ReturnsTotalMessages", 1);
         super.testMarks.put("testGetTotalNumMessagesRemaining_IsStatic", 1);
         super.testMarks.put("testGetTotalNumMessagesRemaining_ReturnsCorrectValue", 1);
         super.testMarks.put("testGetTotalNumMessagesRemaining_ReachesZero", 1);
+
+        super.testMarks.put("testLimitReached_IsStatic", 1);
         super.testMarks.put("testLimitReached_InitiallyFalse", 1);
         super.testMarks.put("testLimitReached_TrueWhenLimitReached", 1);
-        // missingtest for limit reached class method test
 
         // GenerateResponse Tests
         super.testMarks.put("testGenerateResponse_FieldisPrivate", 1);
