@@ -10,6 +10,7 @@ import com.gophers.structures.ChatBotGeneratorGrade;
 import com.gophers.structures.ChatBotGrade;
 import com.gophers.structures.ChatBotPlatformGrade;
 import com.gophers.structures.ChatBotSimulationGrade;
+import com.gophers.structures.ProgramGrade;
 import com.gophers.utilities.AssignmentTestRunner;
 
 public class GradeManager {
@@ -18,10 +19,12 @@ public class GradeManager {
         AssignmentTestRunner assignmentTestRunner = new AssignmentTestRunner();
         List<Result> results = assignmentTestRunner.runAllTest();
         List<Grade> grades = new ArrayList<>();
-        Grade chatBotGeneratorGrade = new ChatBotGeneratorGrade(results.get(0));
-        Grade chatBotGrade = new ChatBotGrade(results.get(1));
-        Grade chatBotPlatformGrade = new ChatBotPlatformGrade(results.get(2));
-        Grade chatBotSimulationGrade = new ChatBotSimulationGrade(results.get(3));
+        Grade programGrade = new ProgramGrade(results.get(0));
+        Grade chatBotGeneratorGrade = new ChatBotGeneratorGrade(results.get(1));
+        Grade chatBotGrade = new ChatBotGrade(results.get(2));
+        Grade chatBotPlatformGrade = new ChatBotPlatformGrade(results.get(3));
+        Grade chatBotSimulationGrade = new ChatBotSimulationGrade(results.get(4));
+        grades.add(programGrade);
         grades.add(chatBotGeneratorGrade);
         grades.add(chatBotGrade);
         grades.add(chatBotPlatformGrade);

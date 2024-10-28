@@ -30,7 +30,6 @@ public class ChatBotSimulationTest {
     @After
     public void tearDown() {
         System.setOut(originalOut);
-        System.out.println(outputStreamCaptor.toString());
     }
 
     // Test for requirement 1

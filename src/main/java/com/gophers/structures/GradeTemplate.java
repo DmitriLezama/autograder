@@ -13,7 +13,7 @@ public abstract class GradeTemplate implements Grade {
     private int marksEarned;
 
     public GradeTemplate(Result result, int totalMarks) {
-        testMarks = new HashMap<String, Integer>();
+        this.testMarks = new HashMap<String, Integer>();
         this.totalMarks = totalMarks;
         this.allocateWeightings();
         this.setMarksEarned(result);
