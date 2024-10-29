@@ -22,8 +22,8 @@ public class ChatBotSimulationGrade extends GradeTemplate {
         /*
          * need better names
          */
-        super.testMarks.put("testIndividualChatBotsAdded", 1);
-        super.testMarks.put("testAtLeastOneChatBotAdded", 1);
+        super.testMarks.put("testAllChatBotModelsPresent", 1);
+        super.testMarks.put("testInitializedPlatformHasMinimumBots", 1);
 
         // Displaying ChatBot statistics - 2 marks
         /*
@@ -36,10 +36,10 @@ public class ChatBotSimulationGrade extends GradeTemplate {
         /*
          * good justneeds better better names
          */
-        super.testMarks.put("testChatBotHasInteractions", 1);
-        super.testMarks.put("testMessageFormatInInteractions", 1);
-        super.testMarks.put("testIncorrectBotNumberHandling", 1);
-        super.testMarks.put("testExactNumberOfInteractions", 1);
+        super.testMarks.put("testAtLeastOneInteractionOccurred", 1);
+        super.testMarks.put("testMessageNumberFormatInBotResponses", 1);
+        super.testMarks.put("testInvalidBotNumberResponsePresent", 1);
+        super.testMarks.put("testSimulationPerformsExactlyFifteenInteractions", 1);
 
         // Final summary statistics - 2 marks
         super.testMarks.put("testFinalSummaryNotEmpty", 1);

@@ -66,7 +66,7 @@ public class ChatBotSimulationTest {
     // Test for requirement 3: Adding ChatBots
 
     @Test
-    public void testIndividualChatBotsAdded() {
+    public void testAllChatBotModelsPresent() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
@@ -79,7 +79,7 @@ public class ChatBotSimulationTest {
     }
 
     @Test
-    public void testAtLeastOneChatBotAdded() {
+    public void testInitializedPlatformHasMinimumBots() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
@@ -108,7 +108,7 @@ public class ChatBotSimulationTest {
     // Test for requirement 5: Interactions with ChatBots
     // Check if any interactions occurred
     @Test
-    public void testChatBotHasInteractions() {
+    public void testAtLeastOneInteractionOccurred() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
@@ -123,7 +123,7 @@ public class ChatBotSimulationTest {
 
     // Check for presence of "(Message#" format indicating message interaction
     @Test
-    public void testMessageFormatInInteractions() {
+    public void testMessageNumberFormatInBotResponses() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
@@ -133,7 +133,7 @@ public class ChatBotSimulationTest {
 
     // Check for handling of incorrect bot number messages
     @Test
-    public void testIncorrectBotNumberHandling() {
+    public void testInvalidBotNumberResponsePresent() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
@@ -143,7 +143,7 @@ public class ChatBotSimulationTest {
 
     // Check for exactly 15 interactions
     @Test
-    public void testExactNumberOfInteractions() {
+    public void testSimulationPerformsExactlyFifteenInteractions() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
