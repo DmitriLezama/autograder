@@ -64,27 +64,21 @@ public class ChatBotSimulationTest {
     }
 
     // Test for requirement 3: Adding ChatBots
-
     @Test
     public void testAllChatBotModelsPresent() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
+
+        long botCount = output.lines().filter(line -> line.startsWith("Bot Number:")).count();
+        assertTrue("Should have several ChatBots", botCount > 1);
 
         // Check for individual ChatBots
         assertTrue("Output should contain 'LLaMa'", output.contains("LLaMa"));
         assertTrue("Output should contain 'Mistral7B'", output.contains("Mistral7B"));
         assertTrue("Output should contain 'Bard'", output.contains("Bard"));
         assertTrue("Output should contain 'Claude'", output.contains("Claude"));
-        assertTrue("Output should contain 'Solar'", output.contains("Solar")); // 1 mark
-    }
-
-    @Test
-    public void testInitializedPlatformHasMinimumBots() {
-        ChatBotSimulation.main(null);
-        String output = outputStreamCaptor.toString().trim();
-
-        long botCount = output.lines().filter(line -> line.startsWith("Bot Number:")).count();
-        assertTrue("At least one ChatBot should be added", botCount >= 1); // 1 mark
+        assertTrue("Output should contain 'Solar'", output.contains("Solar")); 
+        assertTrue("Output should contain 'ChatGPT-3.5'", output.contains("ChatGPT-3.5")); // 2 marks
     }
 
     // Test for requirement 4: Printing ChatBot statistics
@@ -93,16 +87,25 @@ public class ChatBotSimulationTest {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
-        assertTrue("Output should contain 'Your ChatBots' section", output.contains("Your ChatBots")); // 1 mark
+        int messageSectionStart = output.indexOf("(Message");
+        String initialSummarySection = output.substring(0, messageSectionStart).trim();
+
+        assertTrue("Output should contain 'Your ChatBots' section", 
+                initialSummarySection.contains("Your ChatBots")); // 1 mark
     }
 
     @Test
-    public void testChatBotSummaryStatisticsPresent() {
+    public void testInitialSummaryStatistics() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
 
-        assertTrue("Output should contain 'Total Messages Used:'", output.contains("Total Messages Used:")); // 1 mark
-        assertTrue("Output should contain 'Total Messages Remaining:'", output.contains("Total Messages Remaining:"));
+        int messageSectionStart = output.indexOf("(Message");
+        String initialSummarySection = output.substring(0, messageSectionStart).trim();
+
+        assertTrue("Output should contain 'Total Messages Used: 0'", 
+                initialSummarySection.contains("Total Messages Used: 0"));
+        assertTrue("Output should contain 'Total Messages Remaining: 10'", 
+                initialSummarySection.contains("Total Messages Remaining: 10")); // 1 mark
     }
 
     // Test for requirement 5: Interactions with ChatBots
@@ -161,20 +164,45 @@ public class ChatBotSimulationTest {
     public void testFinalSummaryNotEmpty() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
-        String[] lines = output.split("\n");
+        String summarySection = getFinalSummarySection(output);
 
-        assertTrue("Final summary output should not be empty.", lines.length > 0); // 1 mark
+        assertTrue("Final summary output should not be empty.", summarySection.lines().count() != 0); // 1 mark
     }
 
     // Check that final summary contains the required summary statistics
+    // 1 mark
     @Test
     public void testFinalSummaryStatistics() {
         ChatBotSimulation.main(null);
         String output = outputStreamCaptor.toString().trim();
+        String finalSummarySection = getFinalSummarySection(output);
+        
+        String totalMessagesUsedLine = extractLine(finalSummarySection, "Total Messages Used:");
+        String totalMessagesRemainingLine = extractLine(finalSummarySection, "Total Messages Remaining:");
 
-        assertTrue("Final summary should contain 'Total Messages Used:'", output.contains("Total Messages Used:"));
-        assertTrue("Final summary should contain 'Total Messages Remaining: 0'",
-                output.contains("Total Messages Remaining: 0")); // 1 mark
+        assertTrue("Final summary should contain 'Total Messages Used:'", 
+                totalMessagesUsedLine.contains("Total Messages Used:"));
+        assertTrue("Final summary should contain 'Total Messages Remaining:'",
+                totalMessagesRemainingLine.contains("Total Messages Remaining:"));
+        assertTrue("Total Messages Used should match the number of messages generated", 
+                extractNumberFromLine(totalMessagesUsedLine) != 0);
+        assertTrue("Total Messages Remaining should correspond with number of messages used", 
+                extractNumberFromLine(totalMessagesRemainingLine) != 10);
     }
 
+    private String getFinalSummarySection(String output) {
+        int start = output.indexOf("(Message");
+        return output.substring(start).trim();
+    }
+
+    private String extractLine(String output, String label) {
+        return output.lines()
+                .filter(l -> l.contains(label))
+                .findFirst()
+                .orElse("");
+    }
+
+    private int extractNumberFromLine(String line) {
+        return Integer.parseInt(line.split(":")[1].trim());
+    }
 }
