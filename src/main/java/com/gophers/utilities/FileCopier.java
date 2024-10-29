@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public final class FileCopier {
-    private static final String TARGET_PACKAGE_HEADER = "package com.gophers.data;\n";
+    private static final String TARGET_PACKAGE_HEADER = "package com.gophers.data;\n\n";
     private static final String TARGET_DIRECTORY = "src/main/java/com/gophers/data";
 
     public static void copyJavaFiles(String submissionDirectory) {
