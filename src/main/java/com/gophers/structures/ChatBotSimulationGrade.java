@@ -12,10 +12,24 @@ public class ChatBotSimulationGrade extends GradeTemplate {
     protected void allocateWeightings() {
         super.testMarks.put("testMainMethodStartsWithHelloWorld", 1);
         super.testMarks.put("testChatBotPlatformInitialization", 1);
-        super.testMarks.put("testAllChatBotModelsPresent", 1);
-        super.testMarks.put("testInitializedPlatformHasMinimumBots", 1);
+
+        // Adding ChatBots - 2 marks
+        /*
+         * need better names
+         */
+        super.testMarks.put("testAllChatBotModelsPresent", 2);
+
+        // Displaying ChatBot statistics - 2 marks
+        /*
+         * Need more rigour
+         */
         super.testMarks.put("testChatBotsSectionPresent", 1);
-        super.testMarks.put("testChatBotSummaryStatisticsPresent", 1);
+        super.testMarks.put("testInitialSummaryStatistics", 1);
+
+        // Interacting with ChatBots - 4 marks
+        /*
+         * good justneeds better better names
+         */
         super.testMarks.put("testAtLeastOneInteractionOccurred", 1);
         super.testMarks.put("testMessageNumberFormatInBotResponses", 1);
         super.testMarks.put("testInvalidBotNumberResponsePresent", 1);
