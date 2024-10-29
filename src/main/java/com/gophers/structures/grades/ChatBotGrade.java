@@ -68,55 +68,89 @@ public class ChatBotGrade extends GradeTemplate {
 
     @Override
     protected void allocateFeedback() {
-        // Field Tests Feedback
-        super.testFeedback.put("testChatBotNameField", new TestFeedback("Ensure the ChatBot name field exists and is private.", 70));
-        super.testFeedback.put("testNumResponsesGeneratedField", new TestFeedback("The numResponsesGenerated field must be private and of type int.", 70));
-        super.testFeedback.put("testMessageLimitField_FieldExists", new TestFeedback("The messageLimit field should exist in the ChatBot class.", 60));
-        super.testFeedback.put("testMessageLimitField_FieldisStaticandPrivate", new TestFeedback("The messageLimit field should be static and private.", 60));
-        super.testFeedback.put("testMessageLimitField_FieldisIntegerandEquals10", new TestFeedback("Ensure messageLimit is an integer with a value of 10.", 80));
-        super.testFeedback.put("testMessageNumberField_FieldExists", new TestFeedback("The messageNumber field should exist.", 60));
-        super.testFeedback.put("testMessageNumberField_FieldisStaticandZero", new TestFeedback("Ensure messageNumber is static and initialized to zero.", 80));
+        // Field Existence Feedback (96-100)
+        super.testFeedback.put("testChatBot_Compiles", new TestFeedback("ChatBot class should compile.", 100));
+        super.testFeedback.put("testChatBotNameField",
+                new TestFeedback("chatBotName field should exist and be a private string.", 99));
+        super.testFeedback.put("testNumResponsesGeneratedField",
+                new TestFeedback("numResponsesGenerated field should exist,be private and of type int.", 98));
+        super.testFeedback.put("testMessageLimitField_FieldExists",
+                new TestFeedback("messageLimit field should exist in the ChatBot class.", 97));
+        super.testFeedback.put("testMessageNumberField_FieldExists",
+                new TestFeedback("messageNumber field should exist in the ChatBot class.", 96));
 
-        // Constructor Tests Feedback
-        super.testFeedback.put("testDefaultConstructor_ObjectNotNull", new TestFeedback("Default constructor should create a non-null ChatBot object.", 80));
-        super.testFeedback.put("testDefaultConstructor_CorrectChatBotName", new TestFeedback("Default ChatBot name should be 'ChatGPT-3.5' if no code is provided.", 70));
-        super.testFeedback.put("testDefaultConstructor_InitialResponseCount", new TestFeedback("Default constructor should set initial response count to 0.", 70));
+        // Field and Method Properties Feedback (89-95)
+        super.testFeedback.put("testMessageLimitField_FieldisStaticandPrivate",
+                new TestFeedback("messageLimit field should be static and private.", 95));
+        super.testFeedback.put("testGetTotalNumResponsesGenerated_IsStatic",
+                new TestFeedback("getTotalNumResponsesGenerated should be static.", 94));
+        super.testFeedback.put("testGetTotalNumMessagesRemaining_IsStatic",
+                new TestFeedback("getTotalNumMessagesRemaining should be static.", 93));
+        super.testFeedback.put("testLimitReached_IsStatic", new TestFeedback("limitReached should be static.", 92));
+        super.testFeedback.put("testGenerateResponse_FieldisPrivate",
+                new TestFeedback("generateResponse should be private.", 91));
+        super.testFeedback.put("testMessageLimitField_FieldisIntegerandEquals10",
+                new TestFeedback("messageLimit should be an integer with a value of 10.", 90));
+        super.testFeedback.put("testMessageNumberField_FieldisStaticandZero",
+                new TestFeedback("messageNumber should be static and initialized to zero.", 89));
 
-        // Overloaded Constructor Tests Feedback
-        super.testFeedback.put("testOverloadedConstructor_ObjectisNotNull", new TestFeedback("Overloaded constructor should create a valid ChatBot instance.", 80));
-        super.testFeedback.put("testOverloadedConstructor_ProducesCorrectBot", new TestFeedback("Overloaded constructor should set correct ChatBot name based on LLM code.", 80));
-        super.testFeedback.put("testOverloadedConstructor_InvalidLLMCode", new TestFeedback("Invalid LLM codes should set the name to 'ChatGPT-3.5'.", 70));
+        // Constructor Feedback (83-88)
+        super.testFeedback.put("testDefaultConstructor_ObjectNotNull",
+                new TestFeedback("Default ChatBot constructor should create a non-null ChatBot object.", 88));
+        super.testFeedback.put("testOverloadedConstructor_ObjectisNotNull",
+                new TestFeedback("Overloaded constructor should create a valid ChatBot instance.", 87));
+        super.testFeedback.put("testOverloadedConstructor_ProducesCorrectBot",
+                new TestFeedback("Overloaded constructor should set correct ChatBot name based on LLM code.", 86));
+        super.testFeedback.put("testOverloadedConstructor_InvalidLLMCode",
+                new TestFeedback("Invalid LLM codes should set the name to 'ChatGPT-3.5'.", 85));
+        super.testFeedback.put("testDefaultConstructor_CorrectChatBotName",
+                new TestFeedback("Default ChatBot name should be 'ChatGPT-3.5' if no code is provided.", 84));
+        super.testFeedback.put("testDefaultConstructor_InitialResponseCount",
+                new TestFeedback("Default constructor should set initial response count to 0.", 83));
 
-        // Method Tests Feedback
-        super.testFeedback.put("testGetChatBotName", new TestFeedback("getChatBotName should return the correct bot name for each instance.", 70));
-        super.testFeedback.put("testNumResponsesGenerated", new TestFeedback("Ensure numResponsesGenerated increases with each prompt.", 80));
-        super.testFeedback.put("testGetTotalNumResponsesGenerated_IsStatic", new TestFeedback("getTotalNumResponsesGenerated should be static.", 60));
-        super.testFeedback.put("testGetTotalNumResponsesGenerated_ReturnsTotalMessages", new TestFeedback("Ensure total number of responses includes responses from all ChatBot instances.", 70));
-        super.testFeedback.put("testGetTotalNumMessagesRemaining_IsStatic", new TestFeedback("getTotalNumMessagesRemaining should be static.", 60));
-        super.testFeedback.put("testGetTotalNumMessagesRemaining_ReturnsCorrectValue", new TestFeedback("Ensure remaining messages count reflects current usage.", 70));
-        super.testFeedback.put("testGetTotalNumMessagesRemaining_ReachesZero", new TestFeedback("Remaining messages should eventually reach zero if limit is reached.", 70));
+        // Basic Method Behavior Feedback (75-82)
+        super.testFeedback.put("testGetChatBotName",
+                new TestFeedback("getChatBotName should return the correct bot name for each instance.", 82));
+        super.testFeedback.put("testNumResponsesGenerated",
+                new TestFeedback("numResponsesGenerated should increase with each prompt.", 81));
+        super.testFeedback.put("testPrompt1_ResponseWhenPrompted",
+                new TestFeedback("prompt should produce a response that includes 'Response from'.", 80));
+        super.testFeedback.put("testGenerateResponse_ReturnsString",
+                new TestFeedback("generateResponse should return a String.", 79));
+        super.testFeedback.put("testToString_BotNameHeaderExists",
+                new TestFeedback("toString should include 'ChatBot Name' header.", 78));
+        super.testFeedback.put("testToString_NumMessagesUsedHeaderExists",
+                new TestFeedback("toString should include 'Number Messages Used' header.", 77));
+        super.testFeedback.put("testLimitReached_InitiallyFalse",
+                new TestFeedback("limitReached should return false initially.", 76));
+        super.testFeedback.put("testLimitReached_TrueWhenLimitReached",
+                new TestFeedback("limitReached should return true when message limit is hit.", 75));
 
-        super.testFeedback.put("testLimitReached_IsStatic", new TestFeedback("limitReached should be a static method.", 60));
-        super.testFeedback.put("testLimitReached_InitiallyFalse", new TestFeedback("Ensure limitReached returns false initially.", 60));
-        super.testFeedback.put("testLimitReached_TrueWhenLimitReached", new TestFeedback("limitReached should return true when message limit is hit.", 80));
+        // Complex Method Behavior Feedback (70-74)
+        super.testFeedback.put("testGenerateResponse_IncrementsCounters",
+                new TestFeedback("generateResponse should increment both instance and total response counters.", 74));
+        super.testFeedback.put("testGetTotalNumResponsesGenerated_ReturnsTotalMessages", new TestFeedback(
+                "Total number of responses should include responses from all ChatBot instances.", 73));
+        super.testFeedback.put("testGetTotalNumMessagesRemaining_ReturnsCorrectValue",
+                new TestFeedback("Remaining messages count should reflect current usage.", 72));
+        super.testFeedback.put("testGetTotalNumMessagesRemaining_ReachesZero",
+                new TestFeedback("Remaining messages should eventually reach zero if limit is reached.", 71));
+        super.testFeedback.put("testGenerateResponse_ReturnsCorrectStringFormat",
+                new TestFeedback("Response format should match 'Response from [botName]: Message #[number]'", 70));
 
-        // GenerateResponse Tests Feedback
-        super.testFeedback.put("testGenerateResponse_FieldisPrivate", new TestFeedback("generateResponse should be a private method.", 60));
-        super.testFeedback.put("testGenerateResponse_IncrementsCounters", new TestFeedback("generateResponse should increment both instance and total response counters.", 80));
-        super.testFeedback.put("testGenerateResponse_ReturnsCorrectStringFormat", new TestFeedback("Response format should include message number and bot name.", 80));
-        super.testFeedback.put("testGenerateResponse_ReturnsString", new TestFeedback("generateResponse should return a String.", 70));
-        super.testFeedback.put("testGenerateResponse_ContainsUniqueMessageNumber", new TestFeedback("Each response should contain a unique message number.", 80));
+        // Output Format Feedback (65-69)
+        super.testFeedback.put("testGenerateResponse_ContainsUniqueMessageNumber",
+                new TestFeedback("Each response should contain a unique message number.", 69));
+        super.testFeedback.put("testToString_CorrectBotName",
+                new TestFeedback("toString should display the correct bot name.", 68));
+        super.testFeedback.put("testToString_CorrectNumResponsesGenerated",
+                new TestFeedback("toString should show the correct number of responses generated.", 67));
+        super.testFeedback.put("testPrompt2_ResponseCountersAfterPrompt",
+                new TestFeedback("Response counters should update correctly after each prompt.", 66));
+        super.testFeedback.put("testPrompt3_LimitReach",
+                new TestFeedback("System should handle reaching message limit gracefully.", 65));
+        super.testFeedback.put("testPrompt4_TotalResponseCounterAndRemainingMessages",
+                new TestFeedback("Total response counter and remaining messages should be consistent.", 64));
 
-        // ToString Tests Feedback
-        super.testFeedback.put("testToString_BotNameHeaderExists", new TestFeedback("toString should include 'ChatBot Name' header.", 60));
-        super.testFeedback.put("testToString_CorrectBotName", new TestFeedback("Ensure toString displays the correct bot name.", 70));
-        super.testFeedback.put("testToString_NumMessagesUsedHeaderExists", new TestFeedback("toString should include 'Number Messages Used' header.", 60));
-        super.testFeedback.put("testToString_CorrectNumResponsesGenerated", new TestFeedback("Ensure toString shows the correct number of responses generated.", 70));
-
-        // Prompt Tests Feedback
-        super.testFeedback.put("testPrompt1_ResponseWhenPrompted", new TestFeedback("prompt should produce a response that includes 'Response from'.", 70));
-        super.testFeedback.put("testPrompt2_ResponseCountersAfterPrompt", new TestFeedback("Each prompt should increment the response counter.", 80));
-        super.testFeedback.put("testPrompt3_LimitReach", new TestFeedback("After reaching message limit, prompt should return a limit-reached message.", 80));
-        super.testFeedback.put("testPrompt4_TotalResponseCounterAndRemainingMessages", new TestFeedback("Total responses and remaining messages should be updated correctly after each prompt.", 80));
     }
 }

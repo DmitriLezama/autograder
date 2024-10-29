@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -31,6 +32,16 @@ public class ChatBotTest {
         messageNumberField.set(null, 0);
         defaultBot = new ChatBot();
         bardBot = new ChatBot(3);
+    }
+
+    @Test
+    public void testChatBot_Compiles() {
+        try {
+            Class.forName("com.gophers.data.ChatBot");
+            assertTrue(true);
+        } catch (ClassNotFoundException e) {
+            fail("ChatBot class does not compile");
+        }
     }
 
     @Test
