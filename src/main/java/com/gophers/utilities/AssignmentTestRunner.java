@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import com.gophers.services.ChatBotTest;
+import com.gophers.services.ProgramTest;
 import com.gophers.services.ChatBotGeneratorTest;
 import com.gophers.services.ChatBotPlatformTest;
 import com.gophers.services.ChatBotSimulationTest;
@@ -13,7 +14,8 @@ public class AssignmentTestRunner {
     private final List<Class<?>> testClasses;
 
     public AssignmentTestRunner() {
-        testClasses = new ArrayList<Class<?>>();
+        testClasses = new ArrayList<>();
+        testClasses.add(ProgramTest.class);
         testClasses.add(ChatBotGeneratorTest.class);
         testClasses.add(ChatBotTest.class);
         testClasses.add(ChatBotPlatformTest.class);

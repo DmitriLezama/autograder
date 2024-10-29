@@ -10,7 +10,7 @@ import com.itextpdf.text.pdf.PdfStamper;
 
 public class PDFGenerator implements PDF {
     public final String TEMPLATE_PATH = "src/main/resources/Template.pdf";
-    public final String OUTPUT_PATH = "src/main/resources/Template.pdf";
+    public final String OUTPUT_PATH = "src/main/resources/Test.pdf";
 
     public void generate(AssignmentDetails assignmentDetails) {
         try {

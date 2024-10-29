@@ -2,6 +2,8 @@ package com.gophers.structures.grades;
 
 import org.junit.runner.Result;
 
+import com.gophers.structures.TestFeedback;
+
 public class ChatBotPlatformGrade extends GradeTemplate {
     private static final int totalMarks = 20;
 
@@ -12,37 +14,38 @@ public class ChatBotPlatformGrade extends GradeTemplate {
     protected void allocateWeightings() {
         // ArrayList<ChatBot> - 2 marks
         /*
-         * This test should test that is a a list/array list of ChatBot for one mark
-         * And 1 mark for private
+         * 1 mark for confirming that the bots collection is an ArrayList of ChatBot.
+         * 1 mark for confirming that the bots collection is private.
          */
-        super.testMarks.put("testBotsCollection", 1);
-        super.testMarks.put("testBotsCollectionEmptyInitially", 1);
+        super.testMarks.put("testBotsCollectionInitialized", 1);
+        super.testMarks.put("testBotsCollectionIsPrivate", 1);
 
         // Constructor - 2 marks
         /*
-         * Should be 1 mark test the constructor and tht it works
-         * Another mark test that the ArrayList is correctly initalized such as typeof
-         * elements
+         * 1 mark for testing that the constructor initializes ChatBotPlatform
+         * correctly.
+         * 1 mark for testing that the ArrayList of ChatBots is properly initialized.
          */
         super.testMarks.put("testChatBotPlatformConstructor", 1);
         super.testMarks.put("testChatBotPlatformBotsCollectionInitialized", 1);
 
         // addChatBot(int LLMcode) - 5 marks
         /*
-         * Test limit reached for 1 mark
-         * Testing adding chatbots properly before limit reached for 2marks
-         * Test error handling at limit reached for 2marks
+         * 1 mark for testing that adding chatbots respects the limit.
+         * 2 marks for correctly adding chatbots before reaching the limit.
+         * 2 marks for error handling when the limit is reached.
          */
-        super.testMarks.put("testAddFirstChatBot", 1);
-        super.testMarks.put("testAddSecondChatBot", 1);
-        // super.testMarks.put("testAddThirdChatBot", 1);
-        super.testMarks.put("testChatBotsCountAfterAdding", 1);
-        super.testMarks.put("testLimitReachedAfterAddingChatBots", 1);
+        super.testMarks.put("testAddChatBotAddsFirstBot", 1);
+        super.testMarks.put("testAddChatBotAddsSecondBot", 1);
+        super.testMarks.put("testAddChatBotIncrememtsBotCount", 1);
+        super.testMarks.put("testAddChatBotReachesLimit", 1);
         super.testMarks.put("testAddChatBotAfterLimitReached", 1);
 
         // getChatBotList() - 6 marks
         /*
-         * This good
+         * 1 mark each for containing bot numbers, bot names, and message counts.
+         * 1 mark for verifying the total messages used.
+         * 2 marks for verifying the remaining messages.
          */
         super.testMarks.put("testGetChatBotListContainsBotNumbers", 1);
         super.testMarks.put("testGetChatBotListContainsBotNames", 1);
@@ -52,14 +55,24 @@ public class ChatBotPlatformGrade extends GradeTemplate {
 
         // interactWithBot() - 5 marks
         /*
-         * These test are good but you are comparing the Strings too strictly
-         * allow more lenicent by testing pieces of the string rather than the full
-         * string
+         * Tests should be less strict on full string matching and instead test for key
+         * parts.
+         * 1 mark for valid interaction.
+         * 1 mark for invalid negative index handling.
+         * 1 mark for out-of-range index handling.
+         * 1 mark for index equal to size handling.
+         * 1 mark for interaction after the limit is reached.
          */
         super.testMarks.put("testInteractWithValidBot", 1);
         super.testMarks.put("testInteractWithBotInvalidNegativeIndex", 1);
-        super.testMarks.put("testInteractWithBotInvalidOutOfRangeIndex(", 1);
+        super.testMarks.put("testInteractWithBotInvalidOutOfRangeIndex", 1);
         super.testMarks.put("testInteractWithBotInvalidIndexEqualToSize", 1);
         super.testMarks.put("testInteractWithBotAfterLimitReached", 1);
+    }
+
+    @Override
+    protected void allocateFeedback() {
+        super.testFeedback.put("testChatBotPlatformConstructor",
+                new TestFeedback("ChatBotPlatform construct is incorrect", 85));
     }
 }
