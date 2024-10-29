@@ -3,10 +3,6 @@ package com.gophers.structures;
 import org.junit.runner.Result;
 
 public class ChatBotGrade extends GradeTemplate {
-    /*
-     * Has 1 too many test for the constructor
-     * Add a limit reached test to ensure its static
-     */
     private static final int totalMarks = 36;
 
     public ChatBotGrade(Result result) {
@@ -66,5 +62,10 @@ public class ChatBotGrade extends GradeTemplate {
         super.testMarks.put("testPrompt3_LimitReach", 1);
         super.testMarks.put("testPrompt4_TotalResponseCounterAndRemainingMessages", 1);
 
+    }
+
+    @Override
+    protected void allocateFeedback() {
+        super.testFeedback.put("testChatBotNameField", new TestFeedback("ChatBot name field does not exist", 70));
     }
 }

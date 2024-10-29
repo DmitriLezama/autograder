@@ -67,4 +67,10 @@ public class ChatBotPlatformGrade extends GradeTemplate {
         super.testMarks.put("testInteractWithBotInvalidIndexEqualToSize", 1);
         super.testMarks.put("testInteractWithBotAfterLimitReached", 1);
     }
+
+    @Override
+    protected void allocateFeedback() {
+        super.testFeedback.put("testChatBotPlatformConstructor",
+                new TestFeedback("ChatBotPlatform construct is incorrect", 85));
+    }
 }
