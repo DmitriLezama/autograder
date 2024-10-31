@@ -1,23 +1,26 @@
 package com.gophers.data;
 
+
+
 public class ChatBot {
+    // test
     private final static int messageLimit = 10;
     private static int messageNumber = 0;
-    private String chatBotName;
+    private String name;
     private int numResponsesGenerated;
 
     public ChatBot() {
-        this.chatBotName = ChatBotGenerator.generateChatBotLLM(0);
+        this.name = ChatBotGenerator.generateChatBotLLM(0);
         this.numResponsesGenerated = 0;
     }
 
     public ChatBot(int LLMCode) {
-        this.chatBotName = ChatBotGenerator.generateChatBotLLM(LLMCode);
+        this.name = ChatBotGenerator.generateChatBotLLM(LLMCode);
         this.numResponsesGenerated = 0;
     }
 
     public String getChatBotName() {
-        return this.chatBotName;
+        return this.name;
     }
 
     public int getNumResponsesGenerated() {
