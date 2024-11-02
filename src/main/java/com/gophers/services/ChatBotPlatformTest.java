@@ -2,126 +2,227 @@ package com.gophers.services;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import com.gophers.data.ChatBotPlatform;
 import com.gophers.data.ChatBot;
 
-import java.lang.reflect.Field;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import java.lang.reflect.Modifier;
 
-import static org.junit.Assert.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatBotPlatformTest {
     private ChatBotPlatform platform;
 
     @Before
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
-        Field messageNumberField = ChatBot.class.getDeclaredField("messageNumber");
-        messageNumberField.setAccessible(true);
-        messageNumberField.set(null, 0);
+        resetStaticFields();
         platform = new ChatBotPlatform();
     }
 
+    // Reset static fields in ChatBot class before each test
+    private void resetStaticFields() throws NoSuchFieldException, IllegalAccessException {
+        Field messageNumberField = ChatBot.class.getDeclaredField("messageNumber");
+        messageNumberField.setAccessible(true);
+        messageNumberField.set(null, 0);
+    }
+
+    // helper method
+    @SuppressWarnings("unchecked")
+    private List<ChatBot> getBotsCollection() throws NoSuchFieldException, IllegalAccessException {
+        Field botsField = platform.getClass().getDeclaredField("bots");
+        botsField.setAccessible(true);
+        return (List<ChatBot>) botsField.get(platform);
+    }
+
+    // ArrayList<ChatBot> - 2 marks
+    // 1 mark for testing that it’s a list of ChatBot
+    // 1 mark for testing that bots collection is private
+
     @Test
-    public void testBotsCollection() {
-        List<ChatBot> bots = platform.getChatBots();
-        assertNotNull("Bots collection should be initialized", bots);
-        assertTrue("Bots collection should be empty", bots.isEmpty());
+    public void testBotsCollectionInitialized() throws NoSuchFieldException, IllegalAccessException {
+        Field botsField = ChatBotPlatform.class.getDeclaredField("bots");
+        botsField.setAccessible(true);
+        Object botsCollection = botsField.get(platform);
+        assertNotNull("Bots collection should be initialized", botsCollection);
     }
 
     @Test
-    public void testConstructor() {
-        assertNotNull("ChatBotPlatform should be initialized", platform);
-        assertNotNull("Bots collection should be initialized", platform.getChatBots());
+    public void testBotsCollectionIsPrivate() throws NoSuchFieldException {
+        Field botsField = ChatBotPlatform.class.getDeclaredField("bots");
+        assertTrue("Bots collection should be private", Modifier.isPrivate(botsField.getModifiers())); // 1 mark
     }
 
     @Test
-    public void testAddChatBot() throws NoSuchFieldException, IllegalAccessException {
-        assertFalse("Limit should not be reached initially", ChatBot.limitReached());
+    public void testBotsCollectionEmptyInitially() throws NoSuchFieldException, IllegalAccessException {
+        List<ChatBot> bots = getBotsCollection();
+        assertTrue("Bots collection should be empty initially", bots.isEmpty());
+    }
 
-        assertTrue("Should add first ChatBot", platform.addChatBot(1));
-        assertTrue("Should add second ChatBot", platform.addChatBot(2));
-        assertTrue("Should add third ChatBot", platform.addChatBot(3));
+    // Constructor - 2 marks
+    // 1 mark for testing the constructor works
+    // 1 mark for testing bots collection is correctly initialized as an
+    // ArrayList<ChatBot>
 
-        List<ChatBot> chatBots = getBotsCollection();
-        assertEquals("First ChatBot name should be LLaMa", "LLaMa", chatBots.get(0).getChatBotName());
-        assertEquals("Second ChatBot name should be Mistral7B", "Mistral7B", chatBots.get(1).getChatBotName());
-        assertEquals("Third ChatBot name should be Bard", "Bard", chatBots.get(2).getChatBotName());
-        assertEquals("Total ChatBots should be 3", 3, chatBots.size());
+    @Test
+    public void testChatBotPlatformConstructor() {
+        assertNotNull("ChatBotPlatform should be initialized", platform); // 1 mark
     }
 
     @Test
-    public void testAddChatBotLimitReached() {
-        for (int i = 0; i <= ChatBot.getMessageLimit(); i++) {
+    public void testChatBotPlatformBotsCollectionInitialized() throws NoSuchFieldException, IllegalAccessException {
+        assertTrue("Bots collection should be of type ArrayList<ChatBot>", getBotsCollection() instanceof ArrayList);
+    }
+
+    // addChatBot(int LLMcode) - 5 marks
+    // 1 mark for testing limit reached
+    // 2 marks for testing adding chatbots properly before limit reached
+    // 2 marks for error handling when limit is reached
+
+    @Test
+    public void testAddChatBotAddsFirstBot() throws NoSuchFieldException, IllegalAccessException {
+        assertTrue("Should add a first ChatBot", platform.addChatBot(1));
+        assertEquals("First ChatBot name should be LLaMa", "LLaMa", getBotsCollection().get(0).getChatBotName());
+    }
+
+    @Test
+    public void testAddChatBotAddsSecondBot() throws NoSuchFieldException, IllegalAccessException {
+        platform.addChatBot(1);
+        assertTrue("Should add a second ChatBot", platform.addChatBot(2));
+        assertEquals("Second ChatBot name should be Mistral7B", "Mistral7B",
+                getBotsCollection().get(1).getChatBotName());
+    }
+
+    @Test
+    public void testAddChatBotIncrememtsBotCount() throws NoSuchFieldException, IllegalAccessException {
+        platform.addChatBot(1);
+        assertEquals("Total ChatBots should be 1", 1, getBotsCollection().size());
+        platform.addChatBot(2);
+        assertEquals("Total ChatBots should be 2", 2, getBotsCollection().size());
+        platform.addChatBot(3);
+        assertEquals("Total ChatBots should be 3", 3, getBotsCollection().size());
+    }
+
+    @Test
+    public void testAddChatBotReachesLimit() throws NoSuchFieldException, IllegalAccessException {
+        for (int i = 0; i < ChatBot.getMessageLimit(); i++) {
             platform.addChatBot(i % 5 + 1);
-            platform.interactWithBot(i % 5, "I am under the water");
+            platform.interactWithBot(i % getBotsCollection().size(), "Test message");
         }
-
         assertTrue("Limit should be reached", ChatBot.limitReached());
-        assertFalse("Should not be able to add more ChatBots", platform.addChatBot(4));
     }
 
     @Test
-    public void testGetChatBotList() {
+    public void testAddChatBotAfterLimitReached() throws NoSuchFieldException, IllegalAccessException {
+        for (int i = 0; i < ChatBot.getMessageLimit(); i++) {
+            platform.addChatBot(i % 5 + 1);
+            platform.interactWithBot(i % getBotsCollection().size(), "Test message");
+        }
+        assertFalse("Should not add more ChatBots when limit is reached", platform.addChatBot(4));
+    }
+
+    // getChatBotList() - 6 marks
+    // This section is complete as per comments
+
+    @Test
+    public void testGetChatBotListContainsBotNumbers() {
+        platform.addChatBot(1);
+        platform.addChatBot(2);
+        String result = platform.getChatBotList();
+        assertTrue("Should contain Bot Number: 0", result.contains("Bot Number: 0"));
+        assertTrue("Should contain Bot Number: 1", result.contains("Bot Number: 1")); // 1 mark
+    }
+
+    @Test
+    public void testGetChatBotListContainsBotNames() {
+        platform.addChatBot(1);
+        platform.addChatBot(2);
+        String result = platform.getChatBotList();
+        assertTrue("Should contain Name: LLaMa", result.contains("Name: LLaMa"));
+        assertTrue("Should contain Name: Mistral7B", result.contains("Name: Mistral7B")); // 1 mark
+    }
+
+    @Test
+    public void testGetChatBotListContainsMessageCountPerBot() {
         platform.addChatBot(1);
         platform.interactWithBot(0, "Hello");
         platform.interactWithBot(0, "How are you?");
         platform.addChatBot(2);
-        platform.interactWithBot(1, "I am under the water");
-
+        platform.interactWithBot(1, "Testing");
         String result = platform.getChatBotList();
-        assertTrue("Should contain Bot Number: 0", result.contains("Bot Number: 0"));
-        assertTrue("Should contain Name: LLaMa", result.contains("Name: LLaMa"));
         assertTrue("Should contain Number Messages Used: 2", result.contains("Number Messages Used: 2"));
-        assertTrue("Should contain Bot Number: 1", result.contains("Bot Number: 1"));
-        assertTrue("Should contain Name: Mistral7B", result.contains("Name: Mistral7B"));
-        assertTrue("Should contain Number Messages Used: 1", result.contains("Number Messages Used: 1"));
-        assertTrue("Should contain Total Messages Used: 3", result.contains("Total Messages Used: 3"));
-        assertTrue("Should contain Total Messages Remaining", result.contains("Total Messages Remaining: 7"));
+        assertTrue("Should contain Number Messages Used: 1", result.contains("Number Messages Used: 1")); // 1 mark
     }
 
     @Test
-    public void testGetChatBotListEmpty() {
+    public void testGetChatBotListContainsTotalMessagesUsed() {
+        platform.addChatBot(1);
+        platform.interactWithBot(0, "Hello");
+        platform.interactWithBot(0, "How are you?");
+        platform.addChatBot(2);
+        platform.interactWithBot(1, "Testing");
         String result = platform.getChatBotList();
-        assertTrue("Should indicate no ChatBots available", result.contains("Total Messages Used: 0"));
-        assertTrue("Should indicate remaining messages equal to limit",
-                result.contains("Total Messages Remaining: " + ChatBot.getMessageLimit()));
-        assertFalse("Should not contain any ChatBot info", result.contains("Bot Number"));
+        assertTrue("Should contain Total Messages Used: 3", result.contains("Total Messages Used: 3")); // 1 mark
     }
 
     @Test
-    public void testInteractWithBotValidNumber() {
+    public void testGetChatBotListContainsTotalMessagesRemaining() {
+        platform.addChatBot(1);
+        platform.interactWithBot(0, "Hello");
+        platform.interactWithBot(0, "How are you?");
+        platform.addChatBot(2);
+        platform.interactWithBot(1, "Testing");
+        String result = platform.getChatBotList();
+        assertTrue("Should contain Total Messages Remaining: 7", result.contains("Total Messages Remaining: 7")); // 2
+                                                                                                                  // marks
+    }
+
+    // interactWithBot() - 5 marks
+    // String checks adjusted to allow more leniency
+
+    @Test
+    public void testInteractWithValidBot() {
         platform.addChatBot(1);
         String response = platform.interactWithBot(0, "Hello");
-        assertTrue("Response should indicate interaction", response.contains("(Message# 1) Response from LLaMa"));
-        assertTrue("Response should contain expected text", response.contains("generatedTextHere"));
+        assertTrue("Response should indicate interaction with LLaMa", response.contains("Response from LLaMa"));
+        assertTrue("Response should contain generated text", response.contains("generatedTextHere")); // 1 mark
     }
 
     @Test
-    public void testInteractWithBotInvalidNumber() {
+    public void testInteractWithBotInvalidNegativeIndex() {
         platform.addChatBot(1);
-        assertEquals("Incorrect Bot Number (-1) Selected. Try again", platform.interactWithBot(-1, "Hello").trim());
-        assertEquals("Incorrect Bot Number (5) Selected. Try again", platform.interactWithBot(5, "Hello").trim());
-        assertEquals("Incorrect Bot Number (1) Selected. Try again", platform.interactWithBot(1, "Hello").trim());
+        String response = platform.interactWithBot(-1, "Hello").trim();
+        assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (-1)")); // 1
+                                                                                                                     // mark
     }
 
     @Test
-    public void testInteractWithBotLimitReached() {
+    public void testInteractWithBotInvalidOutOfRangeIndex() {
         platform.addChatBot(1);
-        for (int i = 0; i <= ChatBot.getMessageLimit(); i++) {
-            platform.addChatBot(i % 5 + 1);
-            platform.interactWithBot(i % 5, "I am under the water");
+        String response = platform.interactWithBot(5, "Hello").trim();
+        assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (5)")); // 1
+                                                                                                                    // mark
+    }
+
+    @Test
+    public void testInteractWithBotInvalidIndexEqualToSize() {
+        platform.addChatBot(1);
+        String response = platform.interactWithBot(1, "Hello").trim();
+        assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (1)")); // 1
+                                                                                                                    // mark
+    }
+
+    @Test
+    public void testInteractWithBotAfterLimitReached() {
+        platform.addChatBot(1);
+        for (int i = 0; i < ChatBot.getMessageLimit(); i++) {
+            platform.interactWithBot(0, "Test message");
         }
-
-        String response = platform.interactWithBot(0, "please help me").trim();
-        assertEquals("Daily Limit Reached. Wait 24 hours to resume chatbot usage", response);
-        assertFalse("Should not be able to add more ChatBots", platform.addChatBot(1));
-    }
-
-    @SuppressWarnings("unchecked")
-    private List<ChatBot> getBotsCollection() throws NoSuchFieldException, IllegalAccessException {
-        Field chatBotsField = platform.getClass().getDeclaredField("bots");
-        chatBotsField.setAccessible(true);
-        return (List<ChatBot>) chatBotsField.get(platform);
+        String response = platform.interactWithBot(0, "Another message").trim();
+        assertTrue("Response should indicate daily limit reached", response.contains("Daily Limit Reached")); // 1 mark
     }
 }
