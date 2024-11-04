@@ -1,5 +1,6 @@
 package com.gophers.data;
 
+
 public class ChatBot {
     private final static int messageLimit = 10;
     private static int messageNumber = 0;
