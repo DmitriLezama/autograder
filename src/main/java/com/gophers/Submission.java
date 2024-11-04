@@ -15,7 +15,7 @@ public class Submission {
     public String ChatBotPlatformFile;
     public String ChatBotSimulationFile;
 
-    private URLClassLoader classLoader;
+    private static URLClassLoader classLoader;
 
     private Submission(String submissionDirectory) {
         setDirectory(submissionDirectory);
@@ -25,7 +25,7 @@ public class Submission {
 
         try {
             // Initialize the class loader with the submission directory
-            this.classLoader = URLClassLoader.newInstance(new URL[] { new File(submissionDirectory).toURI().toURL() });
+            classLoader = URLClassLoader.newInstance(new URL[] { new File(submissionDirectory).toURI().toURL() });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,9 +73,9 @@ public class Submission {
         return compilationResult == 0;
     }
 
-    public Class<?> getClass(String className) {
+    public static Class<?> getClass(String className) {
         try {
-            return Class.forName(className, true, this.classLoader);
+            return Class.forName(className, true, classLoader);
         } catch (ClassNotFoundException e) {
             System.err.println("Class " + className + " not found in directory: " + submissionDirectory);
             return null;

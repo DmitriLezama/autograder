@@ -16,7 +16,7 @@ public class GradeManager {
     private final AbstractGradeFactory gradeFactory = new GradeFactory();
 
     public AssignmentDetails getAssignmentDetails(String submissionDirectory) {
-        FileCopier.copyJavaFiles(submissionDirectory);
+        // FileCopier.copyJavaFiles(submissionDirectory);
         List<Result> results = new AssignmentTestRunner().runAllTest();
         AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createGrades(results));
         StudentDetails student = new StudentDetails(submissionDirectory);
