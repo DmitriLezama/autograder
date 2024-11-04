@@ -69,21 +69,17 @@ public class ProgramTest {
     }
 
     private static boolean doesClassCompile(Class<?> clazz) {
-        // JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        // if (compiler == null)
-        // throw new IllegalStateException("Java compiler not available. Ensure a JDK
-        // (not JRE) is used.");
-        // String baseDir = "src/main/java/";
-        // String classPath = baseDir + clazz.getName().replace('.', File.separatorChar)
-        // + ".java";
-        // File sourceFile = new File(classPath);
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        if (compiler == null)
+            throw new IllegalStateException("Java compiler not available. Ensure a JDK (not JRE) is used.");
+        String baseDir = "src/main/java/";
+        String classPath = baseDir + clazz.getName().replace('.', File.separatorChar) + ".java";
+        File sourceFile = new File(classPath);
 
-        // if (!sourceFile.exists())
-        // throw new IllegalArgumentException("Source file not found for class: " +
-        // clazz.getName());
+        if (!sourceFile.exists())
+            throw new IllegalArgumentException("Source file not found for class: " + clazz.getName());
 
-        // int compilationResult = compiler.run(null, null, null, classPath);
-        // return compilationResult == 0;
-        return true;
+        int compilationResult = compiler.run(null, null, null, classPath);
+        return compilationResult == 0;
     }
 }

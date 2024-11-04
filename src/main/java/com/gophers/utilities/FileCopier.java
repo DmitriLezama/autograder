@@ -26,35 +26,30 @@ public final class FileCopier {
     }
 
     private static void prepareTargetDirectory(Path targetDir) throws IOException {
-        if (Files.exists(targetDir)) {
+        if (Files.exists(targetDir))
             clearDirectory(targetDir);
-        } else {
+        else
             Files.createDirectories(targetDir);
-        }
     }
 
     private static void clearDirectory(Path targetDir) throws IOException {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(targetDir)) {
-            for (Path entry : stream) {
+            for (Path entry : stream)
                 Files.delete(entry);
-            }
         }
     }
 
     private static void copyFiles(Path sourceDir, Path targetDir) throws IOException {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(sourceDir, "*.java")) {
-            for (Path sourceFile : stream) {
+            for (Path sourceFile : stream)
                 copyFile(sourceFile, targetDir.resolve(sourceFile.getFileName()));
-            }
         }
     }
 
     private static void copyFile(Path sourcePath, Path targetPath) throws IOException {
-
         try (BufferedReader reader = new BufferedReader(new FileReader(sourcePath.toFile()));
                 BufferedWriter writer = new BufferedWriter(new FileWriter(targetPath.toFile()))) {
             writer.write(TARGET_PACKAGE_HEADER);
-            writer.newLine(); // Add a new line after the package header
             String line;
             while ((line = reader.readLine()) != null) {
                 writer.write(line);

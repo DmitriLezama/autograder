@@ -1,6 +1,5 @@
 package com.gophers.data;
 
-
 import java.util.Random;
 
 public class ChatBotSimulation {
