@@ -9,14 +9,12 @@ import com.gophers.structures.StudentDetails;
 import com.gophers.structures.factory.AbstractGradeFactory;
 import com.gophers.structures.factory.GradeFactory;
 import com.gophers.utilities.AssignmentTestRunner;
-import com.gophers.utilities.FileCopier;
 import com.gophers.utilities.PDFGenerator;
 
 public class GradeManager {
     private final AbstractGradeFactory gradeFactory = new GradeFactory();
 
     public AssignmentDetails getAssignmentDetails(String submissionDirectory) {
-        // FileCopier.copyJavaFiles(submissionDirectory);
         List<Result> results = new AssignmentTestRunner().runAllTest();
         AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createGrades(results));
         StudentDetails student = new StudentDetails(submissionDirectory);

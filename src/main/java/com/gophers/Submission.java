@@ -8,6 +8,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
 public class Submission {
+    private static boolean isCompiled;
     private static Submission instance;
     public static String submissionDirectory;
     public String ChatBotFile;
@@ -21,8 +22,9 @@ public class Submission {
         setDirectory(submissionDirectory);
         if (!compileAllClasses()) {
             System.err.println("Compilation failed for one or more files in " + submissionDirectory);
+            isCompiled = false;
         }
-
+        isCompiled = true;
         try {
             classLoader = URLClassLoader.newInstance(new URL[] { new File(submissionDirectory).toURI().toURL() });
         } catch (Exception e) {
@@ -46,11 +48,15 @@ public class Submission {
         this.ChatBotFile = submissionDirectory + "/ChatBot.java";
         this.ChatBotGeneratorFile = submissionDirectory + "/ChatBotGenerator.java";
         this.ChatBotPlatformFile = submissionDirectory + "/ChatBotPlatform.java";
-        this.ChatBotSimulationFile = submissionDirectory + "/ChatBotSimulation.java";
+        ChatBotSimulationFile = submissionDirectory + "/ChatBotSimulation.java";
     }
 
     public String toString() {
         return "Submission Directory: " + submissionDirectory + "\n";
+    }
+
+    public static boolean isCompiled() {
+        return isCompiled;
     }
 
     private boolean compileAllClasses() {
