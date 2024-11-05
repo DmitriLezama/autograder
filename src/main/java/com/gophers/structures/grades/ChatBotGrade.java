@@ -67,53 +67,53 @@ public class ChatBotGrade extends GradeTemplate {
 
         @Override
         protected void allocateFeedback() {
-                // Field Existence Feedback (96-100)
+                // Field Existence Feedback 
                 super.testFeedback.put("testChatBot_Compiles", new TestFeedback("ChatBot class should compile.", 100));
                 super.testFeedback.put("testChatBotNameField",
-                                new TestFeedback("chatBotName field should exist and be a private string.", 99));
+                                new TestFeedback("chatBotName field should exist and be a private string.", 93));
                 super.testFeedback.put("testNumResponsesGeneratedField",
                                 new TestFeedback("numResponsesGenerated field should exist,be private and of type int.",
-                                                98));
+                                                92));
                 super.testFeedback.put("testMessageLimitField_FieldExists",
-                                new TestFeedback("messageLimit field should exist in the ChatBot class.", 97));
+                                new TestFeedback("messageLimit field should exist in the ChatBot class.", 91));
                 super.testFeedback.put("testMessageNumberField_FieldExists",
-                                new TestFeedback("messageNumber field should exist in the ChatBot class.", 96));
+                                new TestFeedback("messageNumber field should exist in the ChatBot class.", 90));
 
-                // Field and Method Properties Feedback (89-95)
+                // Field and Method Properties Feedback 
                 super.testFeedback.put("testMessageLimitField_FieldisStaticandPrivate",
-                                new TestFeedback("messageLimit field should be static and private.", 95));
+                                new TestFeedback("messageLimit field should be static and private.", 89));
                 super.testFeedback.put("testGetTotalNumResponsesGenerated_IsStatic",
-                                new TestFeedback("getTotalNumResponsesGenerated should be static.", 94));
+                                new TestFeedback("getTotalNumResponsesGenerated should be static.", 88));
                 super.testFeedback.put("testGetTotalNumMessagesRemaining_IsStatic",
-                                new TestFeedback("getTotalNumMessagesRemaining should be static.", 93));
+                                new TestFeedback("getTotalNumMessagesRemaining should be static.", 87));
                 super.testFeedback.put("testLimitReached_IsStatic",
-                                new TestFeedback("limitReached should be static.", 92));
+                                new TestFeedback("limitReached should be static.", 86));
                 super.testFeedback.put("testGenerateResponse_FieldisPrivate",
-                                new TestFeedback("generateResponse should be private.", 91));
+                                new TestFeedback("generateResponse should be private.", 85));
                 super.testFeedback.put("testMessageLimitField_FieldisIntegerandEquals10",
-                                new TestFeedback("messageLimit should be an integer with a value of 10.", 90));
+                                new TestFeedback("messageLimit should be an integer with a value of 10.", 84));
                 super.testFeedback.put("testMessageNumberField_FieldisStaticandZero",
-                                new TestFeedback("messageNumber should be static and initialized to zero.", 89));
+                                new TestFeedback("messageNumber should be static and initialized to zero.", 83));
 
-                // Constructor Feedback (83-88)
+                // Constructor Feedback 
                 super.testFeedback.put("testDefaultConstructor_ObjectNotNull",
                                 new TestFeedback("Default ChatBot constructor should create a non-null ChatBot object.",
-                                                88));
+                                                99));
                 super.testFeedback.put("testOverloadedConstructor_ObjectisNotNull",
-                                new TestFeedback("Overloaded constructor should create a valid ChatBot instance.", 87));
+                                new TestFeedback("Overloaded constructor should create a valid ChatBot instance.", 98));
                 super.testFeedback.put("testOverloadedConstructor_ProducesCorrectBot",
                                 new TestFeedback(
                                                 "Overloaded constructor should set correct ChatBot name based on LLM code.",
-                                                86));
+                                                97));
                 super.testFeedback.put("testOverloadedConstructor_InvalidLLMCode",
-                                new TestFeedback("Invalid LLM codes should set the name to 'ChatGPT-3.5'.", 85));
+                                new TestFeedback("Invalid LLM codes should set the name to 'ChatGPT-3.5'.", 96));
                 super.testFeedback.put("testDefaultConstructor_CorrectChatBotName",
                                 new TestFeedback("Default ChatBot name should be 'ChatGPT-3.5' if no code is provided.",
-                                                84));
+                                                95));
                 super.testFeedback.put("testDefaultConstructor_InitialResponseCount",
-                                new TestFeedback("Default constructor should set initial response count to 0.", 83));
+                                new TestFeedback("Default constructor should set initial response count to 0.", 94));
 
-                // Basic Method Behavior Feedback (75-82)
+                // Basic Method Behavior Feedback 
                 super.testFeedback.put("testGetChatBotName",
                                 new TestFeedback("getChatBotName should return the correct bot name for each instance.",
                                                 82));
@@ -133,7 +133,7 @@ public class ChatBotGrade extends GradeTemplate {
                 super.testFeedback.put("testLimitReached_TrueWhenLimitReached",
                                 new TestFeedback("limitReached should return true when message limit is hit.", 75));
 
-                // Complex Method Behavior Feedback (70-74)
+                // Complex Method Behavior Feedback 
                 super.testFeedback.put("testGenerateResponse_IncrementsCounters",
                                 new TestFeedback(
                                                 "generateResponse should increment both instance and total response counters.",
@@ -150,7 +150,7 @@ public class ChatBotGrade extends GradeTemplate {
                                                 "Response format should match 'Response from [botName]: Message #[number]'",
                                                 70));
 
-                // Output Format Feedback (65-69)
+                // Output Format Feedback 
                 super.testFeedback.put("testGenerateResponse_ContainsUniqueMessageNumber",
                                 new TestFeedback("Each response should contain a unique message number.", 69));
                 super.testFeedback.put("testToString_CorrectBotName",
@@ -161,7 +161,7 @@ public class ChatBotGrade extends GradeTemplate {
                 super.testFeedback.put("testPrompt_ResponseCountersAfterPrompt",
                                 new TestFeedback("Response counters should update correctly after each prompt.", 66));
                 super.testFeedback.put("testPrompt3_LimitReach",
-                                new TestFeedback("System should handle reaching message limit gracefully.", 65));
+                                new TestFeedback("System should handle reaching message limit.", 65));
                 super.testFeedback.put("testPrompt_TotalResponseCounterAndRemainingMessages",
                                 new TestFeedback("Total response counter and remaining messages should be consistent.",
                                                 64));
