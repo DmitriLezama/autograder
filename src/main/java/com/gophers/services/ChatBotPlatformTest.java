@@ -19,12 +19,22 @@ import java.util.List;
 public class ChatBotPlatformTest {
     private Class<?> chatBotClass;
     private Object platform;
+    private Method addChatBotMethod;
+    private Method interactWithBotMethod;
+    private Method getChatBotListMethod;
+    private Method getMessageLimitMethod;
 
     @Before
     public void setUp() throws Exception {
         chatBotClass = Submission.getClass("ChatBot");
         var platformClass = Submission.getClass("ChatBotPlatform");
         platform = platformClass.getConstructor().newInstance();
+
+        addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
+        interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
+        getChatBotListMethod = platform.getClass().getMethod("getChatBotList");
+        getMessageLimitMethod = chatBotClass.getMethod("getMessageLimit");
+
         resetStaticFields();
     }
 
@@ -92,7 +102,6 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testAddChatBotAddsFirstBot() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
         boolean result = (boolean) addChatBotMethod.invoke(platform, 1);
         assertTrue("Should add a first ChatBot", result);
 
@@ -104,7 +113,6 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testAddChatBotAddsSecondBot() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
         addChatBotMethod.invoke(platform, 1);
         boolean result = (boolean) addChatBotMethod.invoke(platform, 2);
         assertTrue("Should add a second ChatBot", result);
@@ -116,7 +124,6 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testAddChatBotIncrementsBotCount() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
         addChatBotMethod.invoke(platform, 1);
         assertEquals("Total ChatBots should be 1", 1, getBotsCollection().size());
         addChatBotMethod.invoke(platform, 2);
@@ -127,13 +134,8 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testAddChatBotReachesLimit() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        Method getMessageLimitMethod = Submission.getClass("ChatBot").getMethod("getMessageLimit");
-
         int messageLimit = (int) getMessageLimitMethod.invoke(null);
 
-        // Add bots and interact with them up to the limit
         for (int i = 0; i < messageLimit; i++) {
             addChatBotMethod.invoke(platform, i % 5 + 1);
             interactWithBotMethod.invoke(platform, i % getBotsCollection().size(), "Test message");
@@ -147,10 +149,6 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testAddChatBotAfterLimitReached() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        Method getMessageLimitMethod = Submission.getClass("ChatBot").getMethod("getMessageLimit");
-
         int messageLimit = (int) getMessageLimitMethod.invoke(null);
 
         for (int i = 0; i < messageLimit; i++) {
@@ -161,13 +159,8 @@ public class ChatBotPlatformTest {
         assertFalse("Should not add more ChatBots when limit is reached", result);
     }
 
-    // getChatBotList() - 6 marks
-    // This section is complete as per comments
-
     @Test
     public void testGetChatBotListContainsBotNumbers() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method getChatBotListMethod = platform.getClass().getMethod("getChatBotList");
         addChatBotMethod.invoke(platform, 1);
         addChatBotMethod.invoke(platform, 2);
         String result = (String) getChatBotListMethod.invoke(platform);
@@ -177,8 +170,6 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testGetChatBotListContainsBotNames() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method getChatBotListMethod = platform.getClass().getMethod("getChatBotList");
         addChatBotMethod.invoke(platform, 1);
         addChatBotMethod.invoke(platform, 2);
         String result = (String) getChatBotListMethod.invoke(platform);
@@ -188,9 +179,6 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testGetChatBotListContainsMessageCountPerBot() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        Method getChatBotListMethod = platform.getClass().getMethod("getChatBotList");
         addChatBotMethod.invoke(platform, 1);
         interactWithBotMethod.invoke(platform, 0, "Hello");
         interactWithBotMethod.invoke(platform, 0, "How are you?");
@@ -203,36 +191,28 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testGetChatBotListContainsTotalMessagesUsed() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        Method getChatBotListMethod = platform.getClass().getMethod("getChatBotList");
         addChatBotMethod.invoke(platform, 1);
         interactWithBotMethod.invoke(platform, 0, "Hello");
         interactWithBotMethod.invoke(platform, 0, "How are you?");
         addChatBotMethod.invoke(platform, 2);
-        interactWithBotMethod.invoke(platform, 1, "Testing");
+        interactWithBotMethod.invoke(platform, 1, "I am under the water");
         String result = (String) getChatBotListMethod.invoke(platform);
         assertTrue("Should contain Total Messages Used: 3", result.contains("Total Messages Used: 3"));
     }
 
     @Test
     public void testGetChatBotListContainsTotalMessagesRemaining() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        Method getChatBotListMethod = platform.getClass().getMethod("getChatBotList");
         addChatBotMethod.invoke(platform, 1);
         interactWithBotMethod.invoke(platform, 0, "Hello");
         interactWithBotMethod.invoke(platform, 0, "How are you?");
         addChatBotMethod.invoke(platform, 2);
-        interactWithBotMethod.invoke(platform, 1, "Testing");
+        interactWithBotMethod.invoke(platform, 1, "I am under the water");
         String result = (String) getChatBotListMethod.invoke(platform);
         assertTrue("Should contain Total Messages Remaining: 7", result.contains("Total Messages Remaining: 7"));
     }
 
     @Test
     public void testInteractWithValidBot() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
         addChatBotMethod.invoke(platform, 1);
         String response = (String) interactWithBotMethod.invoke(platform, 0, "Hello");
         assertTrue("Response should indicate interaction with LLaMa", response.contains("Response from LLaMa"));
@@ -241,36 +221,24 @@ public class ChatBotPlatformTest {
 
     @Test
     public void testInteractWithBotInvalidNegativeIndex() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        addChatBotMethod.invoke(platform, 1);
         String response = ((String) interactWithBotMethod.invoke(platform, -1, "Hello")).trim();
         assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (-1)"));
     }
 
     @Test
     public void testInteractWithBotInvalidOutOfRangeIndex() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        addChatBotMethod.invoke(platform, 1);
         String response = ((String) interactWithBotMethod.invoke(platform, 5, "Hello")).trim();
         assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (5)"));
     }
 
     @Test
     public void testInteractWithBotInvalidIndexEqualToSize() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        addChatBotMethod.invoke(platform, 1);
         String response = ((String) interactWithBotMethod.invoke(platform, 1, "Hello")).trim();
         assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (1)"));
     }
 
     @Test
     public void testInteractWithBotAfterLimitReached() throws Exception {
-        Method addChatBotMethod = platform.getClass().getMethod("addChatBot", int.class);
-        Method interactWithBotMethod = platform.getClass().getMethod("interactWithBot", int.class, String.class);
-        Method getMessageLimitMethod = Submission.getClass("ChatBot").getMethod("getMessageLimit");
         int messageLimit = (int) getMessageLimitMethod.invoke(null);
         addChatBotMethod.invoke(platform, 1);
         for (int i = 0; i < messageLimit; i++)
