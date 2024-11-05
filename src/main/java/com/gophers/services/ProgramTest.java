@@ -1,18 +1,20 @@
 package com.gophers.services;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
+import java.lang.reflect.Method;
+
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.gophers.data.ChatBot;
-import com.gophers.data.ChatBotGenerator;
-import com.gophers.data.ChatBotPlatform;
-import com.gophers.data.ChatBotSimulation;
+
+import com.gophers.Submission;
 
 public class ProgramTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -20,31 +22,32 @@ public class ProgramTest {
 
     @Test
     public void test_ChatBotCompiles() {
-        assertTrue("ChatBot class should compile", doesClassCompile(ChatBot.class));
+        assertTrue("ChatBot class should compile", doesClassCompile(Submission.getClass("ChatBot")));
     }
 
     @Test
     public void test_ChatBotPlatformCompiles() {
-        assertTrue("ChatBotPlatform class should compile", doesClassCompile(ChatBotPlatform.class));
+        assertTrue("ChatBotPlatform class should compile", doesClassCompile(Submission.getClass("ChatBotPlatform")));
     }
 
     @Test
     public void test_ChatBotGeneratorCompiles() {
-        assertTrue("ChatBotGenerator class should compile", doesClassCompile(ChatBotGenerator.class));
+        assertTrue("ChatBotGenerator class should compile", doesClassCompile(Submission.getClass("ChatBotGenerator")));
     }
 
     @Test
     public void test_ChatBotSimulationCompiles() {
-        assertTrue("ChatBotSimulation class should compile", doesClassCompile(ChatBotSimulation.class));
+        assertTrue("ChatBotSimulation class should compile",
+                doesClassCompile(Submission.getClass("ChatBotSimulation")));
     }
 
     @Test
     public void testAllCompiles() {
         assertTrue("All required classes should compile",
-                doesClassCompile(ChatBot.class) &&
-                        doesClassCompile(ChatBotPlatform.class) &&
-                        doesClassCompile(ChatBotGenerator.class) &&
-                        doesClassCompile(ChatBotSimulation.class));
+                doesClassCompile(Submission.getClass("ChatBot")) &&
+                        doesClassCompile(Submission.getClass("ChatBotPlatform")) &&
+                        doesClassCompile(Submission.getClass("ChatBotGenerator")) &&
+                        doesClassCompile(Submission.getClass("ChatBotSimulation")));
     }
 
     @Before
@@ -60,11 +63,13 @@ public class ProgramTest {
     @Test
     public void testChatBotSimulationRuns() {
         try {
-            ChatBotSimulation.main(null);
+            Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
+            String[] args = null; // Equivalent to null
+            mainMethod.invoke(null, (Object) args); // Invoke main method
             assertTrue("ChatBotSimulation.main(null) should run without error", true);
         } catch (Exception e) {
             e.printStackTrace();
-            assertTrue("ChatBotSimulation.main(null) threw an exception: " + e.getMessage(), false);
+            fail("ChatBotSimulation.main(null) threw an exception: " + e.getMessage());
         }
     }
 

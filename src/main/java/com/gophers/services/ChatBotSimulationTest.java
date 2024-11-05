@@ -38,15 +38,15 @@ public class ChatBotSimulationTest {
     @Test
     public void testMainMethodStartsWithHelloWorld() throws Exception {
         Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; 
-        mainMethod.invoke(null, (Object) args); 
+        String[] args = null;
+        mainMethod.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
         assertTrue("Should start with 'Hello World!'", output.startsWith("Hello World!")); // 1 mark
     }
 
     // Test for requirement 2
     @Test
-    public void testChatBotPlatformInitialization() throws Exception {
+    public void testChatBotPlatformInitialization() {
         String filePath = Submission.submissionDirectory + "/ChatBotSimulation.java"; // Adjust the path as necessary
         boolean lineFound = false;
 
@@ -71,8 +71,8 @@ public class ChatBotSimulationTest {
     @Test
     public void testAllChatBotModelsPresent() throws Exception {
         Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; 
-        mainMethod.invoke(null, (Object) args); 
+        String[] args = null;
+        mainMethod.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
         long botCount = output.lines().filter(line -> line.startsWith("Bot Number:")).count();
