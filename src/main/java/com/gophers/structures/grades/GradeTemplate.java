@@ -27,13 +27,16 @@ public abstract class GradeTemplate implements Grade {
 
     private void setMarksEarned(Result result) {
         this.marksEarned = this.totalMarks;
+        // this.marksEarned = 0;
         if (!result.wasSuccessful())
             adjustMarksForFailures(result.getFailures());
+        // addMarksForSuccessfulTests(result.getFailures());
     }
 
     private void adjustMarksForFailures(List<Failure> failures) {
         for (Failure failure : failures) {
             String methodName = failure.getDescription().getMethodName();
+            System.out.println("Failed: " + failure);
             this.marksEarned -= testMarks.getOrDefault(methodName, 0);
             TestFeedback feedback = testFeedback.get(methodName);
             if (feedback != null)

@@ -13,7 +13,7 @@ public class Submission {
     public String ChatBotFile;
     public String ChatBotGeneratorFile;
     public String ChatBotPlatformFile;
-    public String ChatBotSimulationFile;
+    public static String ChatBotSimulationFile;
 
     private static URLClassLoader classLoader;
 
@@ -24,7 +24,6 @@ public class Submission {
         }
 
         try {
-            // Initialize the class loader with the submission directory
             classLoader = URLClassLoader.newInstance(new URL[] { new File(submissionDirectory).toURI().toURL() });
         } catch (Exception e) {
             e.printStackTrace();
