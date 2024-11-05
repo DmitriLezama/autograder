@@ -19,7 +19,7 @@ public class ProgramTest {
 
     @Test
     public void testCompiles() {
-        assertTrue("Submission should compile", Submission.isCompiled());
+        assertTrue("Submission should compile", Submission.compileAllClasses());
     }
 
     @Test
@@ -30,8 +30,7 @@ public class ProgramTest {
             mainMethod.invoke(null, (Object) args); // Invoke main method
             assertTrue("ChatBotSimulation.main(null) should run without error", true);
         } catch (Exception e) {
-            e.printStackTrace();
-            fail("ChatBotSimulation.main(null) threw an exception: " + e.getMessage());
+            fail("ChatBotSimulation.main(null) should run without error");
         }
     }
 

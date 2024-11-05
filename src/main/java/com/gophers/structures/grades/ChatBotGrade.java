@@ -46,7 +46,7 @@ public class ChatBotGrade extends GradeTemplate {
                 super.testMarks.put("testLimitReached_TrueWhenLimitReached", 1);
 
                 // GenerateResponse Tests
-                super.testMarks.put("testGenerateResponse_FieldisPrivate", 1);
+                super.testMarks.put("testGenerateResponse_FieldIsPrivate", 1);
                 super.testMarks.put("testGenerateResponse_IncrementsCounters", 1);
                 super.testMarks.put("testGenerateResponse_ReturnsCorrectStringFormat", 1);
                 super.testMarks.put("testGenerateResponse_ReturnsString", 1);
@@ -63,7 +63,6 @@ public class ChatBotGrade extends GradeTemplate {
                 super.testMarks.put("testPrompt_ResponseCountersAfterPrompt", 1);
                 super.testMarks.put("testPrompt_LimitReached", 1);
                 super.testMarks.put("testPrompt_TotalResponseCounterAndRemainingMessages", 1);
-
         }
 
         @Override

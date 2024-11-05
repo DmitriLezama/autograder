@@ -11,9 +11,9 @@ public class Submission {
     private static boolean isCompiled;
     private static Submission instance;
     public static String submissionDirectory;
-    public String ChatBotFile;
-    public String ChatBotGeneratorFile;
-    public String ChatBotPlatformFile;
+    public static String ChatBotFile;
+    public static String ChatBotGeneratorFile;
+    public static String ChatBotPlatformFile;
     public static String ChatBotSimulationFile;
 
     private static URLClassLoader classLoader;
@@ -21,7 +21,8 @@ public class Submission {
     private Submission(String submissionDirectory) {
         setDirectory(submissionDirectory);
         if (!compileAllClasses()) {
-            System.err.println("Compilation failed for one or more files in " + submissionDirectory);
+            // System.err.println("Compilation failed for one or more files in " +
+            // submissionDirectory);
             isCompiled = false;
         }
         isCompiled = true;
@@ -33,9 +34,8 @@ public class Submission {
     }
 
     public static Submission getInstance(String submissionDirectory) {
-        if (instance == null) {
+        if (instance == null)
             instance = new Submission(submissionDirectory);
-        }
         return instance;
     }
 
@@ -59,16 +59,14 @@ public class Submission {
         return isCompiled;
     }
 
-    private boolean compileAllClasses() {
+    public static boolean compileAllClasses() {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         if (compiler == null) {
             System.err.println("Java Compiler not available. Make sure you are running with JDK.");
             return false;
         }
-
         // Classpath as the directory of the submission files
         String classpath = submissionDirectory;
-
         // Compile all files at once
         int compilationResult = compiler.run(null, null, null,
                 "-classpath", classpath,
@@ -82,22 +80,7 @@ public class Submission {
         try {
             return Class.forName(className, true, classLoader);
         } catch (ClassNotFoundException e) {
-            System.err.println("Class " + className + " not found in directory: " + submissionDirectory);
             return null;
-        }
-    }
-
-    public void invokeMethod(String className, String methodName, Class<?>[] paramTypes, Object... params) {
-        try {
-            Class<?> clazz = getClass(className);
-            if (clazz != null) {
-                Method method = clazz.getMethod(methodName, paramTypes);
-                Object instance = clazz.getDeclaredConstructor(int.class).newInstance(1);
-                Object result = method.invoke(instance, params);
-                System.out.println("Method " + methodName + " invoked successfully. Result: " + result);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
