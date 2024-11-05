@@ -1,16 +1,17 @@
 package com.gophers.services;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.gophers.Submission;
-
+//comment 2
 public class ChatBotGeneratorTest {
     private Class<?> generator;
 
