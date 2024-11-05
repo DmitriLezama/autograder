@@ -1,4 +1,4 @@
-package com.gophers.structures;
+package com.gophers.structures.domain;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +16,6 @@ public class AssignmentDetails {
         Map<String, String> data = new HashMap<String, String>();
         data.putAll(studentDetails.toPDFData());
         data.putAll(assignmentGrade.toPDFData());
-        data.put("Bonus", "5, 10, 10, 5");
-        data.put("FeedBack", "Good Work");
         return data;
     }
 }

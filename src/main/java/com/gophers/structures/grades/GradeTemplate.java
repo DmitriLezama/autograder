@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import com.gophers.interfaces.Grade;
-import com.gophers.structures.TestFeedback;
+import com.gophers.structures.domain.TestFeedback;
 
 public abstract class GradeTemplate implements Grade {
     protected Map<String, Integer> testMarks;
@@ -34,7 +34,6 @@ public abstract class GradeTemplate implements Grade {
     private void adjustMarksForFailures(List<Failure> failures) {
         for (Failure failure : failures) {
             String methodName = failure.getDescription().getMethodName();
-            System.out.println("Failed: " + failure);
             this.marksEarned -= testMarks.getOrDefault(methodName, 0);
             TestFeedback feedback = testFeedback.get(methodName);
             if (feedback != null)

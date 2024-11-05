@@ -1,4 +1,4 @@
-package com.gophers.structures;
+package com.gophers.structures.domain;
 
 public class TestFeedback {
     private String feedback;

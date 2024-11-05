@@ -2,7 +2,7 @@ package com.gophers.structures.grades;
 
 import org.junit.runner.Result;
 
-import com.gophers.structures.TestFeedback;
+import com.gophers.structures.domain.TestFeedback;
 
 public class ChatBotSimulationGrade extends GradeTemplate {
     private static final int totalMarks = 12;

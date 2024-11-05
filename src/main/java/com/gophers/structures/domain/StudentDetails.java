@@ -1,4 +1,4 @@
-package com.gophers.structures;
+package com.gophers.structures.domain;
 
 import java.nio.file.Paths;
 import java.util.HashMap;

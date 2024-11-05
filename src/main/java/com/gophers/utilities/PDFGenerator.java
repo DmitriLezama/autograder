@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 import com.gophers.interfaces.PDF;
-import com.gophers.structures.AssignmentDetails;
+import com.gophers.structures.domain.AssignmentDetails;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;

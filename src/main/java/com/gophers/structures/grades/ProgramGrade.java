@@ -1,7 +1,8 @@
 package com.gophers.structures.grades;
 
 import org.junit.runner.Result;
-import com.gophers.structures.TestFeedback;
+
+import com.gophers.structures.domain.TestFeedback;
 
 public class ProgramGrade extends GradeTemplate {
     private static final int totalMarks = 15;
