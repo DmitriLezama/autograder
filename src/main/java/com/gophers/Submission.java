@@ -58,8 +58,6 @@ public class Submission {
         return isCompiled;
     }
 
-
-
     public static boolean compileAllClasses() {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         if (compiler == null) {

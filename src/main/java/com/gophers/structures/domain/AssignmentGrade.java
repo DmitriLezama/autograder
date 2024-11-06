@@ -19,7 +19,7 @@ public class AssignmentGrade {
             gradesMap.put(CRITERIA[i], grades.get(i).getMarks());
             feedback.addAll(grades.get(i).getFailedFeedback());
         }
-        feedback.sort(Comparator.comparingInt(TestFeedback::getPriority));
+        feedback.sort(Comparator.comparingInt(TestFeedback::getPriority).reversed());
     }
 
     public Map<String, String> toPDFData() {
@@ -30,6 +30,7 @@ public class AssignmentGrade {
         data.put("Bonus", determineBonus(sum));
         data.put("Total", String.valueOf(sum));
         data.put("StudentPercentage", sum + "%");
+        System.out.println(String.join("; ", getFeedback(5)));
         data.put("FeedBack", sum >= 90 ? "Excellent Work" : String.join("; ", getFeedback(5)));
         return data;
     }

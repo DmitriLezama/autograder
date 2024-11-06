@@ -99,7 +99,7 @@ public class ChatBotPlatformGrade extends GradeTemplate {
 
                 // getChatBotList feedback
                 super.testFeedback.put("testGetChatBotListContainsBotNumbers",
-                                new TestFeedback("Bot numbers were not correctly included in the list output.", 0));
+                                new TestFeedback("Bot numbers were not correctly included in the list output.", 70));
                 super.testFeedback.put("testGetChatBotListContainsBotNames",
                                 new TestFeedback("Bot names were missing in the list output.", 75));
                 super.testFeedback.put("testGetChatBotListContainsMessageCountPerBot",
