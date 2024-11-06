@@ -1,21 +1,20 @@
 package com.gophers.services;
 
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
-
-import com.gophers.Submission;
-
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.gophers.Submission;
 
 public class ChatBotSimulationTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -117,7 +116,7 @@ public class ChatBotSimulationTest {
         assertTrue("Output should contain 'Total Messages Remaining: 10'",
                 initialSummarySection.contains("Total Messages Remaining: 10")); // 1 mark
     }
-
+    // :D
     // Test for requirement 5: Interactions with ChatBots
     // Check if any interactions occurred
     @Test
@@ -188,7 +187,6 @@ public class ChatBotSimulationTest {
 
         assertTrue("Final summary output should not be empty.", summarySection.lines().count() != 0); // 1 mark
     }
-
     // Check that final summary contains the required summary statistics
     // 1 mark
     @Test
