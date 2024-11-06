@@ -25,8 +25,8 @@ public class GradeConfigLoader {
 		Map<String, TestFeedback> programFeedback = new HashMap<>();
 		programFeedback.put("testCompiles", new TestFeedback("The program does not compile", 99));
 		programFeedback.put("testRuns", new TestFeedback("The program does not run", 100));
-		weightings.put("ChatBotGeneratorGrade", programMarks);
-		feedback.put("ChatBotGeneratorGrade", programFeedback);
+		weightings.put("ProgramGrade", programMarks);
+		feedback.put("ProgramGrade", programFeedback);
 	}
 
 	private static void initializeChatBotGeneratorConfigTest() {

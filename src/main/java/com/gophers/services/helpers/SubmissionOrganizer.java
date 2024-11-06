@@ -2,6 +2,7 @@ package com.gophers.services.helpers;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.gophers.utilities.Constants;
+import com.gophers.utilities.ZipFileExtractor;
 
 public class SubmissionOrganizer {
     public static List<String> organizeSubmissions(String outputDirectory) throws IOException {
@@ -19,16 +21,18 @@ public class SubmissionOrganizer {
                 String studentDirName = zipFile.getFileName().toString().replace(Constants.ZIP_EXTENSION, "");
                 File studentDir = new File(outputDirectory, studentDirName);
                 studentDir.mkdir();
-                moveFileToDirectory(zipFile, outputDirectory);
+                unzipFileToDirectory(zipFile, studentDir);
                 studentDirectories.add(studentDir.getAbsolutePath());
             });
         }
         return studentDirectories;
     }
 
-    private static void moveFileToDirectory(Path zipFile, String outputDirectoryPath) {
+    private static void unzipFileToDirectory(Path zipFile, File outputDirectory) {
         try {
-            Files.move(zipFile, Paths.get(outputDirectoryPath, zipFile.getFileName().toString()));
+            InputStream studentZipStream = Files.newInputStream(zipFile);
+            ZipFileExtractor.extractZipEntries(studentZipStream, outputDirectory.getAbsolutePath());
+            Files.delete(zipFile);
         } catch (IOException e) {
         }
     }
