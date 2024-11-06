@@ -24,14 +24,19 @@ public class AssignmentGrade {
 
     public Map<String, String> toPDFData() {
         int sum = gradesMap.values().stream().mapToInt(Integer::intValue).sum();
-        Map<String, String> data = new TreeMap<>();
-        gradesMap.forEach((key, value) -> data.put(key, String.valueOf(value)));
-        data.put("Bonus", sum >= 90 ? "5, 10, 10" : "5, 10, 0");
         sum = sum >= 90 ? 100 : sum;
+        Map<String, String> data = new TreeMap<String, String>();
+        gradesMap.forEach((key, value) -> data.put(key, String.valueOf(value)));
+        data.put("Bonus", determineBonus(sum));
         data.put("Total", String.valueOf(sum));
         data.put("StudentPercentage", sum + "%");
         data.put("FeedBack", sum >= 90 ? "Excellent Work" : String.join("; ", getFeedback(5)));
         return data;
+    }
+
+    private String determineBonus(int totalScore) {
+        int bonus = gradesMap.getOrDefault("Bonus", 0);
+        return totalScore >= 90 ? "5, 10, 10" : bonus >= 5 ? "5, " + (bonus - 5) : "0";
     }
 
     private List<String> getFeedback(int n) {

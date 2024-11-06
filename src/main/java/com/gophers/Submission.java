@@ -4,6 +4,9 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
@@ -20,16 +23,12 @@ public class Submission {
 
     private Submission(String submissionDirectory) {
         setDirectory(submissionDirectory);
-        if (!compileAllClasses()) {
-            // System.err.println("Compilation failed for one or more files in " +
-            // submissionDirectory);
-            isCompiled = false;
-        }
-        isCompiled = true;
+        isCompiled = compileAllClasses();
         try {
             classLoader = URLClassLoader.newInstance(new URL[] { new File(submissionDirectory).toURI().toURL() });
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Class could not compile");
+            // e.printStackTrace();
         }
     }
 
@@ -45,9 +44,9 @@ public class Submission {
 
     private void setDirectory(String submissionDirectory) {
         Submission.submissionDirectory = submissionDirectory;
-        this.ChatBotFile = submissionDirectory + "/ChatBot.java";
-        this.ChatBotGeneratorFile = submissionDirectory + "/ChatBotGenerator.java";
-        this.ChatBotPlatformFile = submissionDirectory + "/ChatBotPlatform.java";
+        ChatBotFile = submissionDirectory + "/ChatBot.java";
+        ChatBotGeneratorFile = submissionDirectory + "/ChatBotGenerator.java";
+        ChatBotPlatformFile = submissionDirectory + "/ChatBotPlatform.java";
         ChatBotSimulationFile = submissionDirectory + "/ChatBotSimulation.java";
     }
 
@@ -59,19 +58,37 @@ public class Submission {
         return isCompiled;
     }
 
+
+
     public static boolean compileAllClasses() {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         if (compiler == null) {
             System.err.println("Java Compiler not available. Make sure you are running with JDK.");
             return false;
         }
-        // Classpath as the directory of the submission files
-        String classpath = submissionDirectory;
-        // Compile all files at once
-        int compilationResult = compiler.run(null, null, null,
-                "-classpath", classpath,
-                ChatBotFile, ChatBotGeneratorFile,
-                ChatBotPlatformFile, ChatBotSimulationFile);
+
+        // Collect all .java files in the submission directory
+        File directory = new File(submissionDirectory);
+        List<String> javaFiles = new ArrayList<>();
+
+        if (directory.exists() && directory.isDirectory()) {
+            for (File file : directory.listFiles())
+                if (file.isFile() && file.getName().endsWith(".java"))
+                    javaFiles.add(file.getPath());
+        }
+
+        // If no .java files are found, return false
+        if (javaFiles.isEmpty()) {
+            System.out.println("No Java source files found for compilation.");
+            return false;
+        }
+
+        List<String> compilerArgs = new ArrayList<>();
+        compilerArgs.add("-classpath");
+        compilerArgs.add(submissionDirectory);
+        compilerArgs.addAll(javaFiles); // Add all .java files
+        String[] argsArray = compilerArgs.toArray(new String[0]);
+        int compilationResult = compiler.run(null, null, null, argsArray);
 
         return compilationResult == 0;
     }

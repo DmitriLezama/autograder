@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gophers.Submission;
+import static org.junit.Assert.fail;
 
 public class ChatBotSimulationTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -58,7 +59,7 @@ public class ChatBotSimulationTest {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            fail("The file could not be found");
         }
 
         assertTrue(
