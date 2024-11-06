@@ -3,12 +3,12 @@ package com.gophers.managers;
 import java.util.List;
 import org.junit.runner.Result;
 import com.gophers.interfaces.PDF;
+import com.gophers.services.helpers.AssignmentTestRunner;
 import com.gophers.structures.domain.AssignmentDetails;
 import com.gophers.structures.domain.AssignmentGrade;
 import com.gophers.structures.domain.StudentDetails;
 import com.gophers.structures.factory.AbstractGradeFactory;
 import com.gophers.structures.factory.GradeFactory;
-import com.gophers.utilities.AssignmentTestRunner;
 import com.gophers.utilities.PDFGenerator;
 
 public class GradeManager {

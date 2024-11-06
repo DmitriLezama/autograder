@@ -1,9 +1,9 @@
-package com.gophers.services;
+package com.gophers.services.testCases;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gophers.Submission;
+import com.gophers.structures.domain.Submission;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

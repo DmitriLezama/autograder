@@ -1,7 +1,6 @@
-package com.gophers;
+package com.gophers.structures.domain;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -27,8 +26,7 @@ public class Submission {
         try {
             classLoader = URLClassLoader.newInstance(new URL[] { new File(submissionDirectory).toURI().toURL() });
         } catch (Exception e) {
-            System.out.println("Class could not compile");
-            // e.printStackTrace();
+            System.err.println("Class could not be loaded");
         }
     }
 

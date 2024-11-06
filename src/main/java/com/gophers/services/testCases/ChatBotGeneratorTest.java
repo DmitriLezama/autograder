@@ -1,4 +1,4 @@
-package com.gophers.services;
+package com.gophers.services.testCases;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -10,7 +10,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gophers.Submission;
+import com.gophers.structures.domain.Submission;
 //comment 2
 public class ChatBotGeneratorTest {
     private Class<?> generator;

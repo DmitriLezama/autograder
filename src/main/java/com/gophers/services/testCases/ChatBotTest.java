@@ -1,4 +1,4 @@
-package com.gophers.services;
+package com.gophers.services.testCases;
 
 import static org.junit.Assert.*;
 import java.lang.reflect.Constructor;
@@ -11,7 +11,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.gophers.Submission;
+import com.gophers.structures.domain.Submission;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ChatBotTest {

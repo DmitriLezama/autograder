@@ -3,14 +3,14 @@ package com.gophers;
 import java.util.List;
 
 import com.gophers.managers.GradeManager;
-import com.gophers.managers.SubmissionManager;
+import com.gophers.services.helpers.SubmissionProcessor;
 import com.gophers.structures.domain.AssignmentDetails;
-import com.gophers.utilities.ZipFileExtractor;
+import com.gophers.structures.domain.Submission;
 
 public class App {
     public static void main(String[] args) {
-        SubmissionManager submissionManager = new SubmissionManager(new ZipFileExtractor());
-        List<String> studentSubmissions = submissionManager.extractSubmissions("submissions.zip");
+        List<String> studentSubmissions = SubmissionProcessor.processSubmissions("submissions.zip");
+        // System.out.println(studentSubmissions);
         GradeManager gradeManager = new GradeManager();
 
         for (String studentSubmission : studentSubmissions) {

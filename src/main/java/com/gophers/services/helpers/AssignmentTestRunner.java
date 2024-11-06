@@ -1,14 +1,15 @@
-package com.gophers.utilities;
+package com.gophers.services.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
-import com.gophers.services.ChatBotTest;
-import com.gophers.services.ProgramTest;
-import com.gophers.services.ChatBotGeneratorTest;
-import com.gophers.services.ChatBotPlatformTest;
-import com.gophers.services.ChatBotSimulationTest;
+
+import com.gophers.services.testCases.ChatBotGeneratorTest;
+import com.gophers.services.testCases.ChatBotPlatformTest;
+import com.gophers.services.testCases.ChatBotSimulationTest;
+import com.gophers.services.testCases.ChatBotTest;
+import com.gophers.services.testCases.ProgramTest;
 
 public class AssignmentTestRunner {
     private final List<Class<?>> testClasses;

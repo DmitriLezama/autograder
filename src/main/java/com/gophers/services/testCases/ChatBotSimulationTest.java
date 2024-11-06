@@ -1,4 +1,4 @@
-package com.gophers.services;
+package com.gophers.services.testCases;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -14,7 +14,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gophers.Submission;
+import com.gophers.structures.domain.Submission;
+
 import static org.junit.Assert.fail;
 
 public class ChatBotSimulationTest {
