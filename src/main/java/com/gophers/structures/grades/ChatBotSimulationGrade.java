@@ -46,7 +46,7 @@ public class ChatBotSimulationGrade extends GradeTemplate {
 
         // Requirement 1 feedback
         super.testFeedback.put("testMainMethodStartsWithHelloWorld",
-                new TestFeedback("Main method output should start with 'Hello World!'", 85));
+                new TestFeedback("Main method output should start with 'Hello World!'", 43));
 
         // Requirement 2 feedback
         super.testFeedback.put("testChatBotPlatformInitialization",
@@ -54,29 +54,29 @@ public class ChatBotSimulationGrade extends GradeTemplate {
 
         // Requirement 3 feedback
         super.testFeedback.put("testAllChatBotModelsPresent",
-                new TestFeedback("Not all ChatBot models were listed in the output.", 83));
+                new TestFeedback("Not all ChatBot models were listed in the output.", 42));
 
         // Requirement 4 feedback
         super.testFeedback.put("testChatBotsSectionPresent",
-                new TestFeedback("The 'Your ChatBots' section was missing.", 82));
+                new TestFeedback("The 'Your ChatBots' section was missing.", 41));
         super.testFeedback.put("testInitialSummaryStatistics",
-                new TestFeedback("Initial summary statistics were missing or incorrect.", 81));
+                new TestFeedback("Initial summary statistics were missing or incorrect.", 40));
 
          // Requirement 5 feedback
          super.testFeedback.put("testAtLeastOneInteractionOccurred",
-         new TestFeedback("Expected at least one interaction with a ChatBot.", 80));
+         new TestFeedback("Expected at least one interaction with a ChatBot.", 39));
         super.testFeedback.put("testMessageNumberFormatInBotResponses",
-         new TestFeedback("Each interaction should start with '(Message#)'", 79));
+         new TestFeedback("Each interaction should start with '(Message#)'", 38));
         super.testFeedback.put("testInvalidBotNumberResponsePresent",
-         new TestFeedback("Expected 'Incorrect Bot Number' message was missing.", 78));
+         new TestFeedback("Expected 'Incorrect Bot Number' message was missing.", 37));
         super.testFeedback.put("testSimulationPerformsExactlyFifteenInteractions",
-         new TestFeedback("The simulation should interact exactly 15 times with ChatBots.", 77));
+         new TestFeedback("The simulation should interact exactly 15 times with ChatBots.", 57));
         
          // Requirement 6 feedback
         super.testFeedback.put("testFinalSummaryNotEmpty",
-                new TestFeedback("The final summary section should contain summary information.", 76));
+                new TestFeedback("The final summary section should contain summary information.", 36));
         super.testFeedback.put("testFinalSummaryStatistics",
-                new TestFeedback("Final summary statistics were missing or incorrect.", 75));
+                new TestFeedback("Final summary statistics were missing or incorrect.", 35));
     }
 
 }

@@ -74,32 +74,32 @@ public class ChatBotPlatformGrade extends GradeTemplate {
         protected void allocateFeedback() {
                 // ArrayList<ChatBot> feedback
                 super.testFeedback.put("testBotsCollectionInitialized",
-                                new TestFeedback("Bots collection should be initialized.", 85));
+                                new TestFeedback("Bots collection should be initialized.", 88));
                 super.testFeedback.put("testBotsCollectionIsPrivate",
                                 new TestFeedback("Bots collection should be private.",
-                                                84));
+                                                87));
 
                 // Constructor feedback
                 super.testFeedback.put("testChatBotPlatformConstructor",
-                                new TestFeedback("ChatBotPlatform was not properly initialized.", 83));
+                                new TestFeedback("ChatBotPlatform was not properly initialized.", 79));
                 super.testFeedback.put("testChatBotPlatformBotsCollectionInitialized",
-                                new TestFeedback("Bots collection was not initialized as an ArrayList<ChatBot>.", 82));
+                                new TestFeedback("Bots collection was not initialized as an ArrayList<ChatBot>.", 78));
 
                 // addChatBot feedback
                 super.testFeedback.put("testAddChatBotAddsFirstBot",
-                                new TestFeedback("First ChatBot was not added as expected.", 81));
+                                new TestFeedback("First ChatBot was not added as expected.", 71));
                 super.testFeedback.put("testAddChatBotAddsSecondBot",
-                                new TestFeedback("Second ChatBot was not added correctly.", 80));
+                                new TestFeedback("Second ChatBot was not added correctly.", 70));
                 super.testFeedback.put("testAddChatBotIncrememtsBotCount",
-                                new TestFeedback("Bots count did not increment correctly after adding ChatBots.", 79));
+                                new TestFeedback("Bots count did not increment correctly after adding ChatBots.", 56));
                 super.testFeedback.put("testAddChatBotReachesLimit",
-                                new TestFeedback("Limit check failed after reaching the message limit.", 78));
+                                new TestFeedback("Limit check failed after reaching the message limit.", 55));
                 super.testFeedback.put("testAddChatBotAfterLimitReached",
-                                new TestFeedback("ChatBot was incorrectly added after limit was reached.", 77));
+                                new TestFeedback("ChatBot was incorrectly added after limit was reached.", 54));
 
                 // getChatBotList feedback
                 super.testFeedback.put("testGetChatBotListContainsBotNumbers",
-                                new TestFeedback("Bot numbers were not correctly included in the list output.", 76));
+                                new TestFeedback("Bot numbers were not correctly included in the list output.", 0));
                 super.testFeedback.put("testGetChatBotListContainsBotNames",
                                 new TestFeedback("Bot names were missing in the list output.", 75));
                 super.testFeedback.put("testGetChatBotListContainsMessageCountPerBot",
@@ -108,26 +108,26 @@ public class ChatBotPlatformGrade extends GradeTemplate {
                                 new TestFeedback("Total messages used were incorrectly calculated or not included.",
                                                 73));
                 super.testFeedback.put("testGetChatBotListContainsTotalMessagesRemaining",
-                                new TestFeedback("Remaining messages were not correctly displayed.", 72));
+                                new TestFeedback("Remaining messages were not correctly displayed.", 34));
 
                 // interactWithBot feedback
                 super.testFeedback.put("testInteractWithValidBot",
-                                new TestFeedback("Valid interaction with bot failed.", 71));
+                                new TestFeedback("Valid interaction with bot failed.", 69));
                 super.testFeedback.put("testInteractWithBotInvalidNegativeIndex",
                                 new TestFeedback(
                                                 "Interaction with negative index did not return the expected error message.",
-                                                70));
+                                                53));
                 super.testFeedback.put("testInteractWithBotInvalidOutOfRangeIndex",
                                 new TestFeedback(
                                                 "Interaction with out-of-range index failed to provide the correct error message.",
-                                                69));
+                                                52));
                 super.testFeedback.put("testInteractWithBotInvalidIndexEqualToSize",
                                 new TestFeedback(
                                                 "Interaction with an index equal to the list size did not handle the error correctly.",
-                                                68));
+                                                51));
                 super.testFeedback.put("testInteractWithBotAfterLimitReached",
                                 new TestFeedback(
                                                 "Interaction after message limit reached did not return 'Daily Limit Reached'.",
-                                                67));
+                                                50));
         }
 }
