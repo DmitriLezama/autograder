@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.gophers.managers.GradeManager;
 import com.gophers.managers.SubmissionManager;
-import com.gophers.structures.AssignmentGrade;
+import com.gophers.structures.domain.AssignmentDetails;
 import com.gophers.utilities.ZipFileExtractor;
 
 public class App {
@@ -12,7 +12,11 @@ public class App {
         SubmissionManager submissionManager = new SubmissionManager(new ZipFileExtractor());
         List<String> studentSubmissions = submissionManager.extractSubmissions("submissions.zip");
         GradeManager gradeManager = new GradeManager();
-        AssignmentGrade result = gradeManager.getAssignmentGrade(studentSubmissions.get(0));
-        System.out.println("Results:\n" + result.toString());
+
+        for (String studentSubmission : studentSubmissions) {
+            Submission.resetInstance(studentSubmission);
+            AssignmentDetails result = gradeManager.getAssignmentDetails(studentSubmission);
+            gradeManager.generatePDFGrade(result);
+        }
     }
 }

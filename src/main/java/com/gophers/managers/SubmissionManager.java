@@ -13,7 +13,7 @@ import com.gophers.App;
 import com.gophers.utilities.ZipFileExtractor;
 
 public class SubmissionManager {
-    private static final String OUTPUT_DIRECTORY = "StudentSubmissions";
+    private static final String OUTPUT_DIRECTORY = "src/main/resources/StudentSubmissions";
     private final ZipFileExtractor extractor;
 
     public SubmissionManager(ZipFileExtractor extractor) {

@@ -1,4 +1,4 @@
-package com.gophers.structures;
+package com.gophers.structures.grades;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import com.gophers.interfaces.Grade;
+import com.gophers.structures.domain.TestFeedback;
 
 public abstract class GradeTemplate implements Grade {
     protected Map<String, Integer> testMarks;
