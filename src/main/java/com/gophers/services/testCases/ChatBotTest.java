@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -16,43 +15,16 @@ import com.gophers.structures.domain.Submission;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ChatBotTest {
-    private static Class<?> chatBotClass;
+    private Class<?> chatBotClass;
     private Object defaultBot;
     private Object bardBot;
-    private static Method getChatBotName;
-    private static Method getNumResponsesGenerated;
-    private static Method limitReached;
-    private static Method prompt;
-    private static Method getTotalNumResponsesGenerated;
-    private static Method getTotalNumMessagesRemaining;
-    private static Method toString;
-
-    @BeforeClass
-    public static void initialize() {
-        chatBotClass = Submission.getClass("ChatBot");
-        getChatBotName = getMethod("getChatBotName");
-        getNumResponsesGenerated = getMethod("getNumResponsesGenerated");
-        limitReached = getMethod("limitReached");
-        prompt = getMethod("prompt", String.class);
-        getTotalNumResponsesGenerated = getMethod("getTotalNumResponsesGenerated");
-        getTotalNumMessagesRemaining = getMethod("getTotalNumMessagesRemaining");
-        toString = getMethod("toString");
-    }
-
-    public static Method getMethod(String methodName, Class<?>... parameterTypes) {
-        try {
-            return chatBotClass.getMethod(methodName, parameterTypes);
-        } catch (NoSuchMethodException e) {
-            System.err.println("Warning: " + methodName + " method not found in ChatBot class");
-            return null;
-        }
-    }
 
     @Before
     public void setUp() throws Exception {
+        chatBotClass = Submission.getClass("ChatBot");
         Field messageNumberField = chatBotClass.getDeclaredField("messageNumber");
         messageNumberField.setAccessible(true);
-        messageNumberField.set(null, 0);
+        messageNumberField.set(null, 0); // Resetting static messageNumber field to 0
         Constructor<?> defaultConstructor = chatBotClass.getConstructor();
         defaultBot = defaultConstructor.newInstance();
         Constructor<?> overloadedConstructor = chatBotClass.getConstructor(int.class);
@@ -91,12 +63,11 @@ public class ChatBotTest {
         assertEquals("Field should be of type int", int.class, messageLimitField.getType());
     }
 
-
     @Test
     public void testMessageLimitField_EqualsTen() throws Exception {
         Field messageLimitField = chatBotClass.getDeclaredField("messageLimit");
         messageLimitField.setAccessible(true);
-        int messageLimitValue = (int) messageLimitField.get(null);
+        int messageLimitValue = (Integer) messageLimitField.get(null);
         assertEquals("Expected message limit value", 10, messageLimitValue);
     }
 
@@ -112,8 +83,8 @@ public class ChatBotTest {
         Field messageNumberField = chatBotClass.getDeclaredField("messageNumber");
         messageNumberField.setAccessible(true);
         assertTrue("Field should be private", Modifier.isPrivate(messageNumberField.getModifiers()));
-        assertTrue("Field should be static",Modifier.isStatic(messageNumberField.getModifiers()));
-        int messageNumberValue = (int) messageNumberField.get(null);
+        assertTrue("Field should be static", Modifier.isStatic(messageNumberField.getModifiers()));
+        int messageNumberValue = (Integer) messageNumberField.get(null);
         assertEquals("Expected message number value", 0, messageNumberValue);
     }
 
@@ -133,7 +104,8 @@ public class ChatBotTest {
     public void testDefaultConstructor_InitialResponseCount() throws Exception {
         Field numResponsesGeneratedField = chatBotClass.getDeclaredField("numResponsesGenerated");
         numResponsesGeneratedField.setAccessible(true);
-        assertEquals("Initial value of numResponsesGenerated should be 0", 0, numResponsesGeneratedField.get(defaultBot));
+        assertEquals("Initial value of numResponsesGenerated should be 0", 0,
+                numResponsesGeneratedField.get(defaultBot));
     }
 
     @Test // 1 mark
@@ -166,8 +138,9 @@ public class ChatBotTest {
 
     @Test
     public void testGetChatBotName() throws Exception {
-        String defaultBotName = (String) getChatBotName.invoke(defaultBot);
-        String bardBotName = (String) getChatBotName.invoke(bardBot);
+        Method getChatBotNameMethod = chatBotClass.getMethod("getChatBotName");
+        String defaultBotName = (String) getChatBotNameMethod.invoke(defaultBot);
+        String bardBotName = (String) getChatBotNameMethod.invoke(bardBot);
 
         assertEquals("ChatGPT-3.5", defaultBotName);
         assertEquals("Bard", bardBotName);
@@ -175,6 +148,9 @@ public class ChatBotTest {
 
     @Test
     public void testNumResponsesGenerated() throws Exception {
+        Method getNumResponsesGenerated = chatBotClass.getMethod("getNumResponsesGenerated");
+        Method prompt = chatBotClass.getMethod("prompt", String.class);
+
         assertEquals(0, getNumResponsesGenerated.invoke(defaultBot));
         prompt.invoke(defaultBot, "Hello");
         assertEquals(1, getNumResponsesGenerated.invoke(defaultBot));
@@ -182,12 +158,15 @@ public class ChatBotTest {
 
     @Test
     public void testGetTotalNumResponsesGenerated_IsStatic() throws Exception {
+        Method getTotalNumResponsesGenerated = chatBotClass.getMethod("getTotalNumResponsesGenerated");
         assertTrue("Method should be static", Modifier.isStatic(getTotalNumResponsesGenerated.getModifiers()));
     }
 
     @Test
     public void testGetTotalNumResponsesGenerated_ReturnsTotalMessages() throws Exception { // 1 mark
-        int initialTotal = (int) getTotalNumResponsesGenerated.invoke(null);
+        Method getTotalNumResponsesGenerated = chatBotClass.getMethod("getTotalNumResponsesGenerated");
+        Method prompt = chatBotClass.getMethod("prompt", String.class);
+        int initialTotal = (Integer) getTotalNumResponsesGenerated.invoke(null);
         prompt.invoke(defaultBot, "Hello");
         prompt.invoke(bardBot, "How are you?");
         assertEquals(initialTotal + 2, getTotalNumResponsesGenerated.invoke(null));
@@ -197,85 +176,106 @@ public class ChatBotTest {
 
     @Test
     public void testGetTotalNumMessagesRemaining_IsStatic() throws Exception { // 1 mark
-        assertTrue("getTotalNumMessagesRemaining should be static", Modifier.isStatic(getTotalNumMessagesRemaining.getModifiers()));
+        Method getTotalNumMessagesRemaining = chatBotClass.getMethod("getTotalNumMessagesRemaining");
+        assertTrue("getTotalNumMessagesRemaining should be static",
+                Modifier.isStatic(getTotalNumMessagesRemaining.getModifiers()));
     }
 
     @Test
     public void testGetTotalNumMessagesRemaining_ReturnsCorrectValue() throws Exception { // 1 mark
-        int initialRemaining = (int) getTotalNumMessagesRemaining.invoke(null);
-        Field messageLimitField = chatBotClass.getDeclaredField("messageLimit");
-        messageLimitField.setAccessible(true);
-        int messageLimit = (int) messageLimitField.get(null);
-        assertEquals("Initial remaining messages should equal message limit - responses generated", messageLimit - (int)getTotalNumResponsesGenerated.invoke(null), initialRemaining);
+        Method getTotalNumResponsesRemaining = chatBotClass.getDeclaredMethod("getTotalNumMessagesRemaining");
+        Method getTotalNumResponsesGenerated = chatBotClass.getDeclaredMethod("getTotalNumResponsesGenerated");
+        Method getMessageLimit = chatBotClass.getDeclaredMethod("getMessageLimit");
+        Method prompt = chatBotClass.getMethod("prompt", String.class);
+
+        int initialRemaining = (Integer) getTotalNumResponsesRemaining.invoke(null);
+        assertEquals("Initial remaining messages should equal message limit - responses generated",
+                (Integer) getMessageLimit.invoke(null) - (Integer) getTotalNumResponsesGenerated.invoke(null),
+                initialRemaining);
         prompt.invoke(defaultBot, "Test message");
-        int newRemaining = (int) getTotalNumMessagesRemaining.invoke(null);
-        assertEquals("Remaining messages should equal message limit - responses generated", initialRemaining - 1, newRemaining);
+        int newRemaining = (Integer) getTotalNumResponsesRemaining.invoke(null);
+        assertEquals("Remaining messages should equal message limit - responses generated", initialRemaining - 1,
+                newRemaining);
     }
 
     @Test
     public void testGetTotalNumMessagesRemaining_ReachesZero() throws Exception { // 1 mark
-        int initialRemaining = (int) getTotalNumMessagesRemaining.invoke(null);
+        Method getTotalNumResponsesRemaining = chatBotClass.getDeclaredMethod("getTotalNumMessagesRemaining");
+        Method prompt = chatBotClass.getMethod("prompt", String.class);
+
+        int initialRemaining = (int) getTotalNumResponsesRemaining.invoke(null);
         for (int i = 0; i < initialRemaining; i++)
             prompt.invoke(defaultBot, "Test message " + i);
-        assertEquals("Remaining messages should be 0", 0, (int) getTotalNumMessagesRemaining.invoke(null));
+        assertEquals("Remaining messages should be 0", 0, (int) getTotalNumResponsesRemaining.invoke(null));
     }
 
     @Test
     public void testLimitReached_InitiallyFalse() throws Exception { // 1 mark
-        assertFalse((boolean)limitReached.invoke(null));
+        Method limitReached = chatBotClass.getDeclaredMethod("limitReached");
+        assertFalse((boolean) limitReached.invoke(null));
     }
 
     @Test
     public void testLimitReached_TrueWhenLimitReached() throws Exception { // 1 mark
-        int initialRemaining = (int) getTotalNumMessagesRemaining.invoke(null);
+        Method getTotalNumResponsesRemaining = chatBotClass.getDeclaredMethod("getTotalNumMessagesRemaining");
+        Method limitReached = chatBotClass.getDeclaredMethod("limitReached");
+        Method prompt = chatBotClass.getMethod("prompt", String.class);
+
+        int initialRemaining = (int) getTotalNumResponsesRemaining.invoke(null);
         for (int i = 0; i < initialRemaining; i++)
-        prompt.invoke(defaultBot, "Test message " + i);
-        assertTrue((boolean)limitReached.invoke(null));
+            prompt.invoke(defaultBot, "Test message " + i);
+        assertTrue((boolean) limitReached.invoke(null));
     }
 
     @Test
     public void testLimitReached_IsStatic() throws Exception { // 1 mark
-        assertTrue(Modifier.isStatic(limitReached.getModifiers()));
+        Method method = chatBotClass.getMethod("limitReached");
+        assertTrue(Modifier.isStatic(method.getModifiers()));
     }
-    
+
     @Test
     public void testGenerateResponse_FieldIsPrivate() throws Exception { // 1 mark
         Method generateResponse = chatBotClass.getDeclaredMethod("generateResponse");
         assertTrue(Modifier.isPrivate(generateResponse.getModifiers()));
     }
-    
+
     @Test
     public void testGenerateResponse_IncrementsCounters() throws Exception { // 1 mark
-        int initialNumResponses = (int) getNumResponsesGenerated.invoke(defaultBot);
-        int initialTotalNumResponses = (int) getTotalNumResponsesGenerated.invoke(null);
-    
+        Method getTotalNumResponsesGenerated = chatBotClass.getDeclaredMethod("getTotalNumResponsesGenerated");
+        Method getNumResponsesGenerated = chatBotClass.getDeclaredMethod("getNumResponsesGenerated");
+        Method prompt = chatBotClass.getDeclaredMethod("prompt", String.class);
+
+        int initialNumResponses = (Integer) getNumResponsesGenerated.invoke(defaultBot);
+        int initialTotalNumResponses = (Integer) getTotalNumResponsesGenerated.invoke(null);
+
         prompt.invoke(defaultBot, "Test message");
-    
+
         assertEquals(initialNumResponses + 1, (int) getNumResponsesGenerated.invoke(defaultBot));
         assertEquals(initialTotalNumResponses + 1, (int) getTotalNumResponsesGenerated.invoke(null));
     }
-    
+
     @Test
     public void testGenerateResponse_ReturnsCorrectStringFormat() throws Exception {
+        Method prompt = chatBotClass.getMethod("prompt", String.class);
         String response = (String) prompt.invoke(defaultBot, "How are you");
-        
-        String RESPONSE_PATTERN = "\\(Message\\s*#\\d+\\)\\s*Response\\s*from\\s+.*?\\s*generatedTextHere";
-        assertTrue(response.matches(RESPONSE_PATTERN));
-        // assertTrue(response.contains("(Message#"));
-        // assertTrue(response.contains("Response from"));
-        // assertTrue(response.contains("generatedTextHere"));
+
+        assertTrue(response.contains("(Message#"));
+        assertTrue(response.contains("Response from"));
+        assertTrue(response.contains("generatedTextHere"));
     }
-    
+
     @Test
     public void testGenerateResponse_ReturnsString() throws Exception { // 1 mark
+        Method prompt = chatBotClass.getDeclaredMethod("prompt", String.class);
         assertEquals(String.class, prompt.invoke(defaultBot, "Test message").getClass());
     }
 
     @Test
     public void testGenerateResponse_ContainsUniqueMessageNumber() throws Exception { // 1 mark
+        Method prompt = chatBotClass.getDeclaredMethod("prompt", String.class);
         String response1 = (String) prompt.invoke(defaultBot, "First message");
         String response2 = (String) prompt.invoke(defaultBot, "Second message");
-        
+
         int messageNumber1 = extractMessageNumber(response1);
         int messageNumber2 = extractMessageNumber(response2);
         assertNotEquals(messageNumber1, messageNumber2);
@@ -284,11 +284,12 @@ public class ChatBotTest {
     private int extractMessageNumber(String response) {
         int start = response.indexOf("#");
         int end = response.indexOf(")", start);
-        return Integer.parseInt(response.substring(start+1, end).trim());
+        return Integer.parseInt(response.substring(start + 1, end).trim());
     }
 
     @Test
     public void testToString_BotNameHeaderExists() throws Exception { // 1 mark
+        Method toString = chatBotClass.getMethod("toString");
         String toStringResult = (String) toString.invoke(defaultBot);
 
         assertTrue(toStringResult.toLowerCase().contains("ChatBot Name:".toLowerCase()));
@@ -296,44 +297,55 @@ public class ChatBotTest {
 
     @Test
     public void testToString_CorrectBotName() throws Exception { // 1 mark
+        Method toString = chatBotClass.getMethod("toString");
         Field chatBotNameField = chatBotClass.getDeclaredField("chatBotName");
         chatBotNameField.setAccessible(true);
         String toStringResult = (String) toString.invoke(defaultBot);
-        
+
         assertTrue(toStringResult.contains((String) chatBotNameField.get(defaultBot)));
     }
-    
+
     @Test
     public void testToString_NumMessagesUsedHeaderExists() throws Exception { // 1 mark
+        Method toString = chatBotClass.getMethod("toString");
         String toStringResult = (String) toString.invoke(defaultBot);
-    
+
         assertTrue(toStringResult.toLowerCase().contains("Number Messages Used:".toLowerCase()));
     }
-    
+
     @Test
     public void testToString_CorrectNumResponsesGenerated() throws Exception { // 1 mark
+        Method toString = chatBotClass.getMethod("toString");
+        Method getNumResponsesGenerated = chatBotClass.getDeclaredMethod("getNumResponsesGenerated");
         String toStringResult = (String) toString.invoke(defaultBot);
+
         assertTrue(toStringResult.contains(String.valueOf(getNumResponsesGenerated.invoke(defaultBot))));
     }
-    
 
     @Test
     public void testPrompt_ResponseWhenPrompted() throws Exception { // 1 mark
+        Method prompt = chatBotClass.getDeclaredMethod("prompt", String.class);
         String response = (String) prompt.invoke(defaultBot, "How are you");
-        
+
         assertNotNull(response);
         assertTrue(response.toLowerCase().contains("Response from".toLowerCase()));
     }
 
     @Test
     public void testPrompt_ResponseCountersAfterPrompt() throws Exception { // 1 mark
+        Method getNumResponsesGenerated = chatBotClass.getDeclaredMethod("getNumResponsesGenerated");
+        Method prompt = chatBotClass.getDeclaredMethod("prompt", String.class);
+
         prompt.invoke(defaultBot, "How are you");
         assertEquals(1, getNumResponsesGenerated.invoke(defaultBot));
     }
 
     @Test
     public void testPrompt_LimitReached() throws Exception { // 1 mark
-        int remainingMessages = (int) getTotalNumMessagesRemaining.invoke(null);
+        Method getTotalNumMessagesRemaining = chatBotClass.getMethod("getTotalNumMessagesRemaining");
+        Method prompt = chatBotClass.getMethod("prompt", String.class);
+
+        int remainingMessages = (Integer) getTotalNumMessagesRemaining.invoke(null);
         for (int i = 0; i < remainingMessages; i++) {
             prompt.invoke(defaultBot, "Test message " + i);
         }
@@ -344,6 +356,10 @@ public class ChatBotTest {
 
     @Test
     public void testPrompt_TotalResponseCounterAndRemainingMessages() throws Exception { // 1 mark
+        Method getTotalNumResponsesGenerated = chatBotClass.getDeclaredMethod("getTotalNumResponsesGenerated");
+        Method getTotalNumMessagesRemaining = chatBotClass.getDeclaredMethod("getTotalNumMessagesRemaining");
+        Method prompt = chatBotClass.getDeclaredMethod("prompt", String.class);
+
         int initialTotalResponses = (int) getTotalNumResponsesGenerated.invoke(null);
         int initialRemainingMessages = (int) getTotalNumMessagesRemaining.invoke(null);
 

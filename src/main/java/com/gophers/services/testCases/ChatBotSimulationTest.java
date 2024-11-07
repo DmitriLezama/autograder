@@ -12,26 +12,18 @@ import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.gophers.structures.domain.Submission;
+
 import static org.junit.Assert.fail;
 
 public class ChatBotSimulationTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-    private static Class<?> chatBotSimulationClass;
-    private static Method main;
-
-    @BeforeClass
-    public static void initialize() throws Exception {
-        chatBotSimulationClass = Submission.getClass("ChatBotSimulation");
-        main = chatBotSimulationClass.getMethod("main", String[].class);
-    }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws NoSuchFieldException, IllegalAccessException {
         Field messageNumberField = Submission.getClass("ChatBot").getDeclaredField("messageNumber");
         messageNumberField.setAccessible(true);
         messageNumberField.set(null, 0);
@@ -46,8 +38,9 @@ public class ChatBotSimulationTest {
     // Test for requirement 1
     @Test
     public void testMainMethodStartsWithHelloWorld() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null;
-        main.invoke(null, (Object) args);
+        mainMethod.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
         assertTrue("Should start with 'Hello World!'", output.startsWith("Hello World!")); // 1 mark
     }
@@ -78,8 +71,9 @@ public class ChatBotSimulationTest {
     // Test for requirement 3: Adding ChatBots
     @Test
     public void testAllChatBotModelsPresent() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null;
-        main.invoke(null, (Object) args);
+        mainMethod.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
         long botCount = output.lines().filter(line -> line.startsWith("Bot Number:")).count();
@@ -97,8 +91,9 @@ public class ChatBotSimulationTest {
     // Test for requirement 4: Printing ChatBot statistics
     @Test
     public void testChatBotsSectionPresent() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
 
         int messageSectionStart = output.indexOf("(Message");
@@ -110,8 +105,9 @@ public class ChatBotSimulationTest {
 
     @Test
     public void testInitialSummaryStatistics() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
 
         int messageSectionStart = output.indexOf("(Message");
@@ -122,13 +118,15 @@ public class ChatBotSimulationTest {
         assertTrue("Output should contain 'Total Messages Remaining: 10'",
                 initialSummarySection.contains("Total Messages Remaining: 10")); // 1 mark
     }
+
     // :D
     // Test for requirement 5: Interactions with ChatBots
     // Check if any interactions occurred
     @Test
     public void testAtLeastOneInteractionOccurred() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
 
         long interactionCount = output.lines()
@@ -143,8 +141,9 @@ public class ChatBotSimulationTest {
     // Check for presence of "(Message#" format indicating message interaction
     @Test
     public void testMessageNumberFormatInBotResponses() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
 
         boolean messageFormatFound = output.lines().anyMatch(line -> line.startsWith("(Message"));
@@ -154,8 +153,9 @@ public class ChatBotSimulationTest {
     // Check for handling of incorrect bot number messages
     @Test
     public void testInvalidBotNumberResponsePresent() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
 
         boolean incorrectBotMessageFound = output.lines().anyMatch(line -> line.startsWith("Incorrect Bot Number"));
@@ -165,8 +165,9 @@ public class ChatBotSimulationTest {
     // Check for exactly 15 interactions
     @Test
     public void testSimulationPerformsExactlyFifteenInteractions() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
 
         long interactionCount = output.lines()
@@ -181,19 +182,22 @@ public class ChatBotSimulationTest {
     // Check that final summary output is not empty
     @Test
     public void testFinalSummaryNotEmpty() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
         String summarySection = getFinalSummarySection(output);
 
         assertTrue("Final summary output should not be empty.", summarySection.lines().count() != 0); // 1 mark
     }
+
     // Check that final summary contains the required summary statistics
     // 1 mark
     @Test
     public void testFinalSummaryStatistics() throws Exception {
+        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null; // Equivalent to null
-        main.invoke(null, (Object) args); // Invoke main method
+        mainMethod.invoke(null, (Object) args); // Invoke main method
         String output = outputStreamCaptor.toString().trim();
         String finalSummarySection = getFinalSummarySection(output);
 
