@@ -2,7 +2,7 @@ package com.gophers.structures.grades;
 
 import org.junit.runner.Result;
 
-import com.gophers.services.helpers.GradeConfigLoader;
+import com.gophers.services.handlers.GradeConfigLoader;
 import com.gophers.utilities.Constants;
 
 public class ChatBotSimulationGrade extends GradeTemplate {

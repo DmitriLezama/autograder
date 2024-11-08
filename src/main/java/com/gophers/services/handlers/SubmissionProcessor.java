@@ -1,9 +1,10 @@
-package com.gophers.services.helpers;
+package com.gophers.services.handlers;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import com.gophers.services.helpers.SubmissionOrganizer;
 import com.gophers.utilities.Constants;
 import com.gophers.utilities.ZipFileExtractor;
 

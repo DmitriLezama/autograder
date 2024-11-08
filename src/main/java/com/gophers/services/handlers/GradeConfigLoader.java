@@ -1,6 +1,7 @@
-package com.gophers.services.helpers;
+package com.gophers.services.handlers;
 
 import com.gophers.interfaces.ConfigLoaderStrategy;
+import com.gophers.services.helpers.ConfigLoader;
 import com.gophers.structures.domain.TestFeedback;
 import java.util.HashMap;
 import java.util.Map;
