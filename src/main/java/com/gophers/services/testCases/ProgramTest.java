@@ -10,6 +10,8 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gophers.interfaces.CompileCommand;
+import com.gophers.services.helpers.JavaCompileCommand;
 import com.gophers.structures.domain.Submission;
 
 public class ProgramTest {
@@ -18,7 +20,8 @@ public class ProgramTest {
 
     @Test
     public void testCompiles() {
-        assertTrue("Submission should compile", Submission.compileAllClasses());
+        CompileCommand compileCommand = new JavaCompileCommand(Submission.getSubmissionDirectory());
+        assertTrue("Submission should compile", compileCommand.compile());
     }
 
     @Test

@@ -48,7 +48,7 @@ public class ChatBotSimulationTest {
     // Test for requirement 2
     @Test
     public void testChatBotPlatformInitialization() {
-        String filePath = Submission.submissionDirectory + "/ChatBotSimulation.java"; // Adjust the path as necessary
+        String filePath = Submission.getSubmissionDirectory() + "/ChatBotSimulation.java";
         boolean lineFound = false;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
