@@ -13,15 +13,15 @@ public class GradeFactory extends AbstractGradeFactory {
     @Override
     public Grade createGrade(Result result, int index) {
         switch (index) {
-            case Constants.PROGRAM_GRADE:
+            case Constants.PROGRAM_GRADE_INDEX:
                 return new ProgramGrade(result);
-            case Constants.CHATBOT_GENERATOR_GRADE:
+            case Constants.CHATBOT_GENERATOR_GRADE_INDEX:
                 return new ChatBotGeneratorGrade(result);
-            case Constants.CHATBOT_GRADE:
+            case Constants.CHATBOT_GRADE_INDEX:
                 return new ChatBotGrade(result);
-            case Constants.CHATBOT_PLATFORM_GRADE:
+            case Constants.CHATBOT_PLATFORM_GRADE_INDEX:
                 return new ChatBotPlatformGrade(result);
-            case Constants.CHATBOT_SIMULATION_GRADE:
+            case Constants.CHATBOT_SIMULATION_GRADE_INDEX:
                 return new ChatBotSimulationGrade(result);
             default:
                 throw new IllegalArgumentException("Unexpected index: " + index);

@@ -2,6 +2,7 @@ package com.gophers.structures.grades;
 
 import org.junit.runner.Result;
 import com.gophers.services.helpers.GradeConfigLoader;
+import com.gophers.utilities.Constants;
 
 public class ChatBotGrade extends GradeTemplate {
 	private static final int totalMarks = 36;
@@ -12,11 +13,11 @@ public class ChatBotGrade extends GradeTemplate {
 
 	@Override
 	protected void allocateWeightings() {
-		super.testMarks = GradeConfigLoader.getWeightings("ChatBotGrade");
+		super.testMarks = GradeConfigLoader.getWeightings(Constants.CHATBOT_GRADE);
 	}
 
 	@Override
 	protected void allocateFeedback() {
-		super.testFeedback = GradeConfigLoader.getFeedback("ChatBotGrade");
+		super.testFeedback = GradeConfigLoader.getFeedback(Constants.CHATBOT_GRADE);
 	}
 }
