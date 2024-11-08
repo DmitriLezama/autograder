@@ -32,6 +32,7 @@ public class AssignmentGrade {
         data.put("StudentPercentage", sum + "%");
         System.out.println(String.join("; ", getFeedback(5)));
         data.put("FeedBack", sum >= 90 ? "Excellent Work" : String.join("; ", getFeedback(5)));
+        System.out.println(toString());
         return data;
     }
 

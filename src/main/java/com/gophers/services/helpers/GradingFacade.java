@@ -1,30 +1,35 @@
-package com.gophers.managers;
+package com.gophers.services.helpers;
 
 import java.util.List;
+
 import org.junit.runner.Result;
-import com.gophers.interfaces.PDF;
-import com.gophers.services.helpers.AssignmentTestRunner;
+import com.gophers.interfaces.Facade;
 import com.gophers.structures.domain.AssignmentDetails;
 import com.gophers.structures.domain.AssignmentGrade;
 import com.gophers.structures.domain.StudentDetails;
+import com.gophers.structures.domain.Submission;
 import com.gophers.structures.factory.AbstractGradeFactory;
 import com.gophers.structures.factory.GradeFactory;
+import com.gophers.interfaces.PDF;
 import com.gophers.utilities.PDFGenerator;
 
-public class GradeManager {
+public class GradingFacade implements Facade {
     private final AbstractGradeFactory gradeFactory = new GradeFactory();
+    private final PDF pdf = new PDFGenerator();
 
-    public AssignmentDetails getAssignmentDetails(String submissionDirectory) {
+    public void processSubmissions(String zipFilePath) {
+        List<String> studentSubmissions = SubmissionProcessor.processSubmissions("submissions.zip");
+        for (String studentSubmission : studentSubmissions) {
+            Submission.resetInstance(studentSubmission);
+            AssignmentDetails result = this.processSubmission(studentSubmission);
+            pdf.generate(result);
+        }
+    }
+
+    private AssignmentDetails processSubmission(String submissionDirectory) {
         List<Result> results = new AssignmentTestRunner().runAllTest();
         AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createGrades(results));
         StudentDetails student = new StudentDetails(submissionDirectory);
-        // Logging
-        System.out.println("Results:\n" + assignmentGrade.toString());
         return new AssignmentDetails(student, assignmentGrade);
-    }
-
-    public void generatePDFGrade(AssignmentDetails assignmentDetails) {
-        PDF pdf = new PDFGenerator();
-        pdf.generate(assignmentDetails);
     }
 }
