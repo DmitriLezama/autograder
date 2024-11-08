@@ -1,7 +1,7 @@
 package com.gophers;
 
-import com.gophers.services.helpers.GradingFacade;
 import com.gophers.interfaces.Facade;
+import com.gophers.services.handlers.GradingFacade;
 
 public class App {
     public static void main(String[] args) {
