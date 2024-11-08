@@ -32,4 +32,8 @@ public class StudentDetails {
         data.put("StudentName", this.firstName + " " + this.lastName);
         return data;
     }
+
+    public String toString() {
+        return studentID + " " + firstName + " " + lastName;
+    }
 }
