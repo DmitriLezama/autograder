@@ -29,12 +29,24 @@ public class ChatBotPlatformTest {
         chatBotClass = Submission.getClass("ChatBot");
         chatBotPlatformClass = Submission.getClass("ChatBotPlatform");
         platform = chatBotPlatformClass.getConstructor().newInstance();
-        addChatBot = getMethod(chatBotPlatformClass, "addChatBot", int.class);
-        interactWithBot = getMethod(chatBotPlatformClass, "interactWithBot", int.class, String.class);
-        getChatBotList = getMethod(chatBotPlatformClass, "getChatBotList");        
+        initializeMethods();
         resetStaticFields();
     }
 
+    public void resetStaticFields() {
+        try {
+            Field messageNumberField = chatBotClass.getDeclaredField("messageNumber");
+            messageNumberField.setAccessible(true);
+            messageNumberField.set(null, 0);
+        } catch (Exception e) {}
+    }
+
+    private void initializeMethods() {
+        addChatBot = getMethod(chatBotPlatformClass, "addChatBot", int.class);
+        interactWithBot = getMethod(chatBotPlatformClass, "interactWithBot", int.class, String.class);
+        getChatBotList = getMethod(chatBotPlatformClass, "getChatBotList");        
+    }
+    
     public Method getMethod (Class<?> methodClass, String methodName, Class<?>... parameterTypes) {
         Method method = null;
         try {
@@ -42,17 +54,6 @@ public class ChatBotPlatformTest {
         }
         catch (NoSuchMethodException e) {}
         return method;
-    }
-
-    @Before
-    public void resetStaticFields() {
-        try {
-            Field messageNumberField = chatBotClass.getDeclaredField("messageNumber");
-            messageNumberField.setAccessible(true);
-            messageNumberField.set(null, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @SuppressWarnings("unchecked")
