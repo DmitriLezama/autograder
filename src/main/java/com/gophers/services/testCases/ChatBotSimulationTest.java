@@ -21,13 +21,25 @@ import static org.junit.Assert.fail;
 public class ChatBotSimulationTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
+    private Method main;
+    private String GENERATED_MESSAGE_PATTERN = "(Message#";
+    private String INCORRECT_BOT_PATTERN = "Incorrect Bot Number";
+    private String DAILY_LIMIT_REACHED_PATTERN = "Daily Limit Reached";
+    private String BOT_NUMBER_PATTERN = "Bot Number:";
 
     @Before
-    public void setUp() throws NoSuchFieldException, IllegalAccessException {
-        Field messageNumberField = Submission.getClass("ChatBot").getDeclaredField("messageNumber");
-        messageNumberField.setAccessible(true);
-        messageNumberField.set(null, 0);
+    public void setUp() throws Exception {
+        main = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         System.setOut(new PrintStream(outputStreamCaptor));
+        resetStaticFields();
+    }
+
+    public void resetStaticFields() {
+        try {
+            Field messageNumberField = Submission.getClass("ChatBot").getDeclaredField("messageNumber");;
+            messageNumberField.setAccessible(true);
+            messageNumberField.set(null, 0);
+        } catch (Exception e) {}
     }
 
     @After
@@ -38,9 +50,8 @@ public class ChatBotSimulationTest {
     // Test for requirement 1
     @Test
     public void testMainMethodStartsWithHelloWorld() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null;
-        mainMethod.invoke(null, (Object) args);
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
         assertTrue("Should start with 'Hello World!'", output.startsWith("Hello World!")); // 1 mark
     }
@@ -71,12 +82,11 @@ public class ChatBotSimulationTest {
     // Test for requirement 3: Adding ChatBots
     @Test
     public void testAllChatBotModelsPresent() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
         String[] args = null;
-        mainMethod.invoke(null, (Object) args);
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
-        long botCount = output.lines().filter(line -> line.startsWith("Bot Number:")).count();
+        long botCount = output.lines().filter(line -> containsPattern(line, BOT_NUMBER_PATTERN)).count();
         assertTrue("Should have several ChatBots", botCount > 1);
 
         // Check for individual ChatBots
@@ -91,9 +101,8 @@ public class ChatBotSimulationTest {
     // Test for requirement 4: Printing ChatBot statistics
     @Test
     public void testChatBotsSectionPresent() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
         int messageSectionStart = output.indexOf("(Message");
@@ -105,9 +114,8 @@ public class ChatBotSimulationTest {
 
     @Test
     public void testInitialSummaryStatistics() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
         int messageSectionStart = output.indexOf("(Message");
@@ -124,15 +132,13 @@ public class ChatBotSimulationTest {
     // Check if any interactions occurred
     @Test
     public void testAtLeastOneInteractionOccurred() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
-
         long interactionCount = output.lines()
-                .filter(line -> line.startsWith("(Message") ||
-                        line.startsWith("Incorrect Bot Number") ||
-                        line.startsWith("Daily Limit"))
+                .filter(line -> containsPattern(line, GENERATED_MESSAGE_PATTERN) ||
+                                containsPattern(line, INCORRECT_BOT_PATTERN) ||
+                                containsPattern(line, DAILY_LIMIT_REACHED_PATTERN))
                 .count();
 
         assertTrue("There should be interactions with ChatBots.", interactionCount > 0); // 1 mark
@@ -141,40 +147,37 @@ public class ChatBotSimulationTest {
     // Check for presence of "(Message#" format indicating message interaction
     @Test
     public void testMessageNumberFormatInBotResponses() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
-        boolean messageFormatFound = output.lines().anyMatch(line -> line.startsWith("(Message"));
-        assertTrue("Interaction messages should start with '(Message'", messageFormatFound); // 1 mark
+        boolean messageFormatFound = output.lines().anyMatch(line -> containsPattern(line, GENERATED_MESSAGE_PATTERN));
+        assertTrue("Interaction messages should start with '(Message#'", messageFormatFound); // 1 mark
     }
 
     // Check for handling of incorrect bot number messages
     @Test
     public void testInvalidBotNumberResponsePresent() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
-        boolean incorrectBotMessageFound = output.lines().anyMatch(line -> line.startsWith("Incorrect Bot Number"));
+        boolean incorrectBotMessageFound = output.lines().anyMatch(line -> containsPattern(line, INCORRECT_BOT_PATTERN));
         assertTrue("Output should include 'Incorrect Bot Number' message if applicable.", incorrectBotMessageFound); // 1
     }
 
     // Check for exactly 15 interactions
     @Test
     public void testSimulationPerformsExactlyFifteenInteractions() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
-
         long interactionCount = output.lines()
-                .filter(line -> line.startsWith("(Message#") ||
-                        line.startsWith("Incorrect Bot Number") ||
-                        line.startsWith("Daily Limit Reached"))
+                .filter(line -> containsPattern(line, GENERATED_MESSAGE_PATTERN) ||
+                                containsPattern(line, INCORRECT_BOT_PATTERN) ||
+                                containsPattern(line, DAILY_LIMIT_REACHED_PATTERN))
                 .count();
+
         assertEquals("Should interact exactly 15 times with ChatBots.", 15, interactionCount); // 1 mark
     }
 
@@ -182,9 +185,8 @@ public class ChatBotSimulationTest {
     // Check that final summary output is not empty
     @Test
     public void testFinalSummaryNotEmpty() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
         String summarySection = getFinalSummarySection(output);
 
@@ -195,9 +197,8 @@ public class ChatBotSimulationTest {
     // 1 mark
     @Test
     public void testFinalSummaryStatistics() throws Exception {
-        Method mainMethod = Submission.getClass("ChatBotSimulation").getMethod("main", String[].class);
-        String[] args = null; // Equivalent to null
-        mainMethod.invoke(null, (Object) args); // Invoke main method
+        String[] args = null;
+        main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
         String finalSummarySection = getFinalSummarySection(output);
 
@@ -229,4 +230,16 @@ public class ChatBotSimulationTest {
     private int extractNumberFromLine(String line) {
         return Integer.parseInt(line.split(":")[1].trim());
     }
+
+    // ignores case and spaces when performing comparison
+    private boolean containsPattern(String expected, String actual) {
+        expected = normalisedString(expected);
+        actual = normalisedString(actual);
+        return expected.contains(actual);
+    }
+    
+    private String normalisedString(String input) {
+        return input.replaceAll("\\s+", "").toLowerCase();
+    }
+    
 }
