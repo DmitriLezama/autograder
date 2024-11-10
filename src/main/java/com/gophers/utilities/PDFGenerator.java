@@ -13,7 +13,6 @@ import com.itextpdf.text.pdf.PdfStamper;
 public class PDFGenerator implements PDF {
 
     public void generate(AssignmentDetails assignmentDetails) {
-        System.out.println(assignmentDetails.toString());
         try {
             var data = assignmentDetails.toPDFData();
             PdfReader reader = new PdfReader(Constants.TEMPLATE_PATH);

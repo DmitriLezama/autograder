@@ -19,6 +19,7 @@ public class GradingFacade implements Facade {
         for (String studentSubmission : studentSubmissions) {
             Submission.resetInstance(studentSubmission);
             AssignmentDetails result = this.processSubmission(studentSubmission);
+            System.out.println(result.toString());
             pdf.generate(result);
         }
     }
