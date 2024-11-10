@@ -14,8 +14,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gophers.services.handlers.TextProcessor;
 import com.gophers.structures.domain.Submission;
+import com.gophers.utilities.TextProcessor;
 
 import static org.junit.Assert.fail;
 

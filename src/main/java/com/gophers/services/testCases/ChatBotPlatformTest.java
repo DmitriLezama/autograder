@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gophers.structures.domain.Submission;
-import com.gophers.services.handlers.TextProcessor;
+import com.gophers.utilities.TextProcessor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

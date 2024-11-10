@@ -1,4 +1,4 @@
-package com.gophers.services.handlers;
+package com.gophers.utilities;
 
 public class TextProcessor {
 

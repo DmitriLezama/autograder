@@ -9,8 +9,8 @@ import java.lang.reflect.Modifier;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gophers.services.handlers.TextProcessor;
 import com.gophers.structures.domain.Submission;
+import com.gophers.utilities.TextProcessor;
 
 public class ChatBotTest {
     private Class<?> chatBotClass;
