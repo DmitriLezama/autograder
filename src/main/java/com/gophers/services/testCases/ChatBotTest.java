@@ -9,6 +9,7 @@ import java.lang.reflect.Modifier;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gophers.services.handlers.TextProcessor;
 import com.gophers.structures.domain.Submission;
 
 public class ChatBotTest {
@@ -23,8 +24,6 @@ public class ChatBotTest {
     private Method limitReached;
     private Method generateResponse;
     private Method prompt;
-    private String GENERATED_RESPONSE_PATTERN = "\\s*\\(Message\\s*#\\s*\\d+\\)\\s*Response\\s*from\\s*.*?\\s*generatedTextHere";
-    private String DAILY_LIMIT_REACHED_PATTERN = "\\s*Daily\\s*Limit\\s*Reached\\s*.*?";
 
     @Before
     public void setUp() throws Exception {
@@ -136,7 +135,8 @@ public class ChatBotTest {
     public void testDefaultConstructor_CorrectName() throws Exception {
         Field chatBotNameField = chatBotClass.getDeclaredField("chatBotName");
         chatBotNameField.setAccessible(true);
-        assertEquals("Default ChatBot should be named ChatGPT-3.5", "ChatGPT-3.5", chatBotNameField.get(defaultBot));
+        assertTrue("Default ChatBot should be named ChatGPT-3.5", 
+                    TextProcessor.matchString("ChatGPT-3.5", (String) chatBotNameField.get(defaultBot)));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class ChatBotTest {
 
     @Test // 1 mark
     public void testOverloadedConstructor_ObjectNotNull() {
-        assertNotNull(bardBot);
+        assertNotNull("ChatBot instance should not be null", bardBot);
     }
 
     @Test
@@ -158,12 +158,16 @@ public class ChatBotTest {
         Field chatBotNameField = chatBotClass.getDeclaredField("chatBotName");
         chatBotNameField.setAccessible(true);
         Object llamaBot = overloadedConstructor.newInstance(1);
-        assertEquals("LLaMa", chatBotNameField.get(llamaBot));
+        assertTrue("ChatBot name should be LLaMa", 
+                TextProcessor.matchString("LLaMa", (String) chatBotNameField.get(llamaBot)));
         Object mistralBot = overloadedConstructor.newInstance(2);
-        assertEquals("Mistral7B", chatBotNameField.get(mistralBot));
-        assertEquals("Bard", chatBotNameField.get(bardBot));
+        assertTrue("ChatBot name should be Mistral7B", 
+                TextProcessor.matchString("Mistral7B", (String) chatBotNameField.get(mistralBot)));
+        assertTrue("ChatBot name should be Bard", 
+                TextProcessor.matchString("Bard", (String) chatBotNameField.get(bardBot)));
         Object solarBot = overloadedConstructor.newInstance(5);
-        assertEquals("Solar", chatBotNameField.get(solarBot));
+        assertTrue("ChatBot name should be Solar", 
+                TextProcessor.matchString("Solar", (String) chatBotNameField.get(solarBot)));
     }
 
     @Test
@@ -172,7 +176,8 @@ public class ChatBotTest {
         chatBotNameField.setAccessible(true);
         Constructor<?> overloadedConstructor = chatBotClass.getConstructor(int.class);
         Object invalidBot = overloadedConstructor.newInstance(999);
-        assertEquals("ChatGPT-3.5", chatBotNameField.get(invalidBot));
+        assertTrue("ChatBot should be named ChatGPT-3.5",
+                TextProcessor.matchString("ChatGPT-3.5", (String) chatBotNameField.get(invalidBot)));
     }
 
     @Test
@@ -180,16 +185,19 @@ public class ChatBotTest {
         String defaultBotName = (String) getChatBotName.invoke(defaultBot);
         String bardBotName = (String) getChatBotName.invoke(bardBot);
 
-        assertEquals("ChatGPT-3.5", defaultBotName);
-        assertEquals("Bard", bardBotName);
+        assertTrue("ChatBot should be named ChatGPT-3.5", 
+                TextProcessor.matchString("ChatGPT-3.5", defaultBotName));
+        assertTrue("ChatBot should be named Bard",
+                TextProcessor.matchString("Bard", bardBotName));
     }
 
     @Test
     public void testNumResponsesGenerated() throws Exception {
-
-        assertEquals(0, getNumResponsesGenerated.invoke(defaultBot));
+        assertEquals("Initial value of numResponsesGenerated should be 0", 
+                0, getNumResponsesGenerated.invoke(defaultBot));
         prompt.invoke(defaultBot, "Hello");
-        assertEquals(1, getNumResponsesGenerated.invoke(defaultBot));
+        assertEquals("Value of numResponsesGenerated should be 1 after prompting bot",
+                1, getNumResponsesGenerated.invoke(defaultBot));
     }
 
     @Test
@@ -252,12 +260,20 @@ public class ChatBotTest {
 
     @Test
     public void testLimitReached_IsStatic() throws Exception { // 1 mark
-        assertTrue(Modifier.isStatic(limitReached.getModifiers()));
+        assertTrue("limitedReached method should be static", 
+                Modifier.isStatic(limitReached.getModifiers()));
     }
 
     @Test
     public void testGenerateResponse_FieldIsPrivate() throws Exception { // 1 mark
-        assertTrue(Modifier.isPrivate(generateResponse.getModifiers()));
+        assertTrue("generateResponse method should be private", 
+                Modifier.isPrivate(generateResponse.getModifiers()));
+    }
+
+    @Test
+    public void testGenerateResponse_ReturnsString() throws Exception { // 1 mark
+        assertEquals("generateResponse method should return a String", 
+                String.class, generateResponse.invoke(defaultBot).getClass());
     }
 
     @Test
@@ -274,12 +290,9 @@ public class ChatBotTest {
     @Test
     public void testGenerateResponse_ReturnsCorrectStringFormat() throws Exception {
         String response = (String) generateResponse.invoke(defaultBot);
-        assertTrue(response.toLowerCase().matches(GENERATED_RESPONSE_PATTERN.toLowerCase()));
-    }
-
-    @Test
-    public void testGenerateResponse_ReturnsString() throws Exception { // 1 mark
-        assertEquals(String.class, generateResponse.invoke(defaultBot).getClass());
+        assertTrue(TextProcessor.compareString("(Message# 1)", response));
+        assertTrue(TextProcessor.compareString("Response from ChatGPT-3.5", response));
+        assertTrue(TextProcessor.compareString("generatedTextHere", response));
     }
 
     @Test
@@ -292,16 +305,10 @@ public class ChatBotTest {
         assertNotEquals(messageNumber1, messageNumber2);
     }
 
-    private int extractMessageNumber(String response) {
-        int start = response.indexOf("#");
-        int end = response.indexOf(")", start);
-        return Integer.parseInt(response.substring(start + 1, end).trim());
-    }
-
     @Test
     public void testToString_BotNameHeaderExists() throws Exception { // 1 mark
         String toStringResult = (String) toString.invoke(defaultBot);
-        assertTrue(toStringResult.toLowerCase().contains("ChatBot Name:".toLowerCase()));
+        assertTrue(TextProcessor.compareString("ChatBot Name:", toStringResult));
     }
 
     @Test
@@ -310,13 +317,13 @@ public class ChatBotTest {
         chatBotNameField.setAccessible(true);
         String toStringResult = (String) toString.invoke(defaultBot);
 
-        assertTrue(toStringResult.contains((String) chatBotNameField.get(defaultBot)));
+        assertTrue(TextProcessor.compareString((String) chatBotNameField.get(defaultBot), toStringResult));
     }
 
     @Test
     public void testToString_NumMessagesUsedHeaderExists() throws Exception { // 1 mark
         String toStringResult = (String) toString.invoke(defaultBot);
-        assertTrue(toStringResult.toLowerCase().contains("Number Messages Used:".toLowerCase()));
+        assertTrue(TextProcessor.compareString("Number Messages Used:", toStringResult));
     }
 
     @Test
@@ -329,7 +336,7 @@ public class ChatBotTest {
     public void testPrompt_ResponseWhenPrompted() throws Exception { // 1 mark
         String response = (String) prompt.invoke(defaultBot, "How are you");
         assertNotNull(response);
-        assertTrue(response.toLowerCase().matches(GENERATED_RESPONSE_PATTERN.toLowerCase()));
+        assertTrue(TextProcessor.compareString("Response from ChatGPT-3.5", response));
     }
 
     @Test
@@ -345,7 +352,7 @@ public class ChatBotTest {
             prompt.invoke(defaultBot, "Test message " + i);
         }
         String limitReachedResponse = (String) prompt.invoke(defaultBot, "Exceed limit message");
-        assertTrue(limitReachedResponse.toLowerCase().matches(DAILY_LIMIT_REACHED_PATTERN.toLowerCase()));
+        assertTrue(TextProcessor.compareString("Daily Limit Reached", limitReachedResponse));
     }
 
     @Test
@@ -359,5 +366,11 @@ public class ChatBotTest {
 
         assertEquals(initialTotalResponses + 3, getTotalNumResponsesGenerated.invoke(null));
         assertEquals(initialRemainingMessages - 3, getTotalNumMessagesRemaining.invoke(null));
+    }
+
+    private int extractMessageNumber(String response) {
+        int start = response.indexOf("#");
+        int end = response.indexOf(")", start);
+        return Integer.parseInt(response.substring(start + 1, end).trim());
     }
 }

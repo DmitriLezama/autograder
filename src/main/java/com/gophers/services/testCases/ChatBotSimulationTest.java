@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gophers.services.handlers.TextProcessor;
 import com.gophers.structures.domain.Submission;
 
 import static org.junit.Assert.fail;
@@ -86,16 +87,16 @@ public class ChatBotSimulationTest {
         main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
-        long botCount = output.lines().filter(line -> containsPattern(line, BOT_NUMBER_PATTERN)).count();
+        long botCount = output.lines().filter(line -> TextProcessor.compareString(BOT_NUMBER_PATTERN, line)).count();
         assertTrue("Should have several ChatBots", botCount > 1);
 
         // Check for individual ChatBots
-        assertTrue("Output should contain 'LLaMa'", output.contains("LLaMa"));
-        assertTrue("Output should contain 'Mistral7B'", output.contains("Mistral7B"));
-        assertTrue("Output should contain 'Bard'", output.contains("Bard"));
-        assertTrue("Output should contain 'Claude'", output.contains("Claude"));
-        assertTrue("Output should contain 'Solar'", output.contains("Solar"));
-        assertTrue("Output should contain 'ChatGPT-3.5'", output.contains("ChatGPT-3.5")); // 2 marks
+        assertTrue("Output should contain 'LLaMa'", TextProcessor.compareString("LLaMa", output));
+        assertTrue("Output should contain 'Mistral7B'", TextProcessor.compareString("Mistral7B", output));
+        assertTrue("Output should contain 'Bard'", TextProcessor.compareString("Bard", output));
+        assertTrue("Output should contain 'Claude'", TextProcessor.compareString("Claude", output));
+        assertTrue("Output should contain 'Solar'", TextProcessor.compareString("Solar", output));
+        assertTrue("Output should contain 'ChatGPT-3.5'", TextProcessor.compareString("ChatGPT-3.5", output)); // 2 marks
     }
 
     // Test for requirement 4: Printing ChatBot statistics
@@ -109,7 +110,7 @@ public class ChatBotSimulationTest {
         String initialSummarySection = output.substring(0, messageSectionStart).trim();
 
         assertTrue("Output should contain 'Your ChatBots' section",
-                initialSummarySection.contains("Your ChatBots")); // 1 mark
+                TextProcessor.compareString("Your ChatBots", initialSummarySection)); // 1 mark
     }
 
     @Test
@@ -122,9 +123,9 @@ public class ChatBotSimulationTest {
         String initialSummarySection = output.substring(0, messageSectionStart).trim();
 
         assertTrue("Output should contain 'Total Messages Used: 0'",
-                initialSummarySection.contains("Total Messages Used: 0"));
+                TextProcessor.compareString("Total Messages Used: 0", initialSummarySection));
         assertTrue("Output should contain 'Total Messages Remaining: 10'",
-                initialSummarySection.contains("Total Messages Remaining: 10")); // 1 mark
+                TextProcessor.compareString("Total Messages Remaining: 10", initialSummarySection)); // 1 mark
     }
 
     // :D
@@ -136,9 +137,9 @@ public class ChatBotSimulationTest {
         main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
         long interactionCount = output.lines()
-                .filter(line -> containsPattern(line, GENERATED_MESSAGE_PATTERN) ||
-                                containsPattern(line, INCORRECT_BOT_PATTERN) ||
-                                containsPattern(line, DAILY_LIMIT_REACHED_PATTERN))
+                .filter(line -> TextProcessor.compareString(GENERATED_MESSAGE_PATTERN, line) ||
+                                TextProcessor.compareString(INCORRECT_BOT_PATTERN, line) ||
+                                TextProcessor.compareString(DAILY_LIMIT_REACHED_PATTERN, line))
                 .count();
 
         assertTrue("There should be interactions with ChatBots.", interactionCount > 0); // 1 mark
@@ -151,7 +152,7 @@ public class ChatBotSimulationTest {
         main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
-        boolean messageFormatFound = output.lines().anyMatch(line -> containsPattern(line, GENERATED_MESSAGE_PATTERN));
+        boolean messageFormatFound = output.lines().anyMatch(line -> TextProcessor.compareString(GENERATED_MESSAGE_PATTERN, line));
         assertTrue("Interaction messages should start with '(Message#'", messageFormatFound); // 1 mark
     }
 
@@ -162,7 +163,7 @@ public class ChatBotSimulationTest {
         main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
 
-        boolean incorrectBotMessageFound = output.lines().anyMatch(line -> containsPattern(line, INCORRECT_BOT_PATTERN));
+        boolean incorrectBotMessageFound = output.lines().anyMatch(line -> TextProcessor.compareString(INCORRECT_BOT_PATTERN, line));
         assertTrue("Output should include 'Incorrect Bot Number' message if applicable.", incorrectBotMessageFound); // 1
     }
 
@@ -173,9 +174,9 @@ public class ChatBotSimulationTest {
         main.invoke(null, (Object) args);
         String output = outputStreamCaptor.toString().trim();
         long interactionCount = output.lines()
-                .filter(line -> containsPattern(line, GENERATED_MESSAGE_PATTERN) ||
-                                containsPattern(line, INCORRECT_BOT_PATTERN) ||
-                                containsPattern(line, DAILY_LIMIT_REACHED_PATTERN))
+                .filter(line -> TextProcessor.compareString(GENERATED_MESSAGE_PATTERN, line) ||
+                                TextProcessor.compareString(INCORRECT_BOT_PATTERN, line) ||
+                                TextProcessor.compareString(DAILY_LIMIT_REACHED_PATTERN, line))
                 .count();
 
         assertEquals("Should interact exactly 15 times with ChatBots.", 15, interactionCount); // 1 mark
@@ -206,9 +207,9 @@ public class ChatBotSimulationTest {
         String totalMessagesRemainingLine = extractLine(finalSummarySection, "Total Messages Remaining:");
 
         assertTrue("Final summary should contain 'Total Messages Used:'",
-                totalMessagesUsedLine.contains("Total Messages Used:"));
+                TextProcessor.compareString("Total Messages Used:", totalMessagesUsedLine));
         assertTrue("Final summary should contain 'Total Messages Remaining:'",
-                totalMessagesRemainingLine.contains("Total Messages Remaining:"));
+                TextProcessor.compareString("Total Messages Remaining:", totalMessagesRemainingLine));
         assertTrue("Total Messages Used should match the number of messages generated",
                 extractNumberFromLine(totalMessagesUsedLine) != 0);
         assertTrue("Total Messages Remaining should correspond with number of messages used",
@@ -222,24 +223,13 @@ public class ChatBotSimulationTest {
 
     private String extractLine(String output, String label) {
         return output.lines()
-                .filter(l -> l.contains(label))
+                .filter(l -> TextProcessor.compareString(label, l))
                 .findFirst()
                 .orElse("");
     }
 
     private int extractNumberFromLine(String line) {
         return Integer.parseInt(line.split(":")[1].trim());
-    }
-
-    // ignores case and spaces when performing comparison
-    private boolean containsPattern(String expected, String actual) {
-        expected = normalisedString(expected);
-        actual = normalisedString(actual);
-        return expected.contains(actual);
-    }
-    
-    private String normalisedString(String input) {
-        return input.replaceAll("\\s+", "").toLowerCase();
     }
     
 }

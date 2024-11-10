@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gophers.structures.domain.Submission;
+import com.gophers.services.handlers.TextProcessor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -171,8 +172,8 @@ public class ChatBotPlatformTest {
         addChatBot.invoke(platform, 1);
         addChatBot.invoke(platform, 2);
         String result = (String) getChatBotList.invoke(platform);
-        assertTrue("Should contain Bot Number: 0", result.contains("Bot Number: 0"));
-        assertTrue("Should contain Bot Number: 1", result.contains("Bot Number: 1"));
+        assertTrue("Should contain Bot Number: 0", TextProcessor.compareString("Bot Number: 0", result));
+        assertTrue("Should contain Bot Number: 1", TextProcessor.compareString("Bot Number: 1", result));
     }
 
     @Test
@@ -180,8 +181,8 @@ public class ChatBotPlatformTest {
         addChatBot.invoke(platform, 1);
         addChatBot.invoke(platform, 2);
         String result = (String) getChatBotList.invoke(platform);
-        assertTrue("Should contain Name: LLaMa", result.contains("Name: LLaMa"));
-        assertTrue("Should contain Name: Mistral7B", result.contains("Name: Mistral7B"));
+        assertTrue("Should contain Name: LLaMa", TextProcessor.compareString("Name: LLaMa", result));
+        assertTrue("Should contain Name: Mistral7B", TextProcessor.compareString("Name: Mistral7B", result));
     }
 
     @Test
@@ -192,8 +193,8 @@ public class ChatBotPlatformTest {
         addChatBot.invoke(platform, 2);
         interactWithBot.invoke(platform, 1, "Testing");
         String result = (String) getChatBotList.invoke(platform);
-        assertTrue("Should contain Number Messages Used: 2", result.contains("Number Messages Used: 2"));
-        assertTrue("Should contain Number Messages Used: 1", result.contains("Number Messages Used: 1"));
+        assertTrue("Should contain Number Messages Used: 2", TextProcessor.compareString("Number Messages Used: 2", result));
+        assertTrue("Should contain Number Messages Used: 1", TextProcessor.compareString("Number Messages Used: 1", result));
     }
 
     @Test
@@ -204,7 +205,7 @@ public class ChatBotPlatformTest {
         addChatBot.invoke(platform, 2);
         interactWithBot.invoke(platform, 1, "I am under the water");
         String result = (String) getChatBotList.invoke(platform);
-        assertTrue("Should contain Total Messages Used: 3", result.contains("Total Messages Used: 3"));
+        assertTrue("Should contain Total Messages Used: 3", TextProcessor.compareString("Total Messages Used: 3", result));
     }
 
     @Test
@@ -215,33 +216,33 @@ public class ChatBotPlatformTest {
         addChatBot.invoke(platform, 2);
         interactWithBot.invoke(platform, 1, "I am under the water");
         String result = (String) getChatBotList.invoke(platform);
-        assertTrue("Should contain Total Messages Remaining: 7", result.contains("Total Messages Remaining: 7"));
+        assertTrue("Should contain Total Messages Remaining: 7", TextProcessor.compareString("Total Messages Remaining: 7", result));
     }
 
     @Test
     public void testInteractWithValidBot() throws Exception {
         addChatBot.invoke(platform, 1);
         String response = (String) interactWithBot.invoke(platform, 0, "Hello");
-        assertTrue("Response should indicate interaction with LLaMa", response.contains("Response from LLaMa"));
-        assertTrue("Response should contain generated text", response.contains("generatedTextHere"));
+        assertTrue("Response should indicate interaction with LLaMa", TextProcessor.compareString("Response from LLaMa", response));
+        assertTrue("Response should contain generated text", TextProcessor.compareString("generatedTextHere", response));
     }
 
     @Test
     public void testInteractWithBotInvalidNegativeIndex() throws Exception {
         String response = ((String) interactWithBot.invoke(platform, -1, "Hello")).trim();
-        assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (-1)"));
+        assertTrue("Response should indicate incorrect bot number", TextProcessor.compareString("Incorrect Bot Number (-1)", response));
     }
 
     @Test
     public void testInteractWithBotInvalidOutOfRangeIndex() throws Exception {
         String response = ((String) interactWithBot.invoke(platform, 5, "Hello")).trim();
-        assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (5)"));
+        assertTrue("Response should indicate incorrect bot number", TextProcessor.compareString("Incorrect Bot Number (5)", response));
     }
 
     @Test
     public void testInteractWithBotInvalidIndexEqualToSize() throws Exception {
         String response = ((String) interactWithBot.invoke(platform, 1, "Hello")).trim();
-        assertTrue("Response should indicate incorrect bot number", response.contains("Incorrect Bot Number (1)"));
+        assertTrue("Response should indicate incorrect bot number", TextProcessor.compareString("Incorrect Bot Number (1)", response));
     }
 
     @Test
@@ -251,7 +252,7 @@ public class ChatBotPlatformTest {
         for (int i = 0; i < messageLimit; i++)
             interactWithBot.invoke(platform, 0, "Test message");
         String response = ((String) interactWithBot.invoke(platform, 0, "Another message")).trim();
-        assertTrue("Response should indicate daily limit reached", response.contains("Daily Limit Reached"));
+        assertTrue("Response should indicate daily limit reached", TextProcessor.compareString("Daily Limit Reached", response));
     }
 
     private int getMessageLimit() throws Exception {
