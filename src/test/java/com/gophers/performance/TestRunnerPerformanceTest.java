@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.performance;
 
 import com.gophers.interfaces.TestRunner;
 import com.gophers.services.handlers.AssignmentTestRunner;

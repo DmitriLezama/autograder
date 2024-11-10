@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.performance;
 
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;

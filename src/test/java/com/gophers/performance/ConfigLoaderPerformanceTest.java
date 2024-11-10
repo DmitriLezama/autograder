@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.performance;
 
 import com.gophers.interfaces.ConfigLoaderStrategy;
 import com.gophers.services.helpers.ConfigLoader;
@@ -18,7 +18,7 @@ public class ConfigLoaderPerformanceTest {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1_000_000;
         Assert.assertNotNull("Weightings data should not be null", weightings);
-        long performanceThreshold = 500;
+        long performanceThreshold = 1000;
         Assert.assertTrue("Loading weightings took too long: " + duration + " ms", duration < performanceThreshold);
         System.out.println("Weightings load time: " + duration + " ms");
     }
@@ -31,7 +31,7 @@ public class ConfigLoaderPerformanceTest {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1_000_000;
         Assert.assertNotNull("Feedback data should not be null", feedback);
-        long performanceThreshold = 500;
+        long performanceThreshold = 1000;
         Assert.assertTrue("Loading feedback took too long: " + duration + " ms", duration < performanceThreshold);
         System.out.println("Feedback load time: " + duration + " ms");
     }

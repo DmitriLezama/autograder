@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.performance;
 
 import com.gophers.interfaces.CompileCommand;
 import com.gophers.services.helpers.JavaCompileCommand;

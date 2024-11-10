@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.performance;
 
 import com.gophers.interfaces.PDF;
 import com.gophers.interfaces.Grade;
@@ -19,13 +19,14 @@ public class PDFPerformanceTest {
         AssignmentDetails assignmentDetails = new AssignmentDetails(
                 new StudentDetails("John_Doe_816123456_A1"),
                 new AssignmentGrade(createMockGrades()));
-
-        long duration = (System.nanoTime() - System.nanoTime()) / 1_000_000;
         String outputPath = Paths.get(Constants.OUTPUT_DIRECTORY, "John_Doe_816123456_A1",
                 "John_Doe_816123456_A1" + Constants.PDF_EXTENSION).toString();
+        long startTime = System.nanoTime();
         pdfGenerator.generate(assignmentDetails);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1_000_000;
         Assert.assertTrue("PDF not generated", Files.exists(Paths.get(outputPath)));
-        Assert.assertTrue("Generation too slow: " + duration + " ms", duration < 1500);
+        Assert.assertTrue("Generation too slow: " + duration + " ms", duration < 100);
         System.out.println("PDF generation time: " + duration + " ms");
     }
 

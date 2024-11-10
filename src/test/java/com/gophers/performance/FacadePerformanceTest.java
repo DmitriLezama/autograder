@@ -1,4 +1,4 @@
-package com.gophers;
+package com.gophers.performance;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
