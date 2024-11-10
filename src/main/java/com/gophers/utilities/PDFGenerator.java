@@ -14,7 +14,7 @@ public class PDFGenerator implements PDF {
 
     public void generate(AssignmentDetails assignmentDetails) {
         try {
-            var data = assignmentDetails.toPDFData();
+            Map<String, String> data = assignmentDetails.toPDFData();
             PdfReader reader = new PdfReader(Constants.TEMPLATE_PATH);
             String studentName = data.get("StudentName").replace(" ", "_");
             String studentID = data.get("StudentID");
