@@ -11,18 +11,16 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
 public class PDFGenerator implements PDF {
-    public final String TEMPLATE_PATH = "src/main/resources/Template.pdf";
-    public final String OUTPUT_PATH = "src/main/resources/StudentSubmissions";
 
     public void generate(AssignmentDetails assignmentDetails) {
         try {
             var data = assignmentDetails.toPDFData();
-            PdfReader reader = new PdfReader(TEMPLATE_PATH);
+            PdfReader reader = new PdfReader(Constants.TEMPLATE_PATH);
             String studentName = data.get("StudentName").replace(" ", "_");
             String studentID = data.get("StudentID");
             String path = studentName + "_" + studentID + "_A1";
-            String outputPath = Paths.get(OUTPUT_PATH, path, path + ".pdf").toString();
-            Files.createDirectories(Paths.get(OUTPUT_PATH, studentName + "_" + studentID + "_A1"));
+            String outputPath = Paths.get(Constants.OUTPUT_DIRECTORY, path, path + Constants.PDF_EXTENSION).toString();
+            Files.createDirectories(Paths.get(Constants.OUTPUT_DIRECTORY, studentName + "_" + studentID + "_A1"));
             PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(outputPath));
             AcroFields form = stamper.getAcroFields();
             populateFields(data, form);

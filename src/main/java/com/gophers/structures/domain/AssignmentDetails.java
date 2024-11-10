@@ -18,4 +18,8 @@ public class AssignmentDetails {
         data.putAll(assignmentGrade.toPDFData());
         return data;
     }
+
+    public String toString () {
+        return "Student - " + studentDetails.toString() + "\n" + assignmentGrade.toString();
+    }
 }

@@ -10,7 +10,7 @@ import java.util.zip.ZipInputStream;
 
 public class ZipFileExtractor {
 
-    public void extractZipEntries(InputStream zipStream, String destDirectory) throws IOException {
+    public static void extractZipEntries(InputStream zipStream, String destDirectory) throws IOException {
         ZipInputStream zipIn = new ZipInputStream(zipStream);
         ZipEntry entry;
         while ((entry = zipIn.getNextEntry()) != null) {
@@ -23,7 +23,7 @@ public class ZipFileExtractor {
         }
     }
 
-    private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+    private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
         File file = new File(filePath);
         file.getParentFile().mkdirs();
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));

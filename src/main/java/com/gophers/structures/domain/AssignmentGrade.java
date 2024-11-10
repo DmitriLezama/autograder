@@ -9,12 +9,11 @@ import java.util.TreeMap;
 import com.gophers.interfaces.Grade;
 
 public class AssignmentGrade {
-    private static final String[] CRITERIA = { "Bonus", "ChatBotGenerator", "ChatBot", "ChatBotPlatform",
-            "ChatBotSimulation" };
     private final Map<String, Integer> gradesMap = new TreeMap<>();
     private final List<TestFeedback> feedback = new ArrayList<>();
 
     public AssignmentGrade(List<Grade> grades) {
+        String[] CRITERIA = { "Bonus", "ChatBotGenerator", "ChatBot", "ChatBotPlatform", "ChatBotSimulation" };
         for (int i = 0; i < grades.size(); i++) {
             gradesMap.put(CRITERIA[i], grades.get(i).getMarks());
             feedback.addAll(grades.get(i).getFailedFeedback());
@@ -23,16 +22,19 @@ public class AssignmentGrade {
     }
 
     public Map<String, String> toPDFData() {
-        int sum = gradesMap.values().stream().mapToInt(Integer::intValue).sum();
-        sum = sum >= 90 ? 100 : sum;
         Map<String, String> data = new TreeMap<String, String>();
+        int grade = determineGrade();
         gradesMap.forEach((key, value) -> data.put(key, String.valueOf(value)));
-        data.put("Bonus", determineBonus(sum));
-        data.put("Total", String.valueOf(sum));
-        data.put("StudentPercentage", sum + "%");
-        System.out.println(String.join("; ", getFeedback(5)));
-        data.put("FeedBack", sum >= 90 ? "Excellent Work" : String.join("; ", getFeedback(5)));
+        data.put("Bonus", determineBonus(grade));
+        data.put("Total", String.valueOf(grade));
+        data.put("StudentPercentage", grade + "%");
+        data.put("FeedBack", grade >= 90 ? "Excellent Work" : getFormattedFeedback());
         return data;
+    }
+
+    private int determineGrade () {
+        int sum = gradesMap.values().stream().mapToInt(Integer::intValue).sum();
+        return sum >= 90 ? 100 : sum;
     }
 
     private String determineBonus(int totalScore) {
@@ -40,8 +42,12 @@ public class AssignmentGrade {
         return totalScore >= 90 ? "5, 10, 10" : bonus >= 5 ? "5, " + (bonus - 5) : "0";
     }
 
-    private List<String> getFeedback(int n) {
-        return feedback.stream().limit(n).map(TestFeedback::getFeedback).toList();
+    private List<String> getFeedback() {
+        return feedback.stream().map(TestFeedback::getFeedback).toList();
+    }
+
+    private String getFormattedFeedback () {
+        return String.join("; ", getFeedback());
     }
 
     public String toString() {

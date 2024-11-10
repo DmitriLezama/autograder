@@ -2,7 +2,8 @@ package com.gophers.structures.grades;
 
 import org.junit.runner.Result;
 
-import com.gophers.structures.domain.TestFeedback;
+import com.gophers.services.handlers.GradeConfigLoader;
+import com.gophers.utilities.Constants;
 
 public class ProgramGrade extends GradeTemplate {
     private static final int totalMarks = 15;
@@ -13,13 +14,12 @@ public class ProgramGrade extends GradeTemplate {
 
     @Override
     protected void allocateWeightings() {
-        super.testMarks.put("testCompiles", 5);
-        super.testMarks.put("testRuns", 10);
+        super.testMarks = GradeConfigLoader.getWeightings(Constants.PROGRAM_GRADE);
     }
 
     @Override
     protected void allocateFeedback() {
-        super.testFeedback.put("testCompiles", new TestFeedback("The program does not compile", 99));
-        super.testFeedback.put("testRuns", new TestFeedback("The program does not run", 100));
+        super.testFeedback = GradeConfigLoader.getFeedback(Constants.PROGRAM_GRADE);
     }
+
 }

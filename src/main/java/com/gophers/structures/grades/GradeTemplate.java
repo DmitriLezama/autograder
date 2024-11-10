@@ -16,8 +16,6 @@ public abstract class GradeTemplate implements Grade {
     private int marksEarned;
 
     public GradeTemplate(Result result, int totalMarks) {
-        this.testMarks = new HashMap<String, Integer>();
-        this.testFeedback = new HashMap<String, TestFeedback>();
         this.failedFeedbackMap = new HashMap<String, TestFeedback>();
         this.totalMarks = totalMarks;
         this.allocateWeightings();
