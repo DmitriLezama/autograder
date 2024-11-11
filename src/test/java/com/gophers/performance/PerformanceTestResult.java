@@ -1,25 +1,29 @@
 package com.gophers.performance;
 
 public class PerformanceTestResult {
-    private boolean success;
-    private Object result;
-    private long duration;
+    private final String testName;
+    private final boolean success;
+    private final long executionTime;
 
-    public PerformanceTestResult(boolean success, Object result, long duration) {
+    public PerformanceTestResult(String testName, boolean success, long executionTime) {
+        this.testName = testName;
         this.success = success;
-        this.result = result;
-        this.duration = duration;
+        this.executionTime = executionTime;
+    }
+
+    public String getTestName() {
+        return testName;
     }
 
     public boolean isSuccess() {
         return success;
     }
 
-    public Object getResult() {
-        return result;
+    public long getExecutionTime() {
+        return executionTime;
     }
 
-    public long getDuration() {
-        return duration;
+    public Object getResult() {
+        return success ? "Test Passed" : "Test Failed";
     }
 }

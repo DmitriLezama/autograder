@@ -7,9 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-import org.junit.runner.Result;
-
 public class TestRunnerPerformanceTest {
 
     private final long performanceThreshold = 1000;
@@ -18,13 +15,11 @@ public class TestRunnerPerformanceTest {
     public void testRunAllTestsPerformance() {
         TestRunner testRunner = new AssignmentTestRunner();
         PerformanceTestResult result = PerformanceChecker.testExecutionTime(
-            () -> {
-                List<Result> results = testRunner.runAllTests();
-                return results;
-            },
-            performanceThreshold,
-            "TestRunner - runAllTests"
-        );
+                () -> {
+                    testRunner.runAllTests();
+                },
+                performanceThreshold,
+                "TestRunner - runAllTests");
         assertNotNull("Results should not be null", result.getResult());
         assertTrue("Test execution took too long", result.isSuccess());
     }
