@@ -1,4 +1,4 @@
-package com.gophers.performance;
+package com.gophers.utilities;
 
 public class PerformanceTestResult {
     private final String testName;

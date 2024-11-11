@@ -3,6 +3,8 @@ package com.gophers.performance;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import com.gophers.services.handlers.SubmissionExtractor;
+import com.gophers.utilities.ExecutionTimer;
+import com.gophers.utilities.PerformanceTestResult;
 
 public class SubmissionExtractorPerformanceTest {
 
@@ -10,7 +12,7 @@ public class SubmissionExtractorPerformanceTest {
 
     @Test
     public void testSubmissionExtractorPerformance() {
-        PerformanceTestResult result = PerformanceChecker.testExecutionTime(
+        PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> {
                     SubmissionExtractor.extractSubmissions("submissions.zip");
                 },

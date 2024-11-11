@@ -6,6 +6,8 @@ import java.io.PrintStream;
 import org.junit.Test;
 import com.gophers.interfaces.Facade;
 import com.gophers.services.handlers.GradingFacade;
+import com.gophers.utilities.ExecutionTimer;
+import com.gophers.utilities.PerformanceTestResult;
 
 public class FacadePerformanceTest {
     private static final PrintStream originalOut = System.out;
@@ -16,7 +18,7 @@ public class FacadePerformanceTest {
     public void testFacadePerformance() throws Exception {
         Facade facade = new GradingFacade();
         System.setOut(new PrintStream(OutputStream.nullOutputStream()));
-        PerformanceTestResult result = PerformanceChecker.testExecutionTime(
+        PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> {
                     facade.processSubmissions("submissions.zip");
                 },

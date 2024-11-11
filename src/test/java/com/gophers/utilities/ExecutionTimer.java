@@ -1,6 +1,6 @@
-package com.gophers.performance;
+package com.gophers.utilities;
 
-public class PerformanceChecker {
+public class ExecutionTimer {
     public static <T> PerformanceTestResult testExecutionTime(Runnable task, long threshold, String testName) {
         long startTime = System.nanoTime();
         task.run();
