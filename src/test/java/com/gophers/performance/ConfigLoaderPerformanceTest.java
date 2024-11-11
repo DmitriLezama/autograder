@@ -2,37 +2,37 @@ package com.gophers.performance;
 
 import com.gophers.interfaces.ConfigLoaderStrategy;
 import com.gophers.services.helpers.ConfigLoader;
-import com.gophers.structures.domain.TestFeedback;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Map;
+import com.gophers.utilities.ExecutionTimer;
+import com.gophers.utilities.PerformanceTestResult;
 
 public class ConfigLoaderPerformanceTest {
+    
+    long performanceThreshold = 1000;
 
     @Test
     public void testLoadWeightingsPerformance() {
         ConfigLoaderStrategy configLoader = new ConfigLoader();
-        long startTime = System.nanoTime();
-        Map<String, Map<String, Integer>> weightings = configLoader.loadWeightings();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime) / 1_000_000;
-        Assert.assertNotNull("Weightings data should not be null", weightings);
-        long performanceThreshold = 1000;
-        Assert.assertTrue("Loading weightings took too long: " + duration + " ms", duration < performanceThreshold);
-        System.out.println("Weightings load time: " + duration + " ms");
+        PerformanceTestResult result = ExecutionTimer.testExecutionTime(
+                () -> {
+                    configLoader.loadWeightings();
+                },
+                performanceThreshold,
+                "ConfigLoader - Get Weightings");
+        Assert.assertTrue("Loading weightings took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
     }
 
     @Test
     public void testLoadFeedbackPerformance() {
         ConfigLoaderStrategy configLoader = new ConfigLoader();
-        long startTime = System.nanoTime();
-        Map<String, Map<String, TestFeedback>> feedback = configLoader.loadFeedback();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime) / 1_000_000;
-        Assert.assertNotNull("Feedback data should not be null", feedback);
-        long performanceThreshold = 1000;
-        Assert.assertTrue("Loading feedback took too long: " + duration + " ms", duration < performanceThreshold);
-        System.out.println("Feedback load time: " + duration + " ms");
+        PerformanceTestResult result = ExecutionTimer.testExecutionTime(
+                () -> {
+                    configLoader.loadFeedback();
+                },
+                performanceThreshold,
+                "ConfigLoader - Get Feedback");
+        Assert.assertTrue("Loading feedback took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
     }
 }
