@@ -11,8 +11,6 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class PDFPerformanceTest {
-    private static final long PERFORMANCE_THRESHOLD = 3000;
-
     @Test
     public void testGeneratePDFPerformance() throws Exception {
         PDF pdfGenerator = new PDFGenerator();
@@ -23,7 +21,7 @@ public class PDFPerformanceTest {
                 "John_Doe_816123456_A1" + Constants.PDF_EXTENSION).toString();
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> pdfGenerator.generate(assignmentDetails),
-                PERFORMANCE_THRESHOLD,
+                TestConstants.HIGH_PRIORITY_THRESHOLD_MS,
                 "PDF Generation");
         assertTrue("PDF not generated", Files.exists(Paths.get(outputPath)));
         assertTrue("Test execution took too long", result.isSuccess());

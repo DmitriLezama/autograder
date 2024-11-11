@@ -1,17 +1,12 @@
 package com.gophers.performance;
 
-import com.gophers.interfaces.ConfigLoaderStrategy;
-import com.gophers.services.helpers.ConfigLoader;
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.gophers.utilities.ExecutionTimer;
-import com.gophers.utilities.PerformanceTestResult;
+import com.gophers.interfaces.ConfigLoaderStrategy;
+import com.gophers.services.helpers.ConfigLoader;
+import com.gophers.utilities.*;
 
 public class ConfigLoaderPerformanceTest {
-    
-    long performanceThreshold = 1000;
-
     @Test
     public void testLoadWeightingsPerformance() {
         ConfigLoaderStrategy configLoader = new ConfigLoader();
@@ -19,7 +14,7 @@ public class ConfigLoaderPerformanceTest {
                 () -> {
                     configLoader.loadWeightings();
                 },
-                performanceThreshold,
+                TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "ConfigLoader - Get Weightings");
         Assert.assertTrue("Loading weightings took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
     }
@@ -31,7 +26,7 @@ public class ConfigLoaderPerformanceTest {
                 () -> {
                     configLoader.loadFeedback();
                 },
-                performanceThreshold,
+                TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "ConfigLoader - Get Feedback");
         Assert.assertTrue("Loading feedback took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
     }

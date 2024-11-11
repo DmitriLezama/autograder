@@ -1,20 +1,17 @@
 package com.gophers.performance;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import java.util.List;
+import org.junit.Test;
+import org.junit.runner.Result;
 import com.gophers.services.handlers.AssignmentTestRunner;
 import com.gophers.structures.factory.GradeFactory;
 import com.gophers.utilities.ExecutionTimer;
 import com.gophers.utilities.PerformanceTestResult;
-
-import org.junit.runner.Result;
-import org.junit.Test;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
+import com.gophers.utilities.TestConstants;
 
 public class GradeFactoryPerformanceTest {
-    private final long performanceThreshold = 1000;
-
     @Test
     public void createGradePerformace() {
         GradeFactory factory = new GradeFactory();
@@ -23,7 +20,7 @@ public class GradeFactoryPerformanceTest {
                 () -> {
                     factory.createGrades(results);
                 },
-                performanceThreshold,
+                TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "GradeFactory - createGrades");
         assertNotNull("Results should not be null", result.getResult());
         assertTrue("Test execution took too long", result.isSuccess());

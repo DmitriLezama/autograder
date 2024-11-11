@@ -5,18 +5,16 @@ import static org.junit.Assert.assertTrue;
 import com.gophers.services.handlers.SubmissionExtractor;
 import com.gophers.utilities.ExecutionTimer;
 import com.gophers.utilities.PerformanceTestResult;
+import com.gophers.utilities.TestConstants;
 
 public class SubmissionExtractorPerformanceTest {
-
-    private final long performanceThreshold = 2000;
-
     @Test
     public void testSubmissionExtractorPerformance() {
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> {
                     SubmissionExtractor.extractSubmissions("submissions.zip");
                 },
-                performanceThreshold,
+                TestConstants.HIGH_PRIORITY_THRESHOLD_MS,
                 "SubmissionExtractor - extractSubmissions");
         assertTrue("Test execution took too long", result.isSuccess());
     }
