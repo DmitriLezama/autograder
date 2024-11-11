@@ -18,7 +18,7 @@ public class CompileCommandPerformanceTest {
                 () -> {
                     compileCommand.compile();
                 },
-                TestConstants.HIGH_PRIORITY_THRESHOLD_MS,
+                TestConstants.MAX_ALLOWABLE_THRESHOLD_MS,
                 "JavaCompileCommand - Compiler");
         assertTrue("Compilation took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
     }

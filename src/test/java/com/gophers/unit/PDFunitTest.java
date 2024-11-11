@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class PDFunitTest {
+public class PDFUnitTest {
     @Test
     public void testGeneratePDF() throws Exception {
         PDF pdfGenerator = new PDFGenerator();
@@ -21,7 +21,7 @@ public class PDFunitTest {
                 "John_Doe_816123456_A1" + Constants.PDF_EXTENSION).toString();
         pdfGenerator.generate(assignmentDetails);
         assertTrue("PDF not generated", Files.exists(Paths.get(outputPath)));
-        
+
     }
 
     private List<Grade> createMockGrades() {

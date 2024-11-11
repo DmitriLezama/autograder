@@ -2,6 +2,7 @@
 
 # Maven target directory
 /target/
+src/main/resources/studentSubmissions
 
 # IDE specific files
 .idea/
