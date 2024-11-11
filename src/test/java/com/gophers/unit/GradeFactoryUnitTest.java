@@ -21,7 +21,7 @@ public class GradeFactoryUnitTest {
         for(int i = 0; i < results.size(); i++)
             grades.add(factory.createGrade(results.get(i), i));
         for(Grade g : grades)
-            Assert.assertTrue(g != null);      
+            Assert.assertTrue("Grade should not be null",g != null);      
     }
     
 
@@ -31,7 +31,7 @@ public class GradeFactoryUnitTest {
         List<Result> results = new AssignmentTestRunner().runAllTests();
         List<Grade> grades = factory.createGrades(results);
         for(Grade g : grades)
-          Assert.assertTrue(g != null);  
+          Assert.assertTrue("Grade should not be null",g != null);  
     }
     
 }

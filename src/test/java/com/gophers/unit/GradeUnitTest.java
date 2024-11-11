@@ -23,19 +23,19 @@ public class GradeUnitTest {
     @Test
     public void testGetMarks(){
         for(Grade g : this.grades)
-            Assert.assertNotNull(g.getMarks());
+            Assert.assertNotNull("Marks should not be null", g.getMarks());
     }
 
     @Test
     public void testGetTotalMarks(){
         for(Grade g : this.grades)
-            Assert.assertNotNull(g.getTotalMarks());
+            Assert.assertNotNull("Total Marks should not be null", g.getTotalMarks());
     }
 
     @Test
     public void testGetFailedFeedback(){
         for(Grade g : this.grades)
-            Assert.assertNotNull(g.getFailedFeedback());
+            Assert.assertNotNull("Failed Feedback should not be null", g.getFailedFeedback());
     }
     
 }

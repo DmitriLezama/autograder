@@ -15,7 +15,7 @@ public class FacadeUnitTest {
         String filePath = "src/main/resources/studentSubmissions/Brandon_Chandoo_816034693_A1";
         AssignmentDetails result;
         result = gradingFacade.processSubmission(filePath);
-        Assert.assertTrue(result != null);
+        Assert.assertTrue("Submission failed to be processed", result != null);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class FacadeUnitTest {
         String zipFilePath = "src/main/resources/submissions.zip";
         gradingFacade.processSubmissions(zipFilePath);
         File outputDir = new File("src/main/resources/studentSubmissions");
-        Assert.assertTrue(outputDir.list().length > 0);
+        Assert.assertTrue("Submissions failed to be processed", outputDir.list().length > 0);
     }
 
 }
