@@ -1,0 +1,313 @@
+weightings:
+    ProgramGrade:
+        testCompiles: 5
+        testRuns: 10
+    ChatBotGeneratorGrade:
+        testMethodIsStatic_generateChatBotLLM: 1
+        testGenerateChatBotLLM_ReturnsLLaMaForCode1: 1
+        testGenerateChatBotLLM_ReturnsMistral7BForCode2: 1
+        testGenerateChatBotLLM_ReturnsBardForCode3: 1
+        testGenerateChatBotLLM_ReturnsClaudeForCode4: 1
+        testGenerateChatBotLLM_ReturnsSolarForCode5: 1
+        testGenerateChatBotLLM_ReturnsChatGPT35ForInvalidCodes: 1
+    ChatBotGrade:
+        testChatBotNameField: 1
+        testNumResponsesGeneratedField: 1
+        testMessageLimitField_Exists: 1
+        testMessageLimitField_StaticPrivateInteger: 1
+        testMessageLimitField_EqualsTen: 1
+        testMessageNumberField_Exists: 1
+        testMessageNumberField_PrivateStaticEqualsZero: 1
+        testDefaultConstructor_ObjectNotNull: 1
+        testDefaultConstructor_CorrectName: 1
+        testDefaultConstructor_InitialResponseCount: 1
+        testOverloadedConstructor_ObjectNotNull: 1
+        testOverloadedConstructor_ValidLLMCodes: 1
+        testOverloadedConstructor_InvalidLLMCode: 1
+        testGetChatBotName: 1
+        testNumResponsesGenerated: 1
+        testGetTotalNumResponsesGenerated_IsStatic: 1
+        testGetTotalNumResponsesGenerated_ReturnsTotalMessages: 1
+        testGetTotalNumMessagesRemaining_IsStatic: 1
+        testGetTotalNumMessagesRemaining_ReturnsCorrectValue: 1
+        testGetTotalNumMessagesRemaining_ReachesZero: 1
+        testLimitReached_IsStatic: 1
+        testLimitReached_InitiallyFalse: 1
+        testLimitReached_TrueWhenLimitReached: 1
+        testGenerateResponse_isPrivate: 1
+        testGenerateResponse_IncrementsCounters: 1
+        testGenerateResponse_ReturnsCorrectStringFormat: 1
+        testGenerateResponse_ReturnsString: 1
+        testGenerateResponse_ContainsUniqueMessageNumber: 1
+        testToString_BotNameHeaderExists: 1
+        testToString_CorrectBotName: 1
+        testToString_NumMessagesUsedHeaderExists: 1
+        testToString_CorrectNumResponsesGenerated: 1
+        testPrompt_ResponseWhenPrompted: 1
+        testPrompt_ResponseCountersAfterPrompt: 1
+        testPrompt_LimitReached: 1
+        testPrompt_TotalResponseCounterAndRemainingMessages: 1
+    ChatBotPlatformGrade:
+        testBotsCollectionInitialized: 1
+        testBotsCollectionIsPrivate: 1
+        testChatBotPlatformConstructor: 1
+        testChatBotPlatformBotsCollectionInitialized: 1
+        testAddChatBotAddsFirstBot: 1
+        testAddChatBotAddsSecondBot: 1
+        testAddChatBotIncrementsBotCount: 1
+        testAddChatBotReachesLimit: 1
+        testAddChatBotAfterLimitReached: 1
+        testGetChatBotListContainsBotNumbers: 1
+        testGetChatBotListContainsBotNames: 1
+        testGetChatBotListContainsMessageCountPerBot: 1
+        testGetChatBotListContainsTotalMessagesUsed: 1
+        testGetChatBotListContainsTotalMessagesRemaining: 2
+        testInteractWithValidBot: 1
+        testInteractWithBotInvalidNegativeIndex: 1
+        testInteractWithBotInvalidOutOfRangeIndex: 1
+        testInteractWithBotInvalidIndexEqualToSize: 1
+        testInteractWithBotAfterLimitReached: 1
+    ChatBotSimulationGrade:
+        testMainMethodStartsWithHelloWorld: 1
+        testChatBotPlatformInitialization: 1
+        testAllChatBotModelsPresent: 2
+        testChatBotsSectionPresent: 1
+        testInitialSummaryStatistics: 1
+        testAtLeastOneInteractionOccurred: 1
+        testMessageNumberFormatInBotResponses: 1
+        testInvalidBotNumberResponsePresent: 1
+        testSimulationPerformsExactlyFifteenInteractions: 1
+        testFinalSummaryNotEmpty: 1
+        testFinalSummaryStatistics: 1
+
+testFeedback:
+    ProgramGrade:
+        testCompiles:
+            feedback: "The program does not compile"
+            priority: 99
+        testRuns:
+            feedback: "The program does not run"
+            priority: 100
+    ChatBotGeneratorGrade:
+        testMethodIsStatic_generateChatBotLLM:
+            feedback: "generateChatBotLLM should be static and accessible."
+            priority: 86
+        testGenerateChatBotLLM_ReturnsLLaMaForCode1:
+            feedback: "generateChatBotLLM should return 'LLaMa' when the code is 1."
+            priority: 72
+        testGenerateChatBotLLM_ReturnsMistral7BForCode2:
+            feedback: "generateChatBotLLM should return 'Mistral7B' when the code is 2."
+            priority: 71
+        testGenerateChatBotLLM_ReturnsBardForCode3:
+            feedback: "generateChatBotLLM should return 'Bard' when the code is 3."
+            priority: 70
+        testGenerateChatBotLLM_ReturnsClaudeForCode4:
+            feedback: "generateChatBotLLM should return 'Claude' when the code is 4."
+            priority: 69
+        testGenerateChatBotLLM_ReturnsSolarForCode5:
+            feedback: "generateChatBotLLM should return 'Solar' when the code is 5."
+            priority: 68
+        testGenerateChatBotLLM_ReturnsChatGPT35ForInvalidCodes:
+            feedback: "generateChatBotLLM should return 'ChatGPT-3.5' for any invalid codes."
+            priority: 67
+    ChatBotGrade:
+        testChatBotNameField:
+            feedback: "chatBotName field should exist and be a private string."
+            priority: 98
+        testNumResponsesGeneratedField:
+            feedback: "numResponsesGenerated field should exist,be private and of type int."
+            priority: 97
+        testMessageLimitField_FieldExists:
+            feedback: "messageLimit field should exist in the ChatBot class."
+            priority: 96
+        testMessageNumberField_FieldExists:
+            feedback: "messageNumber field should exist in the ChatBot class."
+            priority: 95
+        testMessageLimitField_FieldisStaticandPrivate:
+            feedback: "messageLimit field should be static and private."
+            priority: 94
+        testGetTotalNumResponsesGenerated_IsStatic:
+            feedback: "getTotalNumResponsesGenerated should be static."
+            priority: 93
+        testGetTotalNumMessagesRemaining_IsStatic:
+            feedback: "getTotalNumMessagesRemaining should be static."
+            priority: 92
+        testLimitReached_IsStatic:
+            feedback: "limitReached should be static."
+            priority: 91
+        testGenerateResponse_FieldisPrivate:
+            feedback: "generateResponse should be private."
+            priority: 90
+        testMessageLimitField_FieldisIntegerandEquals10:
+            feedback: "messageLimit should be an integer with a value of 10."
+            priority: 89
+        testMessageNumberField_FieldisStaticandZero:
+            feedback: "messageNumber should be static and initialized to zero."
+            priority: 88
+        testDefaultConstructor_ObjectNotNull:
+            feedback: "Default ChatBot constructor should create a non-null ChatBot object."
+            priority: 85
+        testOverloadedConstructor_ObjectisNotNull:
+            feedback: "Overloaded constructor should create a valid ChatBot instance."
+            priority: 84
+        testOverloadedConstructor_ProducesCorrectBot:
+            feedback: "Overloaded constructor should set correct ChatBot name based on LLM code."
+            priority: 83
+        testOverloadedConstructor_InvalidLLMCode:
+            feedback: "Invalid LLM codes should set the name to 'Chat        GPT-3.5'."
+            priority: 82
+        testDefaultConstructor_CorrectChatBotName:
+            feedback: "Default ChatBot name should be 'ChatGPT-3.5' if no code is provided."
+            priority: 81
+        testDefaultConstructor_InitialResponseCount:
+            feedback: "Default constructor should set initial response count to 0."
+            priority: 80
+        testGetChatBotName:
+            feedback: "getChatBotName should return the correct bot name for each instance."
+            priority: 79
+        testNumResponsesGenerated:
+            feedback: "numResponsesGenerated should increase with each prompt."
+            priority: 78
+        testPrompt_ResponseWhenPrompted:
+            feedback: "prompt should produce a response that includes 'Response from'."
+            priority: 77
+        testGenerateResponse_ReturnsString:
+            feedback: "generateResponse should return a String."
+            priority: 76
+        testToString_BotNameHeaderExists:
+            feedback: "toString should include 'ChatBot Name' header."
+            priority: 75
+        testToString_NumMessagesUsedHeaderExists:
+            feedback: "toString should include 'Number Messages Used' header."
+            priority: 74
+        testLimitReached_InitiallyFalse:
+            feedback: "limitReached should return false initially."
+            priority: 73
+        testLimitReached_TrueWhenLimitReached:
+            feedback: "limitReached should return true when message limit is hit."
+            priority: 72
+        testGenerateResponse_IncrementsCounters:
+            feedback: "generateResponse should increment both instance and total response counters."
+            priority: 62
+        testGetTotalNumResponsesGenerated_ReturnsTotalMessages:
+            feedback: "Total number of responses should include responses from all ChatBot instances."
+            priority: 61
+        testGetTotalNumMessagesRemaining_ReturnsCorrectValue:
+            feedback: "Remaining messages count should reflect current usage."
+            priority: 60
+        testGetTotalNumMessagesRemaining_ReachesZero:
+            feedback: "Remaining messages should eventually reach zero if limit is reached."
+            priority: 59
+        testGenerateResponse_ReturnsCorrectStringFormat:
+            feedback: "Response format should match 'Response from [botName]: Message #[number]'"
+            priority: 58
+        testGenerateResponse_ContainsUniqueMessageNumber:
+            feedback: "Each response should contain a unique message number."
+            priority: 33
+        testToString_CorrectBotName:
+            feedback: "toString should display the correct bot name."
+            priority: 32
+        testToString_CorrectNumResponsesGenerated:
+            feedback: "toString should show the correct number of responses generated."
+            priority: 31
+        testPrompt_ResponseCountersAfterPrompt:
+            feedback: "Response counters should update correctly after each prompt."
+            priority: 30
+        testPrompt3_LimitReach:
+            feedback: "System should handle reaching message limit."
+            priority: 29
+        testPrompt_TotalResponseCounterAndRemainingMessages:
+            feedback: "Total response counter and remaining messages should be consistent."
+            priority: 28
+    ChatBotPlatformGrade:
+        testBotsCollectionInitialized:
+            feedback: "Bots collection should be initialized."
+            priority: 88
+        testBotsCollectionIsPrivate:
+            feedback: "Bots collection should be private."
+            priority: 87
+        testChatBotPlatformConstructor:
+            feedback: "ChatBotPlatform was not properly initialized."
+            priority: 79
+        testChatBotPlatformBotsCollectionInitialized:
+            feedback: "Bots collection was not initialized as an ArrayList<ChatBot>."
+            priority: 78
+        testAddChatBotAddsFirstBot:
+            feedback: "First ChatBot was not added as expected."
+            priority: 71
+        testAddChatBotAddsSecondBot:
+            feedback: "Second ChatBot was not added correctly."
+            priority: 70
+        testAddChatBotIncrememtsBotCount:
+            feedback: "Bots count did not increment correctly after adding ChatBots."
+            priority: 56
+        testAddChatBotReachesLimit:
+            feedback: "Limit check failed after reaching the message limit."
+            priority: 55
+        testAddChatBotAfterLimitReached:
+            feedback: "ChatBot was incorrectly added after limit was reached."
+            priority: 54
+        testGetChatBotListContainsBotNumbers:
+            feedback: "Bot numbers were not correctly included in the list output."
+            priority: 70
+        testGetChatBotListContainsBotNames:
+            feedback: "Bot names were missing in the list output."
+            priority: 75
+        testGetChatBotListContainsMessageCountPerBot:
+            feedback: "Message counts for each bot were not correctly displayed."
+            priority: 74
+        testGetChatBotListContainsTotalMessagesUsed:
+            feedback: "Total messages used were incorrectly calculated or not included."
+            priority: 73
+        testGetChatBotListContainsTotalMessagesRemaining:
+            feedback: "Remaining messages were not correctly displayed."
+            priority: 34
+        testInteractWithValidBot:
+            feedback: "Valid interaction with bot failed."
+            priority: 69
+        testInteractWithBotInvalidNegativeIndex:
+            feedback: "Interaction with negative index did not return the expected error message."
+            priority: 53
+        testInteractWithBotInvalidOutOfRangeIndex:
+            feedback: "Interaction with out-of-range index failed to provide the correct error message."
+            priority: 52
+        testInteractWithBotInvalidIndexEqualToSize:
+            feedback: "Interaction with an index equal to the list size did not handle the error correctly."
+            priority: 51
+        testInteractWithBotAfterLimitReached:
+            feedback: "Interaction after message limit reached did not return 'Daily Limit Reached'."
+            priority: 50
+    ChatBotSimulationGrade:
+        testMainMethodStartsWithHelloWorld:
+            feedback: "Main method output should start with 'Hello World!'"
+            priority: 43
+        testChatBotPlatformInitialization:
+            feedback: "Expected initialization of ChatBotPlatform was not found."
+            priority: 84
+        testAllChatBotModelsPresent:
+            feedback: "Not all ChatBot models were listed in the output."
+            priority: 42
+        testChatBotsSectionPresent:
+            feedback: "The 'Your ChatBots' section was missing."
+            priority: 41
+        testInitialSummaryStatistics:
+            feedback: "Initial summary statistics were missing or incorrect."
+            priority: 40
+        testAtLeastOneInteractionOccurred:
+            feedback: "Expected at least one interaction with a ChatBot."
+            priority: 39
+        testMessageNumberFormatInBotResponses:
+            feedback: "Each interaction should start with '(Message#)'"
+            priority: 38
+        testInvalidBotNumberResponsePresent:
+            feedback: "Expected 'Incorrect Bot Number' message was missing."
+            priority: 37
+        testSimulationPerformsExactlyFifteenInteractions:
+            feedback: "The simulation should interact exactly 15 times with ChatBots."
+            priority: 57
+        testFinalSummaryNotEmpty:
+            feedback: "The final summary section should contain summary information."
+            priority: 36
+        testFinalSummaryStatistics:
+            feedback: "Final summary statistics were missing or incorrect."
+            priority: 35

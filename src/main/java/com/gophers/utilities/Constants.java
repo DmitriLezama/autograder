@@ -5,6 +5,7 @@ public final class Constants {
         throw new AssertionError("Cannot instantiate Constants class");
     }
 
+    public static final String MARK_SCHEME = "mark_scheme.yaml";
     public static final String OUTPUT_DIRECTORY = "src/main/resources/studentSubmissions";
     public static final String TEMPLATE_PATH = "src/main/resources/Template.pdf";
     public static final String STUDENT_SUBMISSIONS_DIR = OUTPUT_DIRECTORY;
