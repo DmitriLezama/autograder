@@ -6,6 +6,7 @@ import com.gophers.structures.grades.ChatBotGrade;
 import com.gophers.utilities.Constants;
 import com.gophers.utilities.ExecutionTimer;
 import com.gophers.utilities.PerformanceTestResult;
+import com.gophers.utilities.TestConstants;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 public class GradePerformanceTest {
-    private final long performanceThreshold = 1000;
     private Grade grade;
 
     @Before
@@ -28,7 +28,7 @@ public class GradePerformanceTest {
     public void getMarksPerformance() {
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> grade.getMarks(),
-                performanceThreshold,
+                TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "Grade - getMarks"
         );
         assertTrue("Test execution took too long", result.isSuccess());
@@ -38,7 +38,7 @@ public class GradePerformanceTest {
     public void getTotalMarksPerformance() {
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> grade.getTotalMarks(),
-                performanceThreshold,
+                TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "Grade - getTotalMarks"
         );
         assertTrue("Test execution took too long", result.isSuccess());
@@ -48,7 +48,7 @@ public class GradePerformanceTest {
     public void getFailedFeedbackPerformance() {
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> grade.getFailedFeedback(),
-                performanceThreshold,
+                TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "Grade - getFailedFeedback"
         );
         assertTrue("Test execution took too long", result.isSuccess());
