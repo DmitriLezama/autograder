@@ -28,7 +28,7 @@ public class PDFGenerator implements PDF {
             stamper.close();
             reader.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("PDF could not be generated");
         }
     }
 

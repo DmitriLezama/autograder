@@ -1,7 +1,7 @@
 package com.gophers.services.handlers;
 
-import com.gophers.interfaces.ConfigLoaderStrategy;
-import com.gophers.services.helpers.ConfigLoader;
+import com.gophers.interfaces.MarkSchemeLoaderStrategy;
+import com.gophers.services.helpers.MarkSchemeLoader;
 import com.gophers.structures.domain.TestFeedback;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +10,11 @@ public class GradeConfigLoader {
 	private static final Map<String, Map<String, Integer>> weightings;
 	private static final Map<String, Map<String, TestFeedback>> feedback;
 
-	private static final ConfigLoaderStrategy configLoader = new ConfigLoader();
+	private static final MarkSchemeLoaderStrategy markScheme = new MarkSchemeLoader();
 
 	static {
-		weightings = configLoader.loadWeightings();
-		feedback = configLoader.loadFeedback();
+		weightings = markScheme.loadWeightings();
+		feedback = markScheme.loadFeedback();
 	}
 
 	public static Map<String, Integer> getWeightings(String gradeType) {

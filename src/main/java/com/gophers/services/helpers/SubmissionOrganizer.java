@@ -34,7 +34,7 @@ public class SubmissionOrganizer {
             ZipFileExtractor.extractZipEntries(studentZipStream, outputDirectory.getAbsolutePath());
             Files.delete(zipFile);
         } catch (IOException e) {
-            System.err.println("File could not be unzipped");
+            // System.err.println("File could not be unzipped");
         }
     }
 }

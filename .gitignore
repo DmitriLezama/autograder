@@ -1,6 +1,4 @@
 # project specific files
-StudentSubmissions
-src/main/resources
 
 # Maven target directory
 /target/
