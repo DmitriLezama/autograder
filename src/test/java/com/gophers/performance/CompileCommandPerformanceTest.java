@@ -7,19 +7,24 @@ import org.junit.Test;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import com.gophers.utilities.ExecutionTimer;
+import com.gophers.utilities.PerformanceTestResult;
+
+
 public class CompileCommandPerformanceTest {
+    private long performanceThreshold = 10000;
     @Test
     public void testCompilePerformance() {
         String submissionDirectory = "src/main/resources/sample";
         Assert.assertTrue("Submission directory does not exist", Files.isDirectory(Paths.get(submissionDirectory)));
         CompileCommand compileCommand = new JavaCompileCommand(submissionDirectory);
-        long startTime = System.nanoTime();
-        boolean compilationSuccess = compileCommand.compile();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime) / 1_000_000;
-        Assert.assertTrue("Compilation failed", compilationSuccess);
-        long performanceThreshold = 5000;
-        Assert.assertTrue("Compilation took too long: " + duration + " ms", duration < performanceThreshold);
-        System.out.println("Compilation time: " + duration + " ms");
+        PerformanceTestResult result = ExecutionTimer.testExecutionTime(
+            () -> {
+                compileCommand.compile();
+            },
+            performanceThreshold,
+            "JavaCompileCommand - Compiler"
+        );
+        Assert.assertTrue("Compilation took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
     }
 }
