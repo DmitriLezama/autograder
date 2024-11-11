@@ -265,7 +265,7 @@ public class ChatBotTest {
     }
 
     @Test
-    public void testGenerateResponse_FieldIsPrivate() throws Exception { // 1 mark
+    public void testGenerateResponse_isPrivate() throws Exception { // 1 mark
         assertTrue("generateResponse method should be private", 
                 Modifier.isPrivate(generateResponse.getModifiers()));
     }

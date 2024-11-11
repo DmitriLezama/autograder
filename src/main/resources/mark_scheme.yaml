@@ -34,7 +34,7 @@ weightings:
         testLimitReached_IsStatic: 1
         testLimitReached_InitiallyFalse: 1
         testLimitReached_TrueWhenLimitReached: 1
-        testGenerateResponse_FieldIsPrivate: 1
+        testGenerateResponse_isPrivate: 1
         testGenerateResponse_IncrementsCounters: 1
         testGenerateResponse_ReturnsCorrectStringFormat: 1
         testGenerateResponse_ReturnsString: 1
