@@ -15,7 +15,7 @@ public class GradingFacade implements Facade {
     private final PDF pdf = new PDFGenerator();
 
     public void processSubmissions(String zipFilePath) {
-        List<String> studentSubmissions = SubmissionProcessor.processSubmissions("submissions.zip");
+        List<String> studentSubmissions = SubmissionExtractor.extractSubmissions("submissions.zip");
         for (String studentSubmission : studentSubmissions) {
             Submission.resetInstance(studentSubmission);
             AssignmentDetails result = this.processSubmission(studentSubmission);
@@ -24,7 +24,7 @@ public class GradingFacade implements Facade {
         }
     }
 
-    private AssignmentDetails processSubmission(String submissionDirectory) {
+    public AssignmentDetails processSubmission(String submissionDirectory) {
         List<Result> results = new AssignmentTestRunner().runAllTests();
         AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createGrades(results));
         StudentDetails student = new StudentDetails(submissionDirectory);

@@ -8,8 +8,8 @@ import com.gophers.services.helpers.SubmissionOrganizer;
 import com.gophers.utilities.Constants;
 import com.gophers.utilities.ZipFileExtractor;
 
-public class SubmissionProcessor {
-    public static List<String> processSubmissions(String submissionsZipPath) {
+public class SubmissionExtractor {
+    public static List<String> extractSubmissions(String submissionsZipPath) {
         try (InputStream zipStream = loadResource(submissionsZipPath)) {
             ZipFileExtractor.extractZipEntries(zipStream, Constants.OUTPUT_DIRECTORY);
             return SubmissionOrganizer.organizeSubmissions(Constants.OUTPUT_DIRECTORY);
@@ -19,7 +19,7 @@ public class SubmissionProcessor {
     }
 
     private static InputStream loadResource(String resourceFileName) throws IOException {
-        InputStream inputStream = SubmissionProcessor.class.getClassLoader().getResourceAsStream(resourceFileName);
+        InputStream inputStream = SubmissionExtractor.class.getClassLoader().getResourceAsStream(resourceFileName);
         if (inputStream == null)
             throw new IOException("Resource not found: " + resourceFileName);
         return inputStream;
