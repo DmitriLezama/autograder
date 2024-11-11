@@ -43,8 +43,8 @@ public class ConfigLoader implements ConfigLoaderStrategy {
                 for (Map.Entry<String, Object> feedbackEntry : entry.getValue().entrySet()) {
                     Map<String, Object> feedbackData = (Map<String, Object>) feedbackEntry.getValue();
                     String message = (String) feedbackData.get("feedback");
-                    int score = (int) feedbackData.get("priority");
-                    feedbackMap.put(feedbackEntry.getKey(), new TestFeedback(message, score));
+                    int priority = (int) feedbackData.get("priority");
+                    feedbackMap.put(feedbackEntry.getKey(), new TestFeedback(message, priority));
                 }
                 feedback.put(entry.getKey(), feedbackMap);
             }
