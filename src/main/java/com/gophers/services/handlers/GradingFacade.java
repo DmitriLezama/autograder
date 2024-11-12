@@ -7,7 +7,6 @@ import com.gophers.interfaces.Facade;
 import com.gophers.structures.domain.*;
 import com.gophers.structures.factory.*;
 import com.gophers.interfaces.PDF;
-import com.gophers.utilities.PDFGenerator;
 
 public class GradingFacade implements Facade {
     private final AbstractGradeFactory gradeFactory = new GradeFactory();

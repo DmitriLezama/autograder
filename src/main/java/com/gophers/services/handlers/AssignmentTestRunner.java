@@ -7,7 +7,7 @@ import org.junit.runner.Result;
 import com.gophers.interfaces.TestRunner;
 import com.gophers.services.testCases.*;
 
-public class AssignmentTestRunner implements TestRunner {
+public class AssignmentTestRunner implements TestRunner<Result> {
     private final List<Class<?>> testClasses;
 
     public AssignmentTestRunner() {

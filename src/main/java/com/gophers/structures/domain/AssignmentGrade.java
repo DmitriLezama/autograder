@@ -3,60 +3,36 @@ package com.gophers.structures.domain;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import com.gophers.interfaces.Grade;
+import com.gophers.services.helpers.GradeUtils;
+import com.gophers.utilities.Constants;
 
 public class AssignmentGrade {
     private final Map<String, Integer> gradesMap = new TreeMap<>();
     private final Map<String, Boolean> feedback = new TreeMap<>();
 
     public AssignmentGrade(List<Grade> grades) {
-        String[] CRITERIA = { "Bonus", "ChatBotGenerator", "ChatBot", "ChatBotPlatform", "ChatBotSimulation" };
         for (int i = 0; i < grades.size(); i++) {
-            gradesMap.put(CRITERIA[i], grades.get(i).getMarks());
-            feedback.putAll(grades.get(i).getTestFeedback());
+            Grade grade = grades.get(i);
+            gradesMap.put(Constants.CRITERIA[i], grade.getMarks());
+            feedback.putAll(grade.getTestFeedback());
         }
     }
 
     public Map<String, String> toPDFData() {
-        Map<String, String> data = new TreeMap<String, String>();
-        int grade = determineGrade();
-        gradesMap.forEach((key, value) -> data.put(key, String.valueOf(value)));
-        for (String key : feedback.keySet()) {
-            boolean result = feedback.get(key);
-            data.put(key, result ? "PASSED" : "FAILED");
-        }
-        data.put("passesAllJUnitTests", grade > 90 ? "PASSED" : "FAILED");
-        data.put("Bonus", determineBonus(grade));
-        data.put("Total", String.valueOf(grade));
-        data.put("StudentPercentage", grade + "%");
-        data.put("FeedBack", determineComment(grade));
+        Map<String, String> data = new TreeMap<>();
+        int grade = GradeUtils.calculateTotalGrade(gradesMap);
+        gradesMap.forEach((criterion, score) -> data.put(criterion, String.valueOf(score)));
+        data.putAll(GradeUtils.getFeedbackAsStatus(feedback));
+        data.put(Constants.PASSES_ALL_JUNIT_TESTS, grade > 90 ? Constants.PASSED : Constants.FAILED);
+        data.put(Constants.BONUS, GradeUtils.calculateBonus(grade, gradesMap.getOrDefault(Constants.CRITERIA[0], 0)));
+        data.put(Constants.TOTAL, String.valueOf(grade));
+        data.put(Constants.STUDENT_PERCENTAGE, grade + "%");
+        data.put(Constants.FEEDBACK, GradeUtils.getComment(grade));
         return data;
     }
 
-    private int determineGrade() {
-        int sum = gradesMap.values().stream().mapToInt(Integer::intValue).sum();
-        return sum >= 90 ? 100 : sum;
-    }
-
-    private String determineBonus(int totalScore) {
-        int bonus = gradesMap.getOrDefault("Bonus", 0);
-        return totalScore >= 90 ? "5, 10, 10" : bonus >= 5 ? "5, " + (bonus - 5) : "0";
-    }
-
-    private String determineComment(int totalScore) {
-        if (totalScore >= 90) {
-            return "Excellent Work!";
-        }
-        if (totalScore >= 70) {
-            return "Great Work!";
-        }
-        if (totalScore >= 50) {
-            return "Good Attempt";
-        }
-        return "Needs Improvement";
-    }
-
+    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         gradesMap.forEach((key, value) -> result.append(key).append(" : ").append(value).append("\n"));

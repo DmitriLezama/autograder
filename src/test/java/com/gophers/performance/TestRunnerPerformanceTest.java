@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class TestRunnerPerformanceTest {
     @Test
     public void testRunAllTestsPerformance() {
-        TestRunner testRunner = new AssignmentTestRunner();
+        TestRunner<?> testRunner = new AssignmentTestRunner();
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> {
                     testRunner.runAllTests();

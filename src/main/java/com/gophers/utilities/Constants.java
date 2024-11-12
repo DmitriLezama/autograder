@@ -22,4 +22,14 @@ public final class Constants {
     public static final int CHATBOT_GRADE_INDEX = 2;
     public static final int CHATBOT_PLATFORM_GRADE_INDEX = 3;
     public static final int CHATBOT_SIMULATION_GRADE_INDEX = 4;
+
+    public static final String[] CRITERIA = { "Bonus", "ChatBotGenerator", "ChatBot", "ChatBotPlatform",
+            "ChatBotSimulation" };
+    public static final String PASSED = "Pass";
+    public static final String FAILED = "Fail";
+    public static final String FEEDBACK = "FeedBack";
+    public static final String PASSES_ALL_JUNIT_TESTS = "passesAllJUnitTests";
+    public static final String BONUS = "Bonus";
+    public static final String TOTAL = "Total";
+    public static final String STUDENT_PERCENTAGE = "StudentPercentage";
 }

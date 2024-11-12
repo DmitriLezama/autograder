@@ -1,4 +1,4 @@
-package com.gophers.utilities;
+package com.gophers.services.handlers;
 
 import java.io.FileOutputStream;
 import java.nio.file.Files;
@@ -6,12 +6,12 @@ import java.nio.file.Paths;
 import java.util.Map;
 import com.gophers.interfaces.PDF;
 import com.gophers.structures.domain.AssignmentDetails;
+import com.gophers.utilities.Constants;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
 public class PDFGenerator implements PDF {
-
     public void generate(AssignmentDetails assignmentDetails) {
         try {
             Map<String, String> data = assignmentDetails.toPDFData();

@@ -1,6 +1,7 @@
 package com.gophers.unit;
 
 import com.gophers.interfaces.PDF;
+import com.gophers.services.handlers.PDFGenerator;
 import com.gophers.structures.domain.*;
 import com.gophers.interfaces.Grade;
 import com.gophers.utilities.*;
