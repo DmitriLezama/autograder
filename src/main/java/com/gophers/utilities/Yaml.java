@@ -8,8 +8,8 @@ import java.util.Map;
 public class Yaml {
     Map<String, Map<String, Integer>> result = new HashMap<>();
     Map<String, Integer> currentSection = null;
-    
-    public Map<String, Map<String, Integer>> loadAs(InputStream inputStream) throws IOException{
+
+    public Map<String, Map<String, Integer>> loadAs(InputStream inputStream) throws IOException {
         String content = new String(inputStream.readAllBytes());
         for (String line : content.split("\n")) {
             String trimmed = line.trim();
