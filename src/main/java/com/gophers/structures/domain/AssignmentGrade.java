@@ -28,7 +28,7 @@ public class AssignmentGrade {
         data.put("Bonus", determineBonus(grade));
         data.put("Total", String.valueOf(grade));
         data.put("StudentPercentage", grade + "%");
-        data.put("FeedBack", grade >= 90 ? "Excellent Work" : getFormattedFeedback());
+        data.put("FeedBack", determineComment(grade));
         return data;
     }
 
@@ -40,6 +40,19 @@ public class AssignmentGrade {
     private String determineBonus(int totalScore) {
         int bonus = gradesMap.getOrDefault("Bonus", 0);
         return totalScore >= 90 ? "5, 10, 10" : bonus >= 5 ? "5, " + (bonus - 5) : "0";
+    }
+
+    private String determineComment(int totalScore) {
+        if (totalScore >= 90) {
+            return "Excellent Work!";
+        }
+        if (totalScore >= 70) {
+            return "Great Work!";
+        }
+        if (totalScore >= 50) {
+            return "Good Attempt";
+        }
+        return "Needs Improvement";
     }
 
     private List<String> getFeedback() {
