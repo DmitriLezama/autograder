@@ -1,24 +1,20 @@
 package com.gophers.structures.grades;
 
-import java.util.Map.Entry;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import com.gophers.interfaces.Grade;
-import com.gophers.structures.domain.TestFeedback;
 
 public abstract class GradeTemplate implements Grade {
     protected Map<String, Integer> testMarks;
-    protected Map<String, TestFeedback> testFeedback;
-    protected Map<String, TestFeedback> failedFeedbackMap;
+    protected Map<String, Boolean> feedbackMap;
     private int totalMarks;
     private int marksEarned;
 
     public GradeTemplate(Result result, int totalMarks) {
-        this.failedFeedbackMap = new HashMap<String, TestFeedback>();
+        this.feedbackMap = new HashMap<String, Boolean>();
         this.totalMarks = totalMarks;
         this.allocateWeightings();
         this.allocateFeedback();
@@ -35,9 +31,7 @@ public abstract class GradeTemplate implements Grade {
         for (Failure failure : failures) {
             String methodName = failure.getDescription().getMethodName();
             this.marksEarned -= testMarks.getOrDefault(methodName, 0);
-            TestFeedback feedback = testFeedback.get(methodName);
-            if (feedback != null)
-                failedFeedbackMap.put(methodName, feedback);
+            feedbackMap.put(methodName, false);
         }
     }
 
@@ -49,18 +43,8 @@ public abstract class GradeTemplate implements Grade {
         return this.totalMarks;
     }
 
-    public List<TestFeedback> getTestFeedback() {
-        List<TestFeedback> feedback = new ArrayList<>();
-        for (Entry<String, Integer> test : testMarks.entrySet()) {
-            String key = test.getKey();
-            if (failedFeedbackMap.get(key) != null) {
-                feedback.add(new TestFeedback(key, 0));
-            }
-            else {
-                feedback.add(new TestFeedback(key, testMarks.get(key)));
-            }
-        }
-        return feedback;
+    public Map<String, Boolean> getTestFeedback() {
+        return feedbackMap;
     }
 
     protected abstract void allocateWeightings();

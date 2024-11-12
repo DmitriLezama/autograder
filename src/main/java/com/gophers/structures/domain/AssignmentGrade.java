@@ -1,6 +1,5 @@
 package com.gophers.structures.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -9,13 +8,13 @@ import com.gophers.interfaces.Grade;
 
 public class AssignmentGrade {
     private final Map<String, Integer> gradesMap = new TreeMap<>();
-    private final List<TestFeedback> feedback = new ArrayList<>();
+    private final Map<String, Boolean> feedback = new TreeMap<>();
 
     public AssignmentGrade(List<Grade> grades) {
         String[] CRITERIA = { "Bonus", "ChatBotGenerator", "ChatBot", "ChatBotPlatform", "ChatBotSimulation" };
         for (int i = 0; i < grades.size(); i++) {
             gradesMap.put(CRITERIA[i], grades.get(i).getMarks());
-            feedback.addAll(grades.get(i).getTestFeedback());
+            feedback.putAll(grades.get(i).getTestFeedback());
         }
     }
 
@@ -23,11 +22,11 @@ public class AssignmentGrade {
         Map<String, String> data = new TreeMap<String, String>();
         int grade = determineGrade();
         gradesMap.forEach((key, value) -> data.put(key, String.valueOf(value)));
-        feedback.forEach(testFeedback -> {
-            String status = testFeedback.getmarksEarned() > 0 ? "PASSED" : "FAILED";
-            data.put(testFeedback.getTestName(), status);
-        });
-        data.put("passesAllJUnitTests", grade > 90? "PASSED" : "FAILED");
+        for (String key : feedback.keySet()) {
+            boolean result = feedback.get(key);
+            data.put(key, result ? "PASSED" : "FAILED");
+        }
+        data.put("passesAllJUnitTests", grade > 90 ? "PASSED" : "FAILED");
         data.put("Bonus", determineBonus(grade));
         data.put("Total", String.valueOf(grade));
         data.put("StudentPercentage", grade + "%");
@@ -35,7 +34,7 @@ public class AssignmentGrade {
         return data;
     }
 
-    private int determineGrade () {
+    private int determineGrade() {
         int sum = gradesMap.values().stream().mapToInt(Integer::intValue).sum();
         return sum >= 90 ? 100 : sum;
     }

@@ -19,7 +19,8 @@ public class ProgramGrade extends GradeTemplate {
 
     @Override
     protected void allocateFeedback() {
-        super.testFeedback = GradeConfigLoader.getFeedback(Constants.PROGRAM_GRADE);
+        for (String key : super.testMarks.keySet()) {
+            super.feedbackMap.put(key, true);
+        }
     }
-
 }

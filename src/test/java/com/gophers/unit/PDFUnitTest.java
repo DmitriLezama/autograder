@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 public class PDFUnitTest {
     @Test
@@ -34,8 +35,8 @@ public class PDFUnitTest {
                 return 100;
             }
 
-            public List<TestFeedback> getTestFeedback() {
-                return List.of(new TestFeedback("Feedback1", 99));
+            public Map<String, Boolean> getTestFeedback() {
+                return Map.of("Feedback1", true);
             }
         });
     }

@@ -19,7 +19,8 @@ public class ChatBotPlatformGrade extends GradeTemplate {
 
 	@Override
 	protected void allocateFeedback() {
-		super.testFeedback = GradeConfigLoader.getFeedback(Constants.CHATBOT_PLATFORM_GRADE);
+		for (String key : super.testMarks.keySet()) {
+			super.feedbackMap.put(key, true);
+		}
 	}
-
 }
