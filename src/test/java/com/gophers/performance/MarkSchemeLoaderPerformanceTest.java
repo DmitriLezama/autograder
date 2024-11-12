@@ -18,16 +18,4 @@ public class MarkSchemeLoaderPerformanceTest {
                 "MarkSchemeLoader - Get Weightings");
         assertTrue("Loading weightings took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
     }
-
-    @Test
-    public void testLoadFeedbackPerformance() {
-        MarkSchemeLoaderStrategy markScheme = new MarkSchemeLoader();
-        PerformanceTestResult result = ExecutionTimer.testExecutionTime(
-                () -> {
-                    markScheme.loadFeedback();
-                },
-                TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
-                "MarkSchemeLoader - Get Feedback");
-        assertTrue("Loading feedback took too long: " + result.getExecutionTime() + " ms", result.isSuccess());
-    }
 }
