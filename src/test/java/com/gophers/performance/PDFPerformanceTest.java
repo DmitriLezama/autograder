@@ -37,7 +37,7 @@ public class PDFPerformanceTest {
                 return 100;
             }
 
-            public List<TestFeedback> getFailedFeedback() {
+            public List<TestFeedback> getTestFeedback() {
                 return List.of(new TestFeedback("Feedback1", 99));
             }
         });

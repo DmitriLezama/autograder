@@ -9,5 +9,5 @@ public interface Grade {
 
     public abstract int getTotalMarks();
 
-    public abstract List<TestFeedback> getFailedFeedback();
+    public abstract List<TestFeedback> getTestFeedback();
 }

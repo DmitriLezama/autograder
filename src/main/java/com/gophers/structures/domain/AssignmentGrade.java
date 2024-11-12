@@ -1,7 +1,6 @@
 package com.gophers.structures.domain;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,15 +15,19 @@ public class AssignmentGrade {
         String[] CRITERIA = { "Bonus", "ChatBotGenerator", "ChatBot", "ChatBotPlatform", "ChatBotSimulation" };
         for (int i = 0; i < grades.size(); i++) {
             gradesMap.put(CRITERIA[i], grades.get(i).getMarks());
-            feedback.addAll(grades.get(i).getFailedFeedback());
+            feedback.addAll(grades.get(i).getTestFeedback());
         }
-        feedback.sort(Comparator.comparingInt(TestFeedback::getPriority).reversed());
     }
 
     public Map<String, String> toPDFData() {
         Map<String, String> data = new TreeMap<String, String>();
         int grade = determineGrade();
         gradesMap.forEach((key, value) -> data.put(key, String.valueOf(value)));
+        feedback.forEach(testFeedback -> {
+            String status = testFeedback.getmarksEarned() > 0 ? "PASSED" : "FAILED";
+            data.put(testFeedback.getTestName(), status);
+        });
+        data.put("passesAllJUnitTests", grade > 90? "PASSED" : "FAILED");
         data.put("Bonus", determineBonus(grade));
         data.put("Total", String.valueOf(grade));
         data.put("StudentPercentage", grade + "%");
@@ -53,14 +56,6 @@ public class AssignmentGrade {
             return "Good Attempt";
         }
         return "Needs Improvement";
-    }
-
-    private List<String> getFeedback() {
-        return feedback.stream().map(TestFeedback::getFeedback).toList();
-    }
-
-    private String getFormattedFeedback () {
-        return String.join("; ", getFeedback());
     }
 
     public String toString() {

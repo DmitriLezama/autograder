@@ -35,7 +35,7 @@ public class GradeUnitTest {
     @Test
     public void testGetFailedFeedback(){
         for(Grade g : this.grades)
-            Assert.assertNotNull("Failed Feedback should not be null", g.getFailedFeedback());
+            Assert.assertNotNull("Failed Feedback should not be null", g.getTestFeedback());
     }
     
 }

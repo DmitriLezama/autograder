@@ -1,5 +1,7 @@
 package com.gophers.structures.grades;
 
+import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +49,18 @@ public abstract class GradeTemplate implements Grade {
         return this.totalMarks;
     }
 
-    public List<TestFeedback> getFailedFeedback() {
-        return failedFeedbackMap.values().stream().toList();
+    public List<TestFeedback> getTestFeedback() {
+        List<TestFeedback> feedback = new ArrayList<>();
+        for (Entry<String, Integer> test : testMarks.entrySet()) {
+            String key = test.getKey();
+            if (failedFeedbackMap.get(key) != null) {
+                feedback.add(new TestFeedback(key, 0));
+            }
+            else {
+                feedback.add(new TestFeedback(key, testMarks.get(key)));
+            }
+        }
+        return feedback;
     }
 
     protected abstract void allocateWeightings();

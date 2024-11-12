@@ -1,19 +1,19 @@
 package com.gophers.structures.domain;
 
 public class TestFeedback {
-    private String feedback;
-    private int priority;
+    private String testName;
+    private int marksEarned;
 
-    public TestFeedback(String feedback, int priority) {
-        this.feedback = feedback;
-        this.priority = priority;
+    public TestFeedback(String testName, int marksEarned) {
+        this.testName = testName;
+        this.marksEarned = marksEarned;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public String getTestName() {
+        return testName;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getmarksEarned() {
+        return marksEarned;
     }
 }
