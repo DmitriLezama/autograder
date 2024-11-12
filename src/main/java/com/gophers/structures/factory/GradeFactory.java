@@ -11,7 +11,7 @@ import com.gophers.utilities.Constants;
 
 public class GradeFactory extends AbstractGradeFactory {
     @Override
-    public Grade createGrade(Result result, int index) {
+    public Grade createItem(Result result, int index) {
         switch (index) {
             case Constants.PROGRAM_GRADE_INDEX:
                 return new ProgramGrade(result);

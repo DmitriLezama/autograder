@@ -16,7 +16,7 @@ public class GradeUnitTest {
     public GradeUnitTest(){
         GradeFactory factory = new GradeFactory();
         List<Result> results = new AssignmentTestRunner().runAllTests();
-        this.grades = factory.createGrades(results);
+        this.grades = factory.createItems(results);
     }
 
     

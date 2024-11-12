@@ -5,11 +5,7 @@ import java.util.List;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import com.gophers.interfaces.TestRunner;
-import com.gophers.services.testCases.ChatBotGeneratorTest;
-import com.gophers.services.testCases.ChatBotPlatformTest;
-import com.gophers.services.testCases.ChatBotSimulationTest;
-import com.gophers.services.testCases.ChatBotTest;
-import com.gophers.services.testCases.ProgramTest;
+import com.gophers.services.testCases.*;
 
 public class AssignmentTestRunner implements TestRunner {
     private final List<Class<?>> testClasses;

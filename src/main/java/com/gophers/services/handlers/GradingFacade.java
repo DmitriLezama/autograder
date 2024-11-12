@@ -5,8 +5,7 @@ import java.util.List;
 import org.junit.runner.Result;
 import com.gophers.interfaces.Facade;
 import com.gophers.structures.domain.*;
-import com.gophers.structures.factory.AbstractGradeFactory;
-import com.gophers.structures.factory.GradeFactory;
+import com.gophers.structures.factory.*;
 import com.gophers.interfaces.PDF;
 import com.gophers.utilities.PDFGenerator;
 
@@ -26,7 +25,7 @@ public class GradingFacade implements Facade {
 
     public AssignmentDetails processSubmission(String submissionDirectory) {
         List<Result> results = new AssignmentTestRunner().runAllTests();
-        AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createGrades(results));
+        AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createItems(results));
         StudentDetails student = new StudentDetails(submissionDirectory);
         return new AssignmentDetails(student, assignmentGrade);
     }
