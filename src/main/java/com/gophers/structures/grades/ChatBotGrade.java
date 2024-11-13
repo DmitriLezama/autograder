@@ -6,7 +6,7 @@ import com.gophers.services.handlers.GradeConfigLoader;
 import com.gophers.utilities.Constants;
 
 public class ChatBotGrade extends GradeTemplate {
-	private static final int totalMarks = 36;
+	private static final int totalMarks = Constants.CHATBOT_GRADE_TOTAL_MARKS;
 
 	public ChatBotGrade(Result result) {
 		super(result, totalMarks);

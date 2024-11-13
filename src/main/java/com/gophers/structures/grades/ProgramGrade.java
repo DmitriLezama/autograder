@@ -6,7 +6,7 @@ import com.gophers.services.handlers.GradeConfigLoader;
 import com.gophers.utilities.Constants;
 
 public class ProgramGrade extends GradeTemplate {
-    private static final int totalMarks = 15;
+    private static final int totalMarks = Constants.PROGRAM_GRADE_TOTAL_MARKS;
 
     public ProgramGrade(Result result) {
         super(result, totalMarks);
