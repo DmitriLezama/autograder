@@ -9,7 +9,7 @@ import com.gophers.utilities.Constants;
 
 public class AssignmentGrade {
     private final Map<String, Integer> gradesMap = new TreeMap<>();
-    private final Map<String, Boolean> feedback = new TreeMap<>();
+    private final Map<String, Integer> feedback = new TreeMap<>();
 
     public AssignmentGrade(List<Grade> grades) {
         for (int i = 0; i < grades.size(); i++) {

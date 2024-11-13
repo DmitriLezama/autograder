@@ -26,9 +26,9 @@ public class GradeUtils {
                 5, "Good Attempt");
     }
 
-    public static Map<String, String> getFeedbackAsStatus(Map<String, Boolean> feedback) {
+    public static Map<String, String> getFeedbackAsStatus(Map<String, Integer> feedback) {
         Map<String, String> feedbackStatus = new TreeMap<String, String>();
-        feedback.forEach((test, passed) -> feedbackStatus.put(test, passed ? Constants.PASSED : Constants.FAILED));
+        feedback.forEach((test, passed) -> feedbackStatus.put(test, passed > 0 ? Constants.PASSED : Constants.FAILED));
         return feedbackStatus;
     }
 }

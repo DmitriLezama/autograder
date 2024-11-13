@@ -1,6 +1,5 @@
 package com.gophers.structures.grades;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.runner.Result;
@@ -9,12 +8,11 @@ import com.gophers.interfaces.Grade;
 
 public abstract class GradeTemplate implements Grade {
     protected Map<String, Integer> testMarks;
-    protected Map<String, Boolean> feedbackMap;
+    protected Map<String, Integer> feedbackMap;
     private int totalMarks;
     private int marksEarned;
 
     public GradeTemplate(Result result, int totalMarks) {
-        this.feedbackMap = new HashMap<String, Boolean>();
         this.totalMarks = totalMarks;
         this.allocateWeightings();
         this.allocateFeedback();
@@ -31,7 +29,7 @@ public abstract class GradeTemplate implements Grade {
         for (Failure failure : failures) {
             String methodName = failure.getDescription().getMethodName();
             this.marksEarned -= testMarks.getOrDefault(methodName, 0);
-            feedbackMap.put(methodName, false);
+            feedbackMap.put(methodName, 0);
         }
     }
 
@@ -43,7 +41,7 @@ public abstract class GradeTemplate implements Grade {
         return this.totalMarks;
     }
 
-    public Map<String, Boolean> getTestFeedback() {
+    public Map<String, Integer> getTestFeedback() {
         return feedbackMap;
     }
 

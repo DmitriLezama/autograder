@@ -7,5 +7,5 @@ public interface Grade {
 
     public abstract int getTotalMarks();
 
-    public abstract Map<String, Boolean> getTestFeedback();
+    public abstract Map<String, Integer> getTestFeedback();
 }
