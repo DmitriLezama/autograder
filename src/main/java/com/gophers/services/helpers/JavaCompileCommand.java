@@ -32,7 +32,6 @@ public class JavaCompileCommand implements CompileCommand {
                 javaFiles.add(file.getPath());
 
         if (javaFiles.isEmpty()) {
-            System.out.println("No Java source files found for compilation.");
             return false;
         }
 

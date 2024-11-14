@@ -40,7 +40,7 @@ public abstract class GradeTemplate implements Grade {
     }
 
     public Map<String, Integer> getTestFeedback() {
-        return testMarks;
+        return this.testMarks;
     }
 
     protected abstract void allocateWeightings();
