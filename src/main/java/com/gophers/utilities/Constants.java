@@ -28,6 +28,7 @@ public final class Constants {
     public static final int CHATBOT_GRADE_TOTAL_MARKS = 36;
     public static final int CHATBOT_PLATFORM_GRADE_TOTAL_MARKS = 20;
     public static final int CHATBOT_SIMULATION_GRADE_TOTAL_MARKS = 12;
+    public static final int ASSIGNMENT_TOTAL_MARKS = 100;
     
     public static final String[] CRITERIA = { "Bonus", "ChatBotGenerator", "ChatBot", "ChatBotPlatform",
             "ChatBotSimulation" };

@@ -34,18 +34,13 @@ public class AssignmentGrade {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        int[] totalMarks = new int[] {
-            Constants.PROGRAM_GRADE_TOTAL_MARKS, Constants.CHATBOT_GENERATOR_GRADE_TOTAL_MARKS, 
-            Constants.CHATBOT_GRADE_TOTAL_MARKS, Constants.CHATBOT_PLATFORM_GRADE_TOTAL_MARKS,
-            Constants.CHATBOT_SIMULATION_GRADE_TOTAL_MARKS
-        };
         for (int i = 0; i < gradesMap.size(); i++) {
             String criterion = Constants.CRITERIA[i];
-            result.append(criterion).append(" : ")
-                .append(gradesMap.get(criterion)).append(" / ").append(totalMarks[i])
-                .append("\n");
+            result.append(GradeUtils.formatTestResult(criterion, gradesMap.get(criterion), 
+                        GradeUtils.getTotalMarks(i)));
         }
-        result.append("Total Marks Earned: ").append(GradeUtils.calculateTotalGrade(gradesMap)).append("\n");
+        result.append(GradeUtils.formatTestResult("Total Marks Earned", 
+                        GradeUtils.calculateTotalGrade(gradesMap), Constants.ASSIGNMENT_TOTAL_MARKS));
         return result.toString();
     }
 }
