@@ -39,8 +39,8 @@ public class PDFPerformanceTest {
                 return 100;
             }
 
-            public Map<String, Boolean> getTestFeedback() {
-                return Map.of("Feedback1", true);
+            public Map<String, Integer> getTestFeedback() {
+                return Map.of("Feedback1", 1);
             }
         });
     }
