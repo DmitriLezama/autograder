@@ -8,12 +8,14 @@ import com.gophers.interfaces.Grade;
 
 public abstract class GradeTemplate implements Grade {
     protected Map<String, Integer> testMarks;
+    protected Map<String, Integer> feedbackMap;
     private int totalMarks;
     private int marksEarned;
 
     public GradeTemplate(Result result, int totalMarks) {
         this.totalMarks = totalMarks;
         this.allocateWeightings();
+        this.allocateFeedback();
         this.setMarksEarned(result);
     }
 
@@ -27,7 +29,7 @@ public abstract class GradeTemplate implements Grade {
         for (Failure failure : failures) {
             String methodName = failure.getDescription().getMethodName();
             this.marksEarned -= testMarks.getOrDefault(methodName, 0);
-            testMarks.put(methodName, 0);
+            feedbackMap.put(methodName, 0);
         }
     }
 
@@ -40,8 +42,10 @@ public abstract class GradeTemplate implements Grade {
     }
 
     public Map<String, Integer> getTestFeedback() {
-        return this.testMarks;
+        return feedbackMap;
     }
 
     protected abstract void allocateWeightings();
+
+    protected abstract void allocateFeedback();
 }

@@ -1,5 +1,6 @@
 package com.gophers.structures.grades;
 
+import java.util.HashMap;
 import org.junit.runner.Result;
 import com.gophers.services.handlers.GradeConfigLoader;
 import com.gophers.utilities.Constants;
@@ -16,4 +17,7 @@ public class ChatBotSimulationGrade extends GradeTemplate {
 		super.testMarks = GradeConfigLoader.getWeightings(Constants.CHATBOT_SIMULATION_GRADE);
 	}
 
+	protected void allocateFeedback() {
+		super.feedbackMap = new HashMap<String, Integer>(super.testMarks);
+	}
 }

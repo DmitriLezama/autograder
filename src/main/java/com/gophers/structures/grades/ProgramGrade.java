@@ -1,5 +1,7 @@
 package com.gophers.structures.grades;
 
+import java.util.HashMap;
+
 import org.junit.runner.Result;
 import com.gophers.services.handlers.GradeConfigLoader;
 import com.gophers.utilities.Constants;
@@ -14,5 +16,10 @@ public class ProgramGrade extends GradeTemplate {
     @Override
     protected void allocateWeightings() {
         super.testMarks = GradeConfigLoader.getWeightings(Constants.PROGRAM_GRADE);
+    }
+
+    @Override
+    protected void allocateFeedback() {
+        super.feedbackMap = new HashMap<String, Integer>(super.testMarks);
     }
 }
