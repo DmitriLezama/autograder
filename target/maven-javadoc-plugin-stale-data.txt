@@ -1,0 +1,89 @@
+-Xdoclint:none
+@options
+@argfile
+-classpath
+'C:/Users/dmitr/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar;C:/Users/dmitr/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar;C:/Users/dmitr/.m2/repository/com/itextpdf/itextpdf/5.5.13.3/itextpdf-5.5.13.3.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'20'
+-sourcepath
+'C:/Users/dmitr/Documents/autograder/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/dmitr/Documents/autograder/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'autograder 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'autograder 1.0-SNAPSHOT API'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/App.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/interfaces/CompileCommand.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/interfaces/Facade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/interfaces/Factory.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/interfaces/Grade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/interfaces/MarkSchemeLoaderStrategy.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/interfaces/PDF.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/interfaces/TestRunner.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/handlers/AssignmentTestRunner.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/handlers/GradeConfigLoader.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/handlers/GradingFacade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/handlers/PDFGenerator.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/handlers/SubmissionExtractor.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/helpers/GradeUtils.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/helpers/JavaCompileCommand.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/helpers/MarkSchemeLoader.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/helpers/SubmissionOrganizer.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/testCases/ChatBotGeneratorTest.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/testCases/ChatBotPlatformTest.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/testCases/ChatBotSimulationTest.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/testCases/ChatBotTest.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/services/testCases/ProgramTest.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/domain/AssignmentDetails.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/domain/AssignmentGrade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/domain/StudentDetails.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/domain/Submission.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/factory/AbstractGradeFactory.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/factory/GradeFactory.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/grades/ChatBotGeneratorGrade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/grades/ChatBotGrade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/grades/ChatBotPlatformGrade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/grades/ChatBotSimulationGrade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/grades/GradeTemplate.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/structures/grades/ProgramGrade.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/utilities/Constants.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/utilities/TextProcessor.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/utilities/Yaml.java'
+'C:/Users/dmitr/Documents/autograder/src/main/java/com/gophers/utilities/ZipFileExtractor.java'
+C:\Users\dmitr\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar = 1729827870741
+C:\Users\dmitr\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar = 1728515081555
+C:\Users\dmitr\.m2\repository\com\itextpdf\itextpdf\5.5.13.3\itextpdf-5.5.13.3.jar = 1728515083436
+C:\Users\dmitr\Documents\autograder\src\main\java = 1731745763647
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\allclasses-index.html = 1731746369609
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\allpackages-index.html = 1731746369622
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\constant-values.html = 1731746368934
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\copy.svg = 1731746369863
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\element-list = 1731746368680
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\help-doc.html = 1731746369847
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\index-all.html = 1731746369826
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\index.html = 1731746369510
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\member-search-index.js = 1731746369641
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\module-search-index.js = 1731746369625
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\overview-summary.html = 1731746369838
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\overview-tree.html = 1731746369498
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\package-search-index.js = 1731746369633
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\script.js = 1731746369858
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\search-page.js = 1731746369873
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\search.html = 1731746369834
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\search.js = 1731746369869
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\stylesheet.css = 1731746369854
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\tag-search-index.js = 1731746369645
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\type-search-index.js = 1731746369637

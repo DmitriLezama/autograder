@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=ChatBotGenerator
+comment1.params=LLMCodeNumber
+comment1.target=java.lang.String\ generateChatBotLLM(int)
+numComments=2

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.gophers.performance.GradePerformanceTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.895 s -- in com.gophers.performance.GradePerformanceTest

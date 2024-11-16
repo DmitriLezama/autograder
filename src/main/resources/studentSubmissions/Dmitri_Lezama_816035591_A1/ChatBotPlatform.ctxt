@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=ChatBotPlatform
+comment1.params=
+comment1.target=ChatBotPlatform()
+comment2.params=
+comment2.target=java.util.ArrayList\ getChatBots()
+comment3.params=
+comment3.target=java.lang.String\ getChatBotList()
+comment4.params=LLMcode
+comment4.target=boolean\ addChatBot(int)
+comment5.params=botNumber\ message
+comment5.target=java.lang.String\ interactWithBot(int,\ java.lang.String)
+numComments=6

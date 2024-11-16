@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.gophers.performance.FacadePerformanceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.26 s -- in com.gophers.performance.FacadePerformanceTest
