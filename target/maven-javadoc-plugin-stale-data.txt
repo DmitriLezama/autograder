@@ -1,0 +1,59 @@
+@options
+@packages
+-classpath
+'C:/Users/dmitr/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar;C:/Users/dmitr/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar;C:/Users/dmitr/.m2/repository/com/itextpdf/itextpdf/5.5.13.3/itextpdf-5.5.13.3.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'20'
+-sourcepath
+'C:/Users/dmitr/Documents/autograder/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/dmitr/Documents/autograder/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'autograder 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'autograder 1.0-SNAPSHOT API'
+com.gophers
+com.gophers.interfaces
+com.gophers.services.handlers
+com.gophers.services.helpers
+com.gophers.services.testCases
+com.gophers.structures.domain
+com.gophers.structures.factory
+com.gophers.structures.grades
+com.gophers.utilities
+C:\Users\dmitr\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar = 1729827870741
+C:\Users\dmitr\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar = 1728515081555
+C:\Users\dmitr\.m2\repository\com\itextpdf\itextpdf\5.5.13.3\itextpdf-5.5.13.3.jar = 1728515083436
+C:\Users\dmitr\Documents\autograder\src\main\java = 1731367052010
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\allclasses-index.html = 1731729221883
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\allpackages-index.html = 1731729221913
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\constant-values.html = 1731729220442
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\copy.svg = 1731729222214
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\element-list = 1731729220057
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\help-doc.html = 1731729222192
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\index-all.html = 1731729222122
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\index.html = 1731729221756
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\member-search-index.js = 1731729221999
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\module-search-index.js = 1731729221981
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\overview-summary.html = 1731729222182
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\overview-tree.html = 1731729221748
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\package-search-index.js = 1731729221990
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\script.js = 1731729222211
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\search-page.js = 1731729222248
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\search.html = 1731729222177
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\search.js = 1731729222242
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\stylesheet.css = 1731729222205
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\tag-search-index.js = 1731729222008
+C:\Users\dmitr\Documents\autograder\target\site\apidocs\type-search-index.js = 1731729221994

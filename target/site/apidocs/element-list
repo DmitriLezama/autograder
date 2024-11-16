@@ -1,0 +1,9 @@
+com.gophers
+com.gophers.interfaces
+com.gophers.services.handlers
+com.gophers.services.helpers
+com.gophers.services.testCases
+com.gophers.structures.domain
+com.gophers.structures.factory
+com.gophers.structures.grades
+com.gophers.utilities
