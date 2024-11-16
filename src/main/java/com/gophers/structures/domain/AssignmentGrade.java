@@ -7,10 +7,18 @@ import com.gophers.interfaces.Grade;
 import com.gophers.services.helpers.GradeUtils;
 import com.gophers.utilities.Constants;
 
+/**
+ * Represents grades and feedback for an assignment.
+ */
 public class AssignmentGrade {
     private final Map<String, Integer> gradesMap = new TreeMap<>();
     private final Map<String, Integer> feedback = new TreeMap<>();
 
+    /**
+     * Constructor to initialize grades and feedback from a list of grade objects.
+     *
+     * @param grades List of grade objects containing marks and test feedback.
+     */
     public AssignmentGrade(List<Grade> grades) {
         for (int i = 0; i < grades.size(); i++) {
             Grade grade = grades.get(i);
@@ -19,6 +27,11 @@ public class AssignmentGrade {
         }
     }
 
+    /**
+     * Converts the grade details into a map format suitable for PDF generation.
+     *
+     * @return A map containing the PDF data for the assignment grades.
+     */
     public Map<String, String> toPDFData() {
         Map<String, String> data = new TreeMap<>();
         int grade = GradeUtils.calculateTotalGrade(gradesMap);
@@ -32,15 +45,20 @@ public class AssignmentGrade {
         return data;
     }
 
+    /**
+     * Provides a detailed string representation of grades and feedback.
+     *
+     * @return A formatted string summarizing the grades and feedback.
+     */
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < gradesMap.size(); i++) {
             String criterion = Constants.CRITERIA[i];
-            result.append(GradeUtils.formatTestResult(criterion, gradesMap.get(criterion), 
-                        GradeUtils.getTotalMarks(i)));
+            result.append(GradeUtils.formatTestResult(criterion, gradesMap.get(criterion),
+                    GradeUtils.getTotalMarks(i)));
         }
-        result.append(GradeUtils.formatTestResult("Total Marks Earned", 
-                        GradeUtils.calculateTotalGrade(gradesMap), Constants.ASSIGNMENT_TOTAL_MARKS));
+        result.append(GradeUtils.formatTestResult("Total Marks Earned",
+                GradeUtils.calculateTotalGrade(gradesMap), Constants.ASSIGNMENT_TOTAL_MARKS));
         return result.toString();
     }
 }
