@@ -1,12 +1,12 @@
 package com.gophers.structures.grades;
 
+import java.util.HashMap;
 import org.junit.runner.Result;
-
 import com.gophers.services.handlers.GradeConfigLoader;
 import com.gophers.utilities.Constants;
 
 public class ChatBotPlatformGrade extends GradeTemplate {
-	private static final int totalMarks = 20;
+	private static final int totalMarks = Constants.CHATBOT_PLATFORM_GRADE_TOTAL_MARKS;
 
 	public ChatBotPlatformGrade(Result result) {
 		super(result, totalMarks);
@@ -17,9 +17,7 @@ public class ChatBotPlatformGrade extends GradeTemplate {
 		super.testMarks = GradeConfigLoader.getWeightings(Constants.CHATBOT_PLATFORM_GRADE);
 	}
 
-	@Override
 	protected void allocateFeedback() {
-		super.testFeedback = GradeConfigLoader.getFeedback(Constants.CHATBOT_PLATFORM_GRADE);
+		super.feedbackMap = new HashMap<String, Integer>(super.testMarks);
 	}
-
 }

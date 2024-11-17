@@ -2,20 +2,15 @@ package com.gophers.unit;
 
 import org.junit.Test;
 import org.junit.Assert;
-
 import java.util.Map;
-
 import com.gophers.services.helpers.MarkSchemeLoader;
-import com.gophers.structures.domain.TestFeedback;
 
 public class MarkSchemeLoaderUnitTest {
     private Map<String, Map<String, Integer>> weightings;
-    private Map<String, Map<String, TestFeedback>> feedback;
 
     public MarkSchemeLoaderUnitTest() {
         MarkSchemeLoader configLoader = new MarkSchemeLoader();
         this.weightings = configLoader.loadWeightings();
-        this.feedback = configLoader.loadFeedback();
     }
 
     @Test
@@ -30,23 +25,6 @@ public class MarkSchemeLoaderUnitTest {
             for (Map.Entry<String, Integer> innerEntry : innerMap.entrySet()) {
                 Assert.assertNotNull("Inner map key should not be null", innerEntry.getKey());
                 Assert.assertNotNull("Value should not be null for key: " + innerEntry.getKey(), innerEntry.getValue());
-            }
-        }
-    }
-
-    @Test
-    public void testLoadFeedback() {
-        Assert.assertNotNull("Feedback map should not be null", feedback);
-
-        for (Map.Entry<String, Map<String, TestFeedback>> outerEntry : feedback.entrySet()) {
-            Assert.assertNotNull("Outer map key should not be null", outerEntry.getKey());
-            Map<String, TestFeedback> innerMap = outerEntry.getValue();
-            Assert.assertNotNull("Inner map should not be null for key: " + outerEntry.getKey(), innerMap);
-
-            for (Map.Entry<String, TestFeedback> innerEntry : innerMap.entrySet()) {
-                Assert.assertNotNull("Inner map key should not be null", innerEntry.getKey());
-                Assert.assertNotNull("TestFeedback should not be null for key: " + innerEntry.getKey(),
-                        innerEntry.getValue());
             }
         }
     }

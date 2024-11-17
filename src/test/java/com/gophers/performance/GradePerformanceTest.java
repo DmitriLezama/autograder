@@ -47,7 +47,7 @@ public class GradePerformanceTest {
     @Test
     public void getFailedFeedbackPerformance() {
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
-                () -> grade.getFailedFeedback(),
+                () -> grade.getTestFeedback(),
                 TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "Grade - getFailedFeedback"
         );

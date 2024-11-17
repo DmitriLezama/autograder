@@ -18,7 +18,7 @@ public class GradeFactoryPerformanceTest {
         List<Result> results = new AssignmentTestRunner().runAllTests();
         PerformanceTestResult result = ExecutionTimer.testExecutionTime(
                 () -> {
-                    factory.createGrades(results);
+                    factory.createItems(results);
                 },
                 TestConstants.CRITICAL_PERFORMANCE_THRESHOLD_MS,
                 "GradeFactory - createGrades");

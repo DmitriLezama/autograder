@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import com.gophers.structures.domain.Submission;
 
-//comment 2
 public class ChatBotGeneratorTest {
     private Class<?> generator;
 

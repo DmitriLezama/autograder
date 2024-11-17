@@ -1,6 +1,7 @@
 package com.gophers.performance;
 
 import com.gophers.interfaces.PDF;
+import com.gophers.services.handlers.PDFGenerator;
 import com.gophers.structures.domain.*;
 import com.gophers.interfaces.Grade;
 import com.gophers.utilities.*;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 public class PDFPerformanceTest {
     @Test
@@ -37,8 +39,8 @@ public class PDFPerformanceTest {
                 return 100;
             }
 
-            public List<TestFeedback> getFailedFeedback() {
-                return List.of(new TestFeedback("Feedback1", 99));
+            public Map<String, Integer> getTestFeedback() {
+                return Map.of("Feedback1", 1);
             }
         });
     }

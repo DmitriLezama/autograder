@@ -1,22 +1,18 @@
 package com.gophers.structures.grades;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import com.gophers.interfaces.Grade;
-import com.gophers.structures.domain.TestFeedback;
 
 public abstract class GradeTemplate implements Grade {
     protected Map<String, Integer> testMarks;
-    protected Map<String, TestFeedback> testFeedback;
-    protected Map<String, TestFeedback> failedFeedbackMap;
+    protected Map<String, Integer> feedbackMap;
     private int totalMarks;
     private int marksEarned;
 
     public GradeTemplate(Result result, int totalMarks) {
-        this.failedFeedbackMap = new HashMap<String, TestFeedback>();
         this.totalMarks = totalMarks;
         this.allocateWeightings();
         this.allocateFeedback();
@@ -33,9 +29,7 @@ public abstract class GradeTemplate implements Grade {
         for (Failure failure : failures) {
             String methodName = failure.getDescription().getMethodName();
             this.marksEarned -= testMarks.getOrDefault(methodName, 0);
-            TestFeedback feedback = testFeedback.get(methodName);
-            if (feedback != null)
-                failedFeedbackMap.put(methodName, feedback);
+            feedbackMap.put(methodName, 0);
         }
     }
 
@@ -47,8 +41,8 @@ public abstract class GradeTemplate implements Grade {
         return this.totalMarks;
     }
 
-    public List<TestFeedback> getFailedFeedback() {
-        return failedFeedbackMap.values().stream().toList();
+    public Map<String, Integer> getTestFeedback() {
+        return feedbackMap;
     }
 
     protected abstract void allocateWeightings();

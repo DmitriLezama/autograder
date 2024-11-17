@@ -5,17 +5,15 @@ import java.util.List;
 import org.junit.runner.Result;
 import com.gophers.interfaces.Facade;
 import com.gophers.structures.domain.*;
-import com.gophers.structures.factory.AbstractGradeFactory;
-import com.gophers.structures.factory.GradeFactory;
+import com.gophers.structures.factory.*;
 import com.gophers.interfaces.PDF;
-import com.gophers.utilities.PDFGenerator;
 
 public class GradingFacade implements Facade {
     private final AbstractGradeFactory gradeFactory = new GradeFactory();
     private final PDF pdf = new PDFGenerator();
 
     public void processSubmissions(String zipFilePath) {
-        List<String> studentSubmissions = SubmissionExtractor.extractSubmissions("submissions.zip");
+        List<String> studentSubmissions = SubmissionExtractor.extractSubmissions(zipFilePath);
         for (String studentSubmission : studentSubmissions) {
             Submission.resetInstance(studentSubmission);
             AssignmentDetails result = this.processSubmission(studentSubmission);
@@ -26,7 +24,7 @@ public class GradingFacade implements Facade {
 
     public AssignmentDetails processSubmission(String submissionDirectory) {
         List<Result> results = new AssignmentTestRunner().runAllTests();
-        AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createGrades(results));
+        AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createItems(results));
         StudentDetails student = new StudentDetails(submissionDirectory);
         return new AssignmentDetails(student, assignmentGrade);
     }

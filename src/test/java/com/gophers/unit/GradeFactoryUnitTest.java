@@ -19,7 +19,7 @@ public class GradeFactoryUnitTest {
         GradeFactory factory = new GradeFactory();
         List<Result> results = new AssignmentTestRunner().runAllTests();
         for(int i = 0; i < results.size(); i++)
-            grades.add(factory.createGrade(results.get(i), i));
+            grades.add(factory.createItem(results.get(i), i));
         for(Grade g : grades)
             Assert.assertTrue("Grade should not be null",g != null);      
     }
@@ -29,7 +29,7 @@ public class GradeFactoryUnitTest {
     public void TestCreateGrades(){
         GradeFactory factory = new GradeFactory();
         List<Result> results = new AssignmentTestRunner().runAllTests();
-        List<Grade> grades = factory.createGrades(results);
+        List<Grade> grades = factory.createItems(results);
         for(Grade g : grades)
           Assert.assertTrue("Grade should not be null",g != null);  
     }

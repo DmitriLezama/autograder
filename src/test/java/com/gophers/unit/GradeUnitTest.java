@@ -16,7 +16,7 @@ public class GradeUnitTest {
     public GradeUnitTest(){
         GradeFactory factory = new GradeFactory();
         List<Result> results = new AssignmentTestRunner().runAllTests();
-        this.grades = factory.createGrades(results);
+        this.grades = factory.createItems(results);
     }
 
     
@@ -35,7 +35,7 @@ public class GradeUnitTest {
     @Test
     public void testGetFailedFeedback(){
         for(Grade g : this.grades)
-            Assert.assertNotNull("Failed Feedback should not be null", g.getFailedFeedback());
+            Assert.assertNotNull("Failed Feedback should not be null", g.getTestFeedback());
     }
     
 }
