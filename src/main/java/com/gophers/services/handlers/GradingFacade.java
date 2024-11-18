@@ -22,7 +22,7 @@ public class GradingFacade implements Facade {
         }
     }
 
-    public AssignmentDetails processSubmission(String submissionDirectory) {
+    private AssignmentDetails processSubmission(String submissionDirectory) {
         List<Result> results = new AssignmentTestRunner().runAllTests();
         AssignmentGrade assignmentGrade = new AssignmentGrade(gradeFactory.createItems(results));
         StudentDetails student = new StudentDetails(submissionDirectory);

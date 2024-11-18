@@ -6,19 +6,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import org.junit.Test;
 import com.gophers.services.handlers.GradingFacade;
-import com.gophers.structures.domain.AssignmentDetails;
 
 public class FacadeUnitTest {
     private static final PrintStream originalOut = System.out;
-
-    @Test
-    public void testProcessSubmission() {
-        GradingFacade gradingFacade = new GradingFacade();
-        String filePath = "src/main/resources/studentSubmissions/Brandon_Chandoo_816034693_A1";
-        AssignmentDetails result;
-        result = gradingFacade.processSubmission(filePath);
-        assertTrue("Submission failed to be processed", result != null);
-    }
 
     @Test
     public void testProcessSubmissionsResultsGenerated() {

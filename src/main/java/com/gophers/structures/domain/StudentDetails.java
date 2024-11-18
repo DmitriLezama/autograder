@@ -22,7 +22,8 @@ public class StudentDetails {
             this.lastName = matcher.group(2);
             this.studentID = matcher.group(3);
         } else {
-            throw new IllegalArgumentException("Invalid submission format: " + submission);
+            String log = "Invalid submission format, Student details will not be saved.\nSubmission name: ";
+            System.err.println(log + submission);
         }
     }
 
