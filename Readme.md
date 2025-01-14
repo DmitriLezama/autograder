@@ -10,17 +10,17 @@ An automated grading system that evaluates Comp2603 assignment 1 and generates d
     <code>There are several ways to save this repository to your device. These options include:</code>
 </summary>
 
--   [Downloading repository as ZIP](https://github.com/DmitriLezama/autograder/archive/refs/heads/master.zip)
+-   [Downloading repository as ZIP](https://github.com/carrot2803/autograder/archive/refs/heads/master.zip)
 
 -   Running the following command in a terminal, provided the [GitHub CLI](https://cli.github.com/) has been previously installed:
 
 ```sh
-git clone https://github.com/DmitriLezama/autograder.git
+git clone https://github.com/carrot2803/autograder.git
 ```
 
 #### Package java and dependencies:
 
-Java and Maven are required to run this application. Refer to the [Document](https://github.com/DmitriLezama/autograder/wiki/Installation-Guide) for prerequisite installations.
+Java and Maven are required to run this application. Refer to the [Document](https://github.com/carrot2803/autograder/wiki/Installation-Guide) for prerequisite installations.
 
 -   To install the required dependencies and package the application, run the following command:
 
@@ -47,9 +47,9 @@ java -jar target/autograder-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ## Architecture
 
-This project follows a layered architecture, with structures as the domain layer, services as the application layer, and interfaces as the contract layer. [Link to Documentation](https://github.com/DmitriLezama/autograder/wiki)
+This project follows a layered architecture, with structures as the domain layer, services as the application layer, and interfaces as the contract layer. [Link to Documentation](https://github.com/carrot2803/autograder/wiki)
 
--   class diagram to be added
+[Class Diagram](https://github.com/carrot2803/autograder/wiki/Design#class-diagram)
 
 ## Package Structure
 
@@ -70,7 +70,3 @@ com.gophers         # Root package
 |
 └── utilities       # contains utility classes and functions
 ```
-
-## Demo Video
-
--   link to be added
